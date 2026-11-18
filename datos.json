@@ -33,9 +33,53 @@
   {
    "body": "Entrega de 27.912,59 € a la Asociación Mi Princesa Rett.",
    "color": "#c2185b",
-   "cover": "",
+   "cover": "c8fa7eb9d88e3fe666f9ca601122e04c",
    "date": "2026-03-16",
-   "files": [],
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "e6d5438dadc445faa46cc99c9dac0d99",
+     "kind": "image",
+     "name": "IMG-20251024-WA0007.jpg",
+     "size": 282999
+    },
+    {
+     "ext": "jpg",
+     "id": "25d7f214d55eeea84c01ff5c50176457",
+     "kind": "image",
+     "name": "bomberosnaron.jpg",
+     "size": 573778
+    },
+    {
+     "ext": "jpg",
+     "id": "7f479dadefae6e2cd9006df12c22dce2",
+     "kind": "image",
+     "name": "20251120_102924.jpg",
+     "size": 562777
+    },
+    {
+     "ext": "jpg",
+     "id": "ce7db89210548d5bb324f6d50dda14a2",
+     "kind": "image",
+     "name": "IMG-20260315-WA0006.jpg",
+     "size": 403899
+    },
+    {
+     "ext": "jpg",
+     "id": "c8fa7eb9d88e3fe666f9ca601122e04c",
+     "kind": "image",
+     "name": "bomberosnaron_71.jpg",
+     "pos": "46% 56%",
+     "size": 593012
+    },
+    {
+     "ext": "jpg",
+     "id": "ef4e4d4f12b58519164e871adac80f30",
+     "kind": "image",
+     "name": "IMG-20251119-WA0011.jpg",
+     "size": 394412
+    }
+   ],
    "goto": "asociacion",
    "icon": "❤️",
    "kind": "page",
@@ -69,9 +113,96 @@
   {
    "body": "Cerca de 3.000 profesionales de 40 países. Balance de los Bombeiros de Narón: **13 medallas** (2 oros, 4 platas, 7 bronces).\n\n- Xavier Piñeiro: oro en 1.500 m libres\n- Luís García: oro en orientación (media distancia), plata en pentatlón y dos bronces en carrera vertical\n- Iván Pérez: dos platas en remo indoor, plata y dos bronces en carrera vertical\n- Iago López: dos bronces en carrera vertical\n- Alexandre Blanco: bronce por equipos en carrera vertical",
    "color": "#e3262b",
-   "cover": "",
+   "cover": "808eb3c4e9d19980fe64534423f3e8b3",
    "date": "2026-10-09",
-   "files": [],
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "69627413c051b03b76f8e9a9f7e9c628",
+     "kind": "image",
+     "name": "IMG-20261008-WA0018.jpg",
+     "size": 330570
+    },
+    {
+     "ext": "jpg",
+     "id": "91c309f12cf291f1547857499d58e0a6",
+     "kind": "image",
+     "name": "IMG-20261017-WA0007.jpg",
+     "size": 391850
+    },
+    {
+     "ext": "jpg",
+     "id": "8277c20bc202ab7f71150bf703672dd0",
+     "kind": "image",
+     "name": "IMG-20261018-WA0008.jpg",
+     "size": 722839
+    },
+    {
+     "ext": "jpg",
+     "id": "55b762a75da7019498a36586f6d3384e",
+     "kind": "image",
+     "name": "IMG-20261018-WA0007.jpg",
+     "size": 576983
+    },
+    {
+     "ext": "jpg",
+     "id": "c4e56edc1e9546a0a5acf12c3c16bee1",
+     "kind": "image",
+     "name": "IMG-20261018-WA0006.jpg",
+     "size": 150696
+    },
+    {
+     "ext": "jpg",
+     "id": "2ecd2e297cc0329ab60bdc40efec399e",
+     "kind": "image",
+     "name": "IMG-20261018-WA0010.jpg",
+     "size": 322874
+    },
+    {
+     "ext": "jpg",
+     "id": "097eba9739654b8d69e9a1349e0858d1",
+     "kind": "image",
+     "name": "IMG-20261018-WA0009.jpg",
+     "size": 257912
+    },
+    {
+     "ext": "jpg",
+     "id": "bf8440eccc8aa01948442bf73d058857",
+     "kind": "image",
+     "name": "IMG-20261018-WA0005.jpg",
+     "size": 343559
+    },
+    {
+     "ext": "jpg",
+     "id": "034e316a9d53cb862d208dacb17fb25b",
+     "kind": "image",
+     "name": "Screenshot_20261020_182359_Instagram.jpg",
+     "size": 486378
+    },
+    {
+     "ext": "jpg",
+     "id": "cd787f3e9294e4170bbb95c789b6a327",
+     "kind": "image",
+     "name": "Screenshot_20261020_182422_Instagram.jpg",
+     "size": 642694
+    },
+    {
+     "ext": "jpg",
+     "id": "c327f09c85820c4629ea7b4e2b2f8e75",
+     "kind": "image",
+     "name": "IMG-20261020-WA0023.jpg",
+     "pos": "60% 40%",
+     "size": 760268
+    },
+    {
+     "ext": "jpg",
+     "id": "808eb3c4e9d19980fe64534423f3e8b3",
+     "kind": "image",
+     "name": "IMG-20261020-WA0021.jpg",
+     "pos": "67% 35%",
+     "size": 790228
+    }
+   ],
    "goto": "",
    "icon": "🥇",
    "kind": "page",
@@ -118,6 +249,8 @@
    "sub": "SkyTrailRun",
    "theme": "",
    "title": "Más de 220 participantes en la segunda edición",
+   "sinPortada": true,
+   "fijada": "",
    "id": "n-ii-2023"
   },
   {
@@ -144,6 +277,8 @@
    "sub": "Diario de Ferrol",
    "theme": "",
    "title": "Narón celebra una cuarta edición de récord del Trail Costa Ártabra",
+   "sinPortada": true,
+   "fijada": "",
    "id": "n-iv-record"
   },
   {
@@ -162,11 +297,13 @@
    "sub": "Ferrol 360",
    "theme": "",
    "title": "El Trail Costa Ártabra regresa el 14 de septiembre",
+   "sinPortada": true,
+   "fijada": "",
    "id": "n-iv-regresa"
   },
   {
    "body": "La asociación cerró su participación en los XI Xogos Europeos de Policías e Bombeiros de Vigo con 2 oros, 4 platas y 7 bronces. La carrera vertical fue la disciplina que más medallas aportó al equipo.",
-   "color": "",
+   "color": "#25209a",
    "cover": "",
    "date": "2026-10-19",
    "files": [
@@ -188,6 +325,9 @@
    "sub": "Concello de Narón",
    "theme": "",
    "title": "Trece medallas para los bomberos de Narón en los Juegos Europeos",
+   "title_gl": "",
+   "sub_gl": "",
+   "body_gl": "",
    "id": "n-medallas"
   },
   {
@@ -406,10 +546,96 @@
   },
   {
    "body": "Se colabora un año mas con el Ayuntamiento de Naron en la cabalgata de Reyes ",
+   "body_gl": "",
    "color": "#1877f2",
-   "cover": "",
+   "cover": "fc1b2287a65af9fc6968091a7f46acc6",
    "date": "2026-01-05",
-   "files": [],
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "a482fea3ace90f1c671ac302423cb36f",
+     "kind": "image",
+     "name": "IMG-20200105-WA0022.jpg",
+     "size": 161575
+    },
+    {
+     "ext": "jpg",
+     "id": "cf785446f65784519a6a225e6f67b76a",
+     "kind": "image",
+     "name": "FB_IMG_1672953774230.jpg",
+     "size": 74078
+    },
+    {
+     "ext": "jpg",
+     "id": "fc1b2287a65af9fc6968091a7f46acc6",
+     "kind": "image",
+     "name": "IMG-20200105-WA0028.jpg",
+     "size": 179419
+    },
+    {
+     "ext": "jpg",
+     "id": "50fe9b3ec779f15e2bd15dbb0f3a6e35",
+     "kind": "image",
+     "name": "IMG-20200105-WA0040.jpg",
+     "size": 103337
+    },
+    {
+     "ext": "jpg",
+     "id": "b2b3a4c5dbae9b78ccd5903a9d13cfdf",
+     "kind": "image",
+     "name": "IMG-20200105-WA0041.jpg",
+     "size": 109540
+    },
+    {
+     "ext": "jpg",
+     "id": "6e168d1f73d85bc212428c319e740e90",
+     "kind": "image",
+     "name": "IMG-20200105-WA0032.jpg",
+     "size": 94659
+    },
+    {
+     "ext": "jpg",
+     "id": "f288800fbb119d2813faf9afbdff3db5",
+     "kind": "image",
+     "name": "IMG-20200105-WA0027.jpg",
+     "size": 153367
+    },
+    {
+     "ext": "jpg",
+     "id": "98f671b66b52ff180960ec5eca8128e5",
+     "kind": "image",
+     "name": "IMG-20200105-WA0015.jpg",
+     "size": 170343
+    },
+    {
+     "ext": "jpg",
+     "id": "be62274bfa613486490977baa6b4fe89",
+     "kind": "image",
+     "name": "FB_IMG_1578411484783.jpg",
+     "size": 202031
+    },
+    {
+     "ext": "jpg",
+     "id": "e4a1a5014c859759e85453b54eec3c9f",
+     "kind": "image",
+     "name": "FB_IMG_1672953777724.jpg",
+     "size": 119027
+    },
+    {
+     "ext": "jpg",
+     "id": "bab0682ba22e158b4e229f594ffda651",
+     "kind": "image",
+     "name": "IMG-20200105-WA0033.jpg",
+     "size": 119837
+    },
+    {
+     "ext": "jpg",
+     "id": "9c207c75b6a62e81cb44a02641e8b437",
+     "kind": "image",
+     "name": "IMG-20200105-WA0009.jpg",
+     "size": 289837
+    }
+   ],
    "goto": "",
    "icon": "⭐",
    "kind": "page",
@@ -418,9 +644,565 @@
    "order": 1,
    "parent": "xmwmakidrggp9z",
    "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CABALGATA DE REYES 2020",
+   "title_gl": "",
+   "id": "xmwmalrih7tcxx"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#1877f2",
+   "cover": "",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "6ba6864788bf203c756f3bf485543e70",
+     "kind": "image",
+     "name": "IMG-20230105-WA0028.jpg",
+     "size": 258068
+    },
+    {
+     "ext": "jpg",
+     "id": "f879cd649030c2dfaf68b2fb5f39bc6a",
+     "kind": "image",
+     "name": "IMG-20230105-WA0026.jpg",
+     "size": 134036
+    },
+    {
+     "ext": "jpg",
+     "id": "72f54809ea65d6d42e24a012bf8198d2",
+     "kind": "image",
+     "name": "IMG-20230105-WA0033.jpg",
+     "size": 199379
+    },
+    {
+     "ext": "jpg",
+     "id": "88b8fd7a1b0f9c7c346b1b0e88212f68",
+     "kind": "image",
+     "name": "IMG-20230105-WA0043.jpg",
+     "size": 156309
+    },
+    {
+     "ext": "jpg",
+     "id": "ff0afa12fc9cb66632d7f85a4fd8c823",
+     "kind": "image",
+     "name": "IMG-20230105-WA0030.jpg",
+     "size": 185752
+    },
+    {
+     "ext": "jpg",
+     "id": "32390f6fccea542ae024c04038a516d2",
+     "kind": "image",
+     "name": "IMG-20230105-WA0041.jpg",
+     "size": 204081
+    },
+    {
+     "ext": "jpg",
+     "id": "696aa9e6d8068ffe1a1dd20cd0a69d2e",
+     "kind": "image",
+     "name": "IMG-20230105-WA0038.jpg",
+     "size": 209616
+    },
+    {
+     "ext": "jpg",
+     "id": "c56190738a86c4da2c1a68d385e72115",
+     "kind": "image",
+     "name": "IMG-20230105-WA0036.jpg",
+     "size": 229184
+    },
+    {
+     "ext": "jpg",
+     "id": "6eb7d75a244aa539172a9c3c2662aa7d",
+     "kind": "image",
+     "name": "IMG-20230105-WA0035.jpg",
+     "size": 171450
+    },
+    {
+     "ext": "jpg",
+     "id": "06c86b9033a6d9c52d1569db491c8fa4",
+     "kind": "image",
+     "name": "IMG-20230105-WA0034.jpg",
+     "size": 156626
+    },
+    {
+     "ext": "jpg",
+     "id": "7af8a0e49fbfd61324b1122fd5513552",
+     "kind": "image",
+     "name": "IMG-20230105-WA0032.jpg",
+     "size": 216579
+    },
+    {
+     "ext": "jpg",
+     "id": "88b7750bb250a9ab520560845c7cbe30",
+     "kind": "image",
+     "name": "IMG-20230105-WA0031.jpg",
+     "size": 235301
+    },
+    {
+     "ext": "jpg",
+     "id": "38dd8592725787fd0e96192b433d8271",
+     "kind": "image",
+     "name": "IMG-20230105-WA0003.jpg",
+     "size": 404633
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 2,
+   "parent": "xmwmakidrggp9z",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CABALGATA DE REYES 2023",
+   "title_gl": "",
+   "id": "xmwmervdvz5bvg"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#1877f2",
+   "cover": "",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "dbdd3fd8faed9d897aa5721ab2dd03e6",
+     "kind": "image",
+     "name": "IMG-20240105-WA0029.jpg",
+     "size": 268509
+    },
+    {
+     "ext": "jpg",
+     "id": "cc494031b7bb3e0f3a734c13c0d0fc28",
+     "kind": "image",
+     "name": "20240105_180812.jpg",
+     "size": 214314
+    },
+    {
+     "ext": "jpg",
+     "id": "79f4aadebf14b1572b8b29060ad00015",
+     "kind": "image",
+     "name": "20240105_180021.jpg",
+     "size": 280130
+    },
+    {
+     "ext": "jpg",
+     "id": "c5bdad6b48531fca745e36e35eb1eed1",
+     "kind": "image",
+     "name": "20240105_180001.jpg",
+     "size": 213303
+    },
+    {
+     "ext": "jpg",
+     "id": "7b0185e44d94cda1b60b003e46c9bb31",
+     "kind": "image",
+     "name": "IMG-20240105-WA0010.jpg",
+     "size": 226963
+    },
+    {
+     "ext": "jpg",
+     "id": "2a8ec0e23e12420a7b314d971d4f4cd8",
+     "kind": "image",
+     "name": "IMG-20240105-WA0009.jpg",
+     "size": 201072
+    },
+    {
+     "ext": "jpg",
+     "id": "33eae850fd3003e038b67ad143028a9b",
+     "kind": "image",
+     "name": "20240105_172220.jpg",
+     "size": 1783534
+    },
+    {
+     "ext": "jpg",
+     "id": "80a11d9013ba3e7045d57397533c4a80",
+     "kind": "image",
+     "name": "20240105_172217.jpg",
+     "size": 1959367
+    },
+    {
+     "ext": "mp4",
+     "id": "0793b0d1004bdbc257182768ed67ada1",
+     "kind": "video",
+     "name": "VID-20240105-WA0025.mp4",
+     "size": 8274080
+    },
+    {
+     "ext": "mp4",
+     "id": "0fdadb85344e0cd9d606666882944c50",
+     "kind": "video",
+     "name": "VID-20240105-WA0035.mp4",
+     "size": 12201643
+    },
+    {
+     "ext": "mp4",
+     "id": "872b8218131a5e0c40ded50a145b2cb1",
+     "kind": "video",
+     "name": "VID-20240105-WA0032.mp4",
+     "size": 3636157
+    },
+    {
+     "ext": "mp4",
+     "id": "0c9562121384d2c0f85d45220f124b21",
+     "kind": "video",
+     "name": "VID-20240105-WA0023.mp4",
+     "size": 2872669
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 3,
+   "parent": "xmwmakidrggp9z",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CABALGATA DE REYES 2024",
+   "title_gl": "",
+   "id": "xmwmf0gzm4iego"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#1877f2",
+   "cover": "",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "890e25dac651af0c56e16af9b27194df",
+     "kind": "image",
+     "name": "IMG-20250105-WA0019.jpg",
+     "size": 287885
+    },
+    {
+     "ext": "jpg",
+     "id": "f571e5ff1f5638c42512b1c9367e8dcf",
+     "kind": "image",
+     "name": "IMG-20250105-WA0013.jpg",
+     "size": 242217
+    },
+    {
+     "ext": "jpg",
+     "id": "acb17469abdcfe60cdaf08d0a10b0524",
+     "kind": "image",
+     "name": "IMG-20250105-WA0011.jpg",
+     "size": 260113
+    },
+    {
+     "ext": "jpg",
+     "id": "66e56d7c47fc5515df54974f5941583e",
+     "kind": "image",
+     "name": "IMG-20250105-WA0010.jpg",
+     "size": 327701
+    },
+    {
+     "ext": "jpg",
+     "id": "2dab16db822f9f81cae80817b6f15003",
+     "kind": "image",
+     "name": "IMG-20250105-WA0009.jpg",
+     "size": 245037
+    },
+    {
+     "ext": "jpg",
+     "id": "3ae37e5d3e6593547413606c6d5f4696",
+     "kind": "image",
+     "name": "IMG-20250105-WA0008.jpg",
+     "size": 339030
+    },
+    {
+     "ext": "jpg",
+     "id": "4063d0e92882150b3570b89a26f17053",
+     "kind": "image",
+     "name": "IMG-20250105-WA0007.jpg",
+     "size": 261466
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "xmwmakidrggp9z",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CABALGATA DE REYES 2025",
+   "title_gl": "",
+   "id": "xmwmf7elnntjd3"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#1877f2",
+   "cover": "",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "mp4",
+     "id": "cd5ccdf774e0c18e275cea76b225971a",
+     "kind": "video",
+     "name": "VID-20260105-WA0035.mp4",
+     "size": 14313313
+    },
+    {
+     "ext": "jpg",
+     "id": "75cab9745ee7b2547a8555c03d72cc1e",
+     "kind": "image",
+     "name": "20260105_192647.jpg",
+     "size": 2347035
+    },
+    {
+     "ext": "jpg",
+     "id": "982697bfa9482fbbd8f3052f392f754d",
+     "kind": "image",
+     "name": "IMG-20260105-WA0025.jpg",
+     "size": 421540
+    },
+    {
+     "ext": "jpg",
+     "id": "793ce6a0a5b6fff74588c5a371a74d0a",
+     "kind": "image",
+     "name": "IMG-20260105-WA0023.jpg",
+     "size": 584375
+    },
+    {
+     "ext": "jpg",
+     "id": "df973e4b211ffa02b622064f352d75d0",
+     "kind": "image",
+     "name": "IMG-20260105-WA0019.jpg",
+     "size": 310524
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 5,
+   "parent": "xmwmakidrggp9z",
+   "sub": "",
+   "sub_gl": "",
    "theme": "",
    "title": "CABALGATA DE REYES 2026",
-   "id": "xmwmalrih7tcxx"
+   "title_gl": "",
+   "id": "xmwmfdn5hhs0t2"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#e3262b",
+   "cover": "",
+   "created": "2026-11-18",
+   "date": "2021-09-10",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "cfea14ec901c3ce0d34287f5e06e0a16",
+     "kind": "image",
+     "name": "IMG-20210910-WA0070.jpg",
+     "size": 755584
+    },
+    {
+     "ext": "jpg",
+     "id": "af173cbbc1217751cf7a6c4548b0f8f1",
+     "kind": "image",
+     "name": "IMG-20210910-WA0069.jpg",
+     "size": 713127
+    },
+    {
+     "ext": "jpg",
+     "id": "292795a39147e03c69de5e0f916c4bed",
+     "kind": "image",
+     "name": "IMG-20210910-WA0032.jpg",
+     "size": 192754
+    },
+    {
+     "ext": "jpg",
+     "id": "8d178e0e01e768fde4975577d1f77290",
+     "kind": "image",
+     "name": "20210910_192930.jpg",
+     "size": 1305422
+    },
+    {
+     "ext": "jpg",
+     "id": "f265f1b8569e65e839c9de5b1ee4d5e4",
+     "kind": "image",
+     "name": "20210910_192922.jpg",
+     "size": 1899584
+    },
+    {
+     "ext": "jpg",
+     "id": "b283d08db586402d09c57d611f366880",
+     "kind": "image",
+     "name": "20210910_192839.jpg",
+     "size": 1306794
+    },
+    {
+     "ext": "jpg",
+     "id": "537294ced2fbf48318571965f6c5f5cb",
+     "kind": "image",
+     "name": "20210910_184538.jpg",
+     "size": 1154994
+    },
+    {
+     "ext": "jpg",
+     "id": "d4884a8b56bd31bafd9ca11ac85db7ab",
+     "kind": "image",
+     "name": "20210910_184412.jpg",
+     "size": 1510128
+    },
+    {
+     "ext": "jpg",
+     "id": "caac232df14964508f2a1ce35523855f",
+     "kind": "image",
+     "name": "20210910_184404.jpg",
+     "size": 1043183
+    },
+    {
+     "ext": "jpg",
+     "id": "0b0677486cfc1c14060c291180c1fabc",
+     "kind": "image",
+     "name": "20210910_184122.jpg",
+     "size": 1870269
+    },
+    {
+     "ext": "jpg",
+     "id": "2898062ffd0296a8a915cd591bb7c5ad",
+     "kind": "image",
+     "name": "20210910_182835.jpg",
+     "size": 2261579
+    },
+    {
+     "ext": "jpg",
+     "id": "a616483f121d3fc11a6c1d0bb420a639",
+     "kind": "image",
+     "name": "20210910_182725.jpg",
+     "size": 2194028
+    },
+    {
+     "ext": "jpg",
+     "id": "24d0b4671c1d5fdc6748fff12a5630a2",
+     "kind": "image",
+     "name": "20210910_182614.jpg",
+     "size": 1854689
+    },
+    {
+     "ext": "jpg",
+     "id": "9415f052ec5f2b485ca6ac901d65806f",
+     "kind": "image",
+     "name": "20210910_181857.jpg",
+     "size": 1038372
+    },
+    {
+     "ext": "jpg",
+     "id": "8c4ed28898f4ff876dfe37c3ec472672",
+     "kind": "image",
+     "name": "20210910_180051.jpg",
+     "size": 2339328
+    },
+    {
+     "ext": "jpg",
+     "id": "e0b9c3dec62e89a510ea54543c045341",
+     "kind": "image",
+     "name": "20210910_180020.jpg",
+     "size": 1028821
+    },
+    {
+     "ext": "jpg",
+     "id": "bf862419a55b1bc48df92a787e80cb85",
+     "kind": "image",
+     "name": "20210910_175445.jpg",
+     "size": 2297062
+    },
+    {
+     "ext": "jpg",
+     "id": "67b1ebb0e10655a501358db34cd4ea0c",
+     "kind": "image",
+     "name": "20210910_173817.jpg",
+     "size": 1995749
+    },
+    {
+     "ext": "jpg",
+     "id": "68decce3f9f4b40bd692314a009ca6ca",
+     "kind": "image",
+     "name": "20210910_170357.jpg",
+     "size": 1708978
+    },
+    {
+     "ext": "jpg",
+     "id": "95d31ca8c4fa610da0ad79cb5751f325",
+     "kind": "image",
+     "name": "20210910_170312.jpg",
+     "size": 1196241
+    },
+    {
+     "ext": "jpg",
+     "id": "3dfdbca4e5f7ffa55c19cad107931396",
+     "kind": "image",
+     "name": "IMG-20210910-WA0025.jpg",
+     "size": 302435
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 6,
+   "parent": "eventos",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CAMPAÑA DE SENSIBILIZACION MEDIOAMBIENTAL",
+   "title_gl": "",
+   "id": "xmwmfthi8pndso"
+  },
+  {
+   "body": "Se trata de una recogida de pequeños residuos en la zona del paseo marítimo: pequeños plásticos, tapones… para sensibilizar sobre los importantes daños y perjuicios que generan al medio ambiente. Será preciso inscribirse (gratuitamente), el propio día de la actividad, en la zona del parque infantil del paseo de Xuvia, donde habrá un espacio habilitado para tal fin. El presidente de la Asociación de Bomberos de Narón aseguró que “nosotros teníamos ganas de organizar una actividad medioambiental y siendo un poco continuistas con las campañas que organizó el Ayuntamiento hablamos sobre la posibilidad de realizar esta para continuar manteniendo limpia la ciudad en un entorno que consideramos el ideal por ser de especial protección y de los más bonitos de Narón”.",
+   "body_gl": "",
+   "color": "#25209a",
+   "cover": "900b99ac28ce4c38825d8aa546a93a97",
+   "created": "2026-11-18",
+   "date": "2026-11-18",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "900b99ac28ce4c38825d8aa546a93a97",
+     "kind": "image",
+     "name": "20210910_192922.jpg",
+     "size": 1899584
+    }
+   ],
+   "goto": "",
+   "icon": "i:news",
+   "kind": "news",
+   "link": "https://www.cope.es/emisoras/galicia/a-coruna-provincia/ferrol/ferrol-comarcas/noticias/naron-organiza-una-nueva-campana-sensibilizacion-medioambiental-20210906_1483739.html?autoplay-track-id=1619",
+   "linkLabel": "",
+   "order": 7,
+   "parent": "noticias",
+   "retirada": false,
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "Narón organiza una nueva campaña de sensibilización medioambiental",
+   "title_gl": "",
+   "sinPortada": true,
+   "fijada": "",
+   "id": "xmwmg2nqism4iv"
   },
   {
    "body": "Carrera de montaña y andainas por la costa de Narón: **Pena Lopesa, Pena Molexa, los acantilados de O Val y las playas de Lopesa, Hortiña y Casal**.\n\nSalida y meta junto a la Cooperativa Santa María do Val, delante de la A.VV. «Os Irmandiños». Organizan la A.D.C. Bombeiros Narón y el Concello de Narón (Padroado de Deportes). Las dos distancias de trail son **UTMB Index** y dan puntos para las UTMB World Series.\n\n- Trail largo · 27 km · ~1.500 m D+\n- Trail corto · 14 km · ~700 m D+\n- Andaina larga · 13,5 km\n- Andaina corta · 8 km",
@@ -1270,6 +2052,7 @@
   },
   {
    "body": "",
+   "body_gl": "",
    "color": "#c13584",
    "cover": "",
    "date": "",
@@ -1277,13 +2060,15 @@
    "goto": "",
    "icon": "◎",
    "kind": "link",
-   "link": "https://www.instagram.com/explore/search/keyword/?q=trailcostaartabra",
+   "link": "https://www.instagram.com/trailcostaartabra/?utm_source=ig_web_button_share_sheet",
    "linkLabel": "",
    "order": 2,
    "parent": "trail-rrss",
    "sub": "Trail Costa Artabra",
+   "sub_gl": "",
    "theme": "",
    "title": "Instagram",
+   "title_gl": "",
    "id": "trs-ig"
   }
  ]
