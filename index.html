@@ -309,6 +309,12 @@ body.trail .drop{border-color:var(--trail);background:color-mix(in srgb,var(--tr
 .socart .fl.hrt{color:#ff6b8a}
 @keyframes rise{0%{transform:translateY(0) scale(.7);opacity:0}10%{opacity:.95}80%{opacity:.8}100%{transform:translateY(-340px) scale(1.15);opacity:0}}
 @media (prefers-reduced-motion:reduce){.tdot i,.socart .fl,.socart .net line,.socart .net circle{animation:none}.hart .prof{stroke-dashoffset:0}.socart .fl{opacity:.6;bottom:30%}}
+.sghost{opacity:.35}
+.schosen{outline:3px dashed var(--hl);outline-offset:3px}
+body.editing [data-id],body.editing [data-fid]{cursor:grab}
+.secbar{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.secbar span{flex:1;border-bottom:2px dashed var(--line);padding-bottom:4px}
+.secbar button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 10px;font-weight:700;font-size:13px;color:var(--ink);text-transform:none;letter-spacing:0}
 /* footer (sin cambios) */
 footer{margin-top:50px;background:#0e0c3c;color:#cfd0ea;font-size:15px}
 body.trail footer{background:#0b2d36}
@@ -317,9 +323,11 @@ footer img{height:70px}
 footer .soc{display:flex;gap:8px}
 footer .soc a svg.ico{width:20px;height:20px}
 footer .soc a{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:800;font-size:18px;color:#fff}
-footer .flinks{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 10px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
-footer .flinks a{color:#fff;text-decoration:none;font-weight:600;font-size:14px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 14px}
-footer .flinks a:hover{background:rgba(255,255,255,.18)}
+footer .flinks{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
+footer .flinks .fl-t{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-right:6px}
+footer .flinks a{color:#fff;text-decoration:none;font-size:15px;font-weight:500;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:1px;transition:border-color .15s}
+footer .flinks a:hover{border-color:#fff}
+footer .flinks .sep{color:rgba(255,255,255,.3)}
 @media (max-width:700px){footer .flinks{justify-content:center}}
 footer .copy{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;font-size:13px;opacity:.75}
 @media (max-width:700px){footer .wrap{grid-template-columns:1fr;text-align:center}footer img{margin:auto}footer .soc{justify-content:center}}
@@ -523,22 +531,24 @@ function route(keepScroll){
   $("#brand").href=tr?"#n-trail":"#inicio";
   renderNav(node); renderFoot(); renderEditbar();
   if(node) renderNode(node); else renderHome();
+  { const nav=$("#nav"); if(nav&&nav._s){ nav._s.destroy(); nav._s=null; } } setTimeout(initSort,0);
   if(!keepScroll||lastHash!==h) window.scrollTo(0,0);
   lastHash=h;
 }
 window.addEventListener("hashchange",()=>{ $("#nav").classList.remove("open"); route(); });
 function renderEditbar(){
+  document.body.classList.toggle("editing",!!S.edit);
   $("#langBtn").textContent=LANG==="gl"?"ES":"GL"; $("#langBtn").title=LANG==="gl"?"Ver en castelán":"Ver en galego";
   const eb=$("#editbar"); eb.hidden=!S.edit; $("#editBtn").classList.toggle("on",S.edit);
   if(!S.edit) return;
   eb.innerHTML = S.owner
-    ? `✏️ Modo edición (administrador) <button class="btn sm blue" data-act="newnews">＋ Noticia</button><button class="btn sm dark" data-act="settings">🎨 Colores y portada</button><button class="btn sm dark" data-act="export">⭳ Exportar para Vercel</button><button class="btn sm light" data-act="exitedit">Salir</button>`
+    ? `✏️ Modo edición · arrastra cualquier botón, menú, foto o bloque para moverlo <button class="btn sm blue" data-act="newnews">＋ Noticia</button><button class="btn sm dark" data-act="settings">🎨 Colores y portada</button><button class="btn sm dark" data-act="export">⭳ Exportar para Vercel</button><button class="btn sm light" data-act="exitedit">Salir</button>`
     : `🔐 Modo colaborador · solo Trail Costa Ártabra <button class="btn sm light" data-act="exitedit">Salir</button>`;
 }
 function renderNav(cur){
   const roots=kids("root"); const top=cur?chain(cur.id)[0]:null;
   $("#nav").innerHTML=`<a href="#inicio" class="${!cur?"on":""}">Inicio</a>`+roots.map(r=>
-    `<a href="#n-${esc(r.id)}" class="${r.theme==="trail"?"trailbtn":""} ${top&&top.id===r.id?"on":""}">${esc(tr(r,"title"))}</a>`).join("");
+    `<a href="#n-${esc(r.id)}" data-id="${esc(r.id)}" class="${r.theme==="trail"?"trailbtn":""} ${top&&top.id===r.id?"on":""}">${esc(tr(r,"title"))}</a>`).join("");
 }
 function socials(){ return kids("rrss").filter(n=>n.kind==="link"&&n.link).slice(0,4); }
 const DEF_LINKS=[["Concello de Narón","https://www.naron.gal"],["Bombeiros Narón","https://bombeiros-naron-web.vercel.app"],["Xogos Europeos de Policías e Bombeiros","https://policeandfire.games/es/"]];
@@ -548,7 +558,7 @@ function renderFoot(){
     <img src="escudo.png" alt="">
     <div><b style="color:#fff;font-family:'Barlow Condensed';font-size:22px;letter-spacing:.04em">${esc((m.heroTitle||"A.D.C. Bombeiros Narón").toUpperCase())}</b><br>${esc((LANG==="gl"&&m.contact_gl)||m.contact||"")}</div>
     <div class="soc">${socials().map(s=>`<a href="${esc(s.link)}" target="_blank" rel="noopener" title="${esc(s.title)}" style="background:${esc(s.color||"")}">${icon(s.icon,"link")}</a>`).join("")}</div>
-    ${(m.footLinks||[]).length?`<div class="flinks">${(m.footLinks||[]).map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])} ↗</a>`).join("")}</div>`:""}
+    ${(m.footLinks||[]).length?`<nav class="flinks" aria-label="Accesos directos"><span class="fl-t">${LANG==="gl"?"Accesos directos":"Accesos directos"}</span>${(m.footLinks||[]).map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join('<span class="sep">·</span>')}</nav>`:""}
     <div class="copy">© ${new Date().getFullYear()} Asociación Deportiva e Cultural Bombeiros Narón · Trail Costa Ártabra · Narón (A Coruña)</div></div>`;
 }
 
@@ -561,7 +571,7 @@ function ctrls(n,siblings){
 function card(n,siblings){
   const ic=n.icon||""; const direct=n.kind==="link"&&n.link&&!S.edit;
   const href=direct?n.link:"#n-"+n.id;
-  return `<a class="card" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
+  return `<a class="card" data-id="${esc(n.id)}" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
     ${coverOf(n)&&n.cover?`<span class="ic ph2"><img src="${esc(blobUrl(coverOf(n)))}" alt="" style="object-position:${posOf(coverOf(n))}"></span>`:`<span class="ic ${lum(n.color)>0.7?"light":""}">${icon(ic)}</span>`}
     <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>${esc(fdate(n.date))}</small>`:""}</span>
     ${ctrls(n,siblings)||`<span class="ar">${direct?"↗":"›"}</span>`}</a>`;
@@ -571,7 +581,7 @@ function deepCover(n){ const own=coverOf(n); if(own&&(n.cover||!kids(n.id).lengt
   const anyImg=ds.slice().reverse().find(d=>coverOf(d)); return anyImg?coverOf(anyImg):null; }
 function pcard(n,siblings){
   const c=deepCover(n); const direct=n.kind==="link"&&n.link&&!S.edit; const href=direct?n.link:"#n-"+n.id;
-  return `<a class="pcard" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
+  return `<a class="pcard" data-id="${esc(n.id)}" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
     <div class="pimg">${c?`<img src="${esc(blobUrl(c))}" alt="" loading="lazy" style="object-position:${posOf(c)}">`:icon(n.icon)}</div>
     <div class="pbd"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${tr(n,"body")?`<p class="pex">${esc(plain(tr(n,"body")))}</p>`:""}${n.date?`<small>${esc(fdate(n.date))}</small>`:""}</div>${ctrls(n,siblings)}</a>`;
 }
@@ -660,15 +670,15 @@ function renderHome(){
   const news=portada();
   const asoc=S.nodes.get("asociacion");
   const eds=kids("trail-ediciones");
-  const ordered=[...roots.filter(r=>r.id==="trail"),...roots.filter(r=>r.id==="noticias"),...roots.filter(r=>r.id!=="trail"&&r.id!=="noticias"&&r.id!=="asociacion")];
+  const ordered=roots.filter(r=>r.id!=="asociacion");
   const others=ordered.filter(r=>r.id!=="trail"&&r.id!=="noticias"); const rest=others.slice(2);
   const spanOf=r=>{ const i=rest.indexOf(r); if(i<0) return ""; const k=rest.length%4; const lastRow=rest.slice(rest.length-(k||4)); const j=lastRow.indexOf(r); if(j<0) return "";
     if(lastRow.length===1) return "s4"; if(lastRow.length===2) return "s2"; if(lastRow.length===3&&j===2) return "s2"; return ""; };
   const bento=ordered.map(r=>{
-    if(r.id==="trail") return `<a class="bx big" href="#n-trail">${trailArt()}${S.edit&&S.owner?ctrls(r,roots):""}<img src="trail.jpg" alt=""><span class="ybar">${esc(eds[0]?tr(eds[0],"sub"):"")}</span><h3>${esc(tr(r,"title"))}</h3><small>${esc(tr(r,"sub")||"")}</small><div class="mods"><span>${T("Trail largo 27 km")}</span><span>${T("Trail corto 14 km")}</span><span>${T("Andaina larga 13,5 km")}</span><span>${T("Andaina corta 8 km")}</span></div></a>`;
+    if(r.id==="trail") return `<a class="bx big" data-id="${esc(r.id)}" href="#n-trail">${trailArt()}${S.edit&&S.owner?ctrls(r,roots):""}<img src="trail.jpg" alt=""><span class="ybar">${esc(eds[0]?tr(eds[0],"sub"):"")}</span><h3>${esc(tr(r,"title"))}</h3><small>${esc(tr(r,"sub")||"")}</small><div class="mods"><span>${T("Trail largo 27 km")}</span><span>${T("Trail corto 14 km")}</span><span>${T("Andaina larga 13,5 km")}</span><span>${T("Andaina corta 8 km")}</span></div></a>`;
     if(r.id==="noticias"){ const l=news[0]; const c=l&&coverOf(l);
-      return `<a class="bx wide" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-noticias">${c?`<span class="ph" style="background-image:url('${esc(blobUrl(c))}');background-position:${posOf(c)}"></span>`:""}<span class="bi">${icon(r.icon,"news")}</span><span class="go">→</span>${S.edit&&S.owner?ctrls(r,roots):""}<span class="head" style="position:relative">${esc(tr(r,"title"))} · ${esc(l?fdate(l.date):"")}</span><span class="hl" style="position:relative">${esc(l?tr(l,"title"):tr(r,"sub"))}</span></a>`; }
-    return `<a class="bx ${spanOf(r)} ${lum(r.color)>0.7?"light":""}" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-${esc(r.id)}">${r.id==="rrss"?socArt():""}<span class="bi">${icon(r.icon)}</span><span class="go">→</span>${S.edit&&S.owner?ctrls(r,roots):""}<h3>${esc(tr(r,"title"))}</h3>${tr(r,"sub")?`<small>${esc(tr(r,"sub"))}</small>`:""}</a>`;
+      return `<a class="bx wide" data-id="${esc(r.id)}" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-noticias">${c?`<span class="ph" style="background-image:url('${esc(blobUrl(c))}');background-position:${posOf(c)}"></span>`:""}<span class="bi">${icon(r.icon,"news")}</span><span class="go">→</span>${S.edit&&S.owner?ctrls(r,roots):""}<span class="head" style="position:relative">${esc(tr(r,"title"))} · ${esc(l?fdate(l.date):"")}</span><span class="hl" style="position:relative">${esc(l?tr(l,"title"):tr(r,"sub"))}</span></a>`; }
+    return `<a class="bx ${spanOf(r)} ${lum(r.color)>0.7?"light":""}" data-id="${esc(r.id)}" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-${esc(r.id)}">${r.id==="rrss"?socArt():""}<span class="bi">${icon(r.icon)}</span><span class="go">→</span>${S.edit&&S.owner?ctrls(r,roots):""}<h3>${esc(tr(r,"title"))}</h3>${tr(r,"sub")?`<small>${esc(tr(r,"sub"))}</small>`:""}</a>`;
   }).join("");
   const first=asoc?plain((tr(asoc,"body")||"").split(/\n{2,}/)[0]):"";
   app.innerHTML=`
@@ -677,19 +687,22 @@ function renderHome(){
     <div><span class="kicker">${T("Asociación Deportiva e Cultural")}</span></div>
     <h1>${esc(m.heroTitle||"A.D.C. Bombeiros Narón")}</h1>
     <p>${esc(m.heroSub||"")}</p>
-  </div><div class="chev"></div></section>
-  <section class="blk"><div class="wrap">
-    <div class="bento">${bento}</div>
+  </div><div class="chev"></div></section>`;
+  const secs={
+   accesos:`<div class="wrap">
+    <div class="bento" data-sort="root">${bento}</div>
     ${S.edit&&S.owner?`<div style="margin-top:12px"><button class="btn sm light" data-act="add" data-id="root">＋ Añadir apartado principal</button></div>`:""}
-  </div></section>
-  ${asoc?`<section class="blk"><div class="wrap"><div class="about">
+  </div>`,
+   asociacion: asoc?`<div class="wrap"><div class="about">
     <div><h2>${esc(tr(asoc,"title"))}</h2><p>${esc(first)}</p>
       <div class="chips"><span>${T("Deporte")}</span><span>${T("Cultura")}</span><span>${T("Solidaridad")}</span><span>Trail Costa Ártabra</span></div>
       <a class="btn blue" href="#n-asociacion">${T("Conocer la asociación →")}</a></div>
-    <img src="escudo.png" alt=""></div></div></section>`:""}
-  <section class="blk"><div class="wrap"><div class="sh"><h2><small>${T("Prensa y actualidad")}</small>${T("Últimas noticias")}</h2><a class="btn sm light" href="#n-noticias">${T("Todas las noticias →")}</a></div>
+    <img src="escudo.png" alt=""></div></div>`:"",
+   noticias:`<div class="wrap"><div class="sh"><h2><small>${T("Prensa y actualidad")}</small>${T("Últimas noticias")}</h2><a class="btn sm light" href="#n-noticias">${T("Todas las noticias →")}</a></div>
     ${carHTML()}
-  </div></section>`;
+  </div>`};
+  const order=homeOrder();
+  app.innerHTML+=order.filter(k=>secs[k]).map((k,i)=>`<section class="blk hsec" data-sec="${k}">${S.edit&&S.owner?`<div class="wrap secbar"><span>${{accesos:"Accesos principales",asociacion:"La asociación",noticias:"Últimas noticias"}[k]}</span>${i>0?`<button data-act="secup" data-id="${k}">↑ Subir</button>`:""}${i<order.length-1?`<button data-act="secdown" data-id="${k}">↓ Bajar</button>`:""}</div>`:""}${secs[k]}</section>`).join("");
   carI=0; carGo(0);
   startTrailAnim();
 }
@@ -717,13 +730,13 @@ function renderNode(n){
   if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
   if(children.length||ed){
     if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
-    else if(n.id==="eventos"||n.parent==="eventos"||n.id==="trail-ediciones"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
-    else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
+    else if(n.id==="eventos"||n.parent==="eventos"||n.id==="trail-ediciones"||n.layout==="fotos") html+=`<div class="pcards" data-sort="${esc(n.id)}">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
+    else html+=`<div class="cards" data-sort="${esc(n.id)}">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
-  if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
-  if(vids.length) html+=`<div><h2 class="sub2">▶ ${T("Vídeos")} <small style="font-size:16px;color:var(--muted)">(${vids.length})</small></h2><div class="vids">${vids.map(f=>`<figure class="vid"><video controls playsinline preload="metadata" src="${esc(blobUrl(f))}"></video><figcaption>${esc(f.name)}${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</figcaption></figure>`).join("")}</div></div>`;
+  if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal" data-sortf="${esc(n.id)}">${imgs.map((f,i)=>`<figure data-lb="${i}" data-fid="${esc(f.id)}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
+  if(vids.length) html+=`<div><h2 class="sub2">▶ ${T("Vídeos")} <small style="font-size:16px;color:var(--muted)">(${vids.length})</small></h2><div class="vids" data-sortf="${esc(n.id)}">${vids.map(f=>`<figure class="vid" data-fid="${esc(f.id)}"><video controls playsinline preload="metadata" src="${esc(blobUrl(f))}"></video><figcaption>${esc(f.name)}${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</figcaption></figure>`).join("")}</div></div>`;
   if(trks.length) html+=`<div><h2 class="sub2">🗺️ ${T("Tracks")}</h2><div class="docs">${trks.map(f=>`<div class="track" data-track="${esc(f.id)}"><div class="tt"><b>${esc(f.name)}</b><span class="sp"></span><a class="btn sm ${isTrail(n.id)?"green":"blue"}" href="${esc(blobUrl(f))}" target="_blank" rel="noopener">Abrir ${esc((f.ext||"").toUpperCase())}</a>${ed?`<button class="btn sm" style="background:#b3261e" data-rmf="${esc(f.id)}">✕</button>`:""}</div><div class="tbody note">${T("Cargando track…")}</div></div>`).join("")}</div></div>`;
-  if(docs.length) html+=`<div><h2 class="sub2">📄 ${T("Documentos")}</h2><div class="docs">${docs.map(f=>`<a class="doc" href="${esc(blobUrl(f))}" target="_blank" rel="noopener"><span class="fi" style="background:${f.ext==="pdf"?"#c62828":"var(--primary)"}">${esc((f.ext||"DOC").toUpperCase().slice(0,4))}</span><span><b>${esc(f.name)}</b><br><small>${f.size?Math.max(1,Math.round(f.size/1024))+" KB":""}</small></span>${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</a>`).join("")}</div></div>`;
+  if(docs.length) html+=`<div><h2 class="sub2">📄 ${T("Documentos")}</h2><div class="docs" data-sortf="${esc(n.id)}">${docs.map(f=>`<a class="doc" data-fid="${esc(f.id)}" href="${esc(blobUrl(f))}" target="_blank" rel="noopener"><span class="fi" style="background:${f.ext==="pdf"?"#c62828":"var(--primary)"}">${esc((f.ext||"DOC").toUpperCase().slice(0,4))}</span><span><b>${esc(f.name)}</b><br><small>${f.size?Math.max(1,Math.round(f.size/1024))+" KB":""}</small></span>${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</a>`).join("")}</div></div>`;
   if(ed) html+=`<div class="drop" id="drop" data-id="${esc(n.id)}"><b>Arrastra aquí fotos, vídeos, PDF, GPX o KML</b><br><span style="font-size:14px;color:var(--muted)">o pulsa para elegir archivos · se guardan en esta sección</span></div>`;
   else if(!children.length&&!tr(n,"body")&&!files.length&&!n.link&&n.kind!=="collab") html+=`<div class="empty">${T("Contenido en preparación.")}</div>`;
   html+=`</div>`;
@@ -948,7 +961,7 @@ async function exportVercel(){
 }
 
 /* ---------- actualización automática ---------- */
-const APP_VER="20261118-2030";
+const APP_VER="20261118-2045";
 async function checkVersion(){
   try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
     if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
@@ -959,6 +972,28 @@ async function reloadPublic(){
   try{ const t=await (await fetch("datos.json?v="+Date.now(),{cache:"no-store"})).text(); if(t===S.pubRaw) return; S.pubRaw=t; S.defaults=JSON.parse(t); useDefaults(); route(true); }catch(e){}
 }
 if(window.__PUBLIC__) setInterval(reloadPublic,120000);
+
+/* ---------- ordenar arrastrando (todo) ---------- */
+const HOME_DEF=["accesos","asociacion","noticias"];
+function homeOrder(){ const o=(S.meta&&S.meta.homeOrder)||[]; return [...o.filter(k=>HOME_DEF.includes(k)),...HOME_DEF.filter(k=>!o.includes(k))]; }
+async function moveSec(k,d){ const o=homeOrder(); const i=o.indexOf(k), j=i+d; if(j<0||j>=o.length) return; [o[i],o[j]]=[o[j],o[i]]; await saveMeta({...S.meta,homeOrder:o}); }
+function loadSortable(){ return new Promise((res,rej)=>{ if(window.Sortable) return res(window.Sortable); const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"; s.onload=()=>res(window.Sortable); s.onerror=rej; document.head.appendChild(s); }); }
+async function saveOrder(ids){ for(let i=0;i<ids.length;i++){ const n=S.nodes.get(ids[i]); if(n&&(n.order||0)!==i+1) await saveNode({...n,order:i+1}); } toast("Orden guardado"); }
+async function saveFileOrder(nodeId,fids){ const n=S.nodes.get(nodeId); if(!n) return; const files=[...(n.files||[])]; const set=new Set(fids);
+  const moved=fids.map(id=>files.find(f=>f.id===id)).filter(Boolean); let k=0; const out=files.map(f=>set.has(f.id)?moved[k++]:f); await saveNode({...n,files:out}); toast("Orden guardado"); }
+async function initSort(){
+  if(!S.edit) return;
+  const opts={animation:160,delay:220,delayOnTouchOnly:true,ghostClass:"sghost",chosenClass:"schosen",filter:"button,.ctr,input,textarea",preventOnFilter:false};
+  let Sortable; try{ Sortable=await loadSortable(); }catch(e){ return; }
+  if(S.owner){ const nav=$("#nav"); if(nav&&!nav._s){ nav._s=Sortable.create(nav,{...opts,draggable:"a[data-id]",onEnd:()=>saveOrder([...nav.querySelectorAll("a[data-id]")].map(a=>a.dataset.id))}); } }
+  document.querySelectorAll("[data-sort]").forEach(el=>{ if(el._s) return; const pid=el.dataset.sort; const pn=S.nodes.get(pid);
+    if(pid!=="root"&&!canEdit(pn)) return; if(pid==="root"&&!S.owner) return;
+    el._s=Sortable.create(el,{...opts,draggable:"[data-id]",onEnd:()=>{ let ids=[...el.querySelectorAll(":scope > [data-id]")].map(x=>x.dataset.id);
+      if(pid==="root"){ const asoc=kids("root").find(r=>r.id==="asociacion"); if(asoc){ const at=kids("root").indexOf(asoc); ids.splice(Math.min(at,ids.length),0,"asociacion"); } }
+      saveOrder(ids); }}); });
+  document.querySelectorAll("[data-sortf]").forEach(el=>{ if(el._s) return; const nid=el.dataset.sortf; if(!canEdit(S.nodes.get(nid))) return;
+    el._s=Sortable.create(el,{...opts,draggable:"[data-fid]",onEnd:()=>saveFileOrder(nid,[...el.querySelectorAll(":scope > [data-fid]")].map(x=>x.dataset.fid))}); });
+}
 /* ---------- events ---------- */
 const curId=()=>location.hash.startsWith("#n-")?location.hash.slice(3):null;
 document.addEventListener("click",async e=>{
@@ -970,6 +1005,8 @@ document.addEventListener("click",async e=>{
   if(act==="edit") editNode({...S.nodes.get(id)});
   else if(act==="add") addChild(id);
   else if(act==="newnews") addChild("noticias");
+  else if(act==="secup") moveSec(id,-1);
+  else if(act==="secdown") moveSec(id,1);
   else if(act==="car") carGo(b.dataset.i!=null?+b.dataset.i:carI+ +b.dataset.d);
   else if(act==="encuadre") encAbre(id,b.dataset.fid);
   else if(act==="nquitar") removeFileOf(id,b.dataset.fid);
