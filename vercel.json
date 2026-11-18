@@ -374,6 +374,18 @@
    "destination": "/archivos/900b99ac28ce4c38825d8aa546a93a97.jpg"
   },
   {
+   "source": "/_blob/7ffc50bfd5f02bbe30183e7012fee7fe",
+   "destination": "/archivos/7ffc50bfd5f02bbe30183e7012fee7fe.webp"
+  },
+  {
+   "source": "/_blob/2637a49befb7835976090cde31d22978",
+   "destination": "/archivos/2637a49befb7835976090cde31d22978.png"
+  },
+  {
+   "source": "/_blob/b069ebe1ef9b9182fd8ab519507fb8c5",
+   "destination": "/archivos/b069ebe1ef9b9182fd8ab519507fb8c5.jpg"
+  },
+  {
    "source": "/_blob/d70eeb13ff49e0b8bf7b58dd7ccd0346",
    "destination": "/archivos/d70eeb13ff49e0b8bf7b58dd7ccd0346.jpg"
   },

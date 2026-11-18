@@ -9,7 +9,25 @@
   "contact": "Parque de Bombeiros de Narón · Avda. Bernardo Romero s/n, Polígono Río do Pozo, 15570 Narón · adcbombeirosnaron@gmail.com · 646 166 113",
   "heroSub": "Deporte, cultura e solidariedade desde o parque de bombeiros de Narón",
   "heroTitle": "A.D.C. Bombeiros Narón",
-  "seeded": true
+  "seeded": true,
+  "footLinks": [
+   [
+    "Concello de Narón",
+    "https://www.naron.gal"
+   ],
+   [
+    "Bombeiros Narón",
+    "https://bombeiros-naron-web.vercel.app"
+   ],
+   [
+    "Xogos Europeos de Policías e Bombeiros",
+    "https://policeandfire.games/es/"
+   ],
+   [
+    "Mi Princesa Rett",
+    "https://miprincesarett.es/"
+   ]
+  ]
  },
  "nodes": [
   {
@@ -31,7 +49,8 @@
    "id": "asociacion"
   },
   {
-   "body": "Entrega de 27.912,59 € a la Asociación Mi Princesa Rett.",
+   "body": "Para ayudar a la niña Julieta y a todas las que como ella sufren la enfermedad de Rett, la Asociación Deportiva Cultural Bombeiros Narón presentó ayer un calendario solidario llamado O océano de Julieta 2026.\nEl acto contó con la presencia de la niña y de su madre Lucía García; además del concejal de Seguridade, José Oreona; el inspector jefe sustituto de los bomberos; Adrián Fraga; el presidente de la asociación, Luis García; la fotógrafa Noelia Soto; o el impulsor del proyecto, Carlos Doval.\nEl 100 % de la recaudación se destinará a la asociación Mi Princesa Rett, «entidade que financia proxectos de investigación e revisións multidisciplinares no Hospital San Juan de Dios de Barcelona, centro pioneiro en ensaios clínicos sobre o síndrome de Rett». El calendario puede comprarse en el parque de bomberos, A Roldana, cooperativa O Val, Ali Bebé y Ali Hogar, Ronnie, Arrecendo, Australian, Dinámica Fisioterapia, Copistería Conde y Ferretería Freixeiro. Los bomberos agradecen «a colaboración da fotógrafa Noelia Soto, que de maneira totalmente altruísta realizou as fotografías e a edición, e coa cooperativa gráfica Sacauntos, encargada da impresión; e o apoio das empresas MaSSevoluo, Tyche Narón, Cooperativa O Val, Arrecendo, Vibra Açaí Club, Café Ronnie, Australian, A Roldana e Ferretería Freixeiro, que financiaron os custes de impresión». ",
+   "body_gl": "",
    "color": "#c2185b",
    "cover": "c8fa7eb9d88e3fe666f9ca601122e04c",
    "date": "2026-03-16",
@@ -83,13 +102,15 @@
    "goto": "asociacion",
    "icon": "❤️",
    "kind": "page",
-   "link": "",
-   "linkLabel": "",
+   "link": "https://www.lavozdegalicia.es/noticia/ferrol/naron/2025/11/21/bomberos-naron-lanzan-calendario-apoyo-julieta/0003_202511F21C5_COPY993.htm",
+   "linkLabel": "Los bomberos de Narón lanzan un calendario de apoyo a Julieta, la niña con enfermedad de Rett",
    "order": 4,
    "parent": "eventos",
-   "sub": "",
+   "sub": "Los bomberos de Narón lanzan un calendario de apoyo a Julieta, la niña con enfermedad de Rett",
+   "sub_gl": "",
    "theme": "",
    "title": "Calendario solidario «O Océano de Julieta»",
+   "title_gl": "",
    "id": "ev-calendario"
   },
   {
@@ -313,6 +334,7 @@
      "id": "d2f27c91822af5385f421d37a253bc20",
      "kind": "image",
      "name": "7190-1792407177.jpg",
+     "pos": "38% 21%",
      "size": 15661
     }
    ],
@@ -341,6 +363,7 @@
      "id": "df00b0ebbed63741951870b2912d9c25",
      "kind": "image",
      "name": "69b7d3f1d68b8.webp",
+     "pos": "19% 2%",
      "size": 226356
     }
    ],
@@ -367,6 +390,7 @@
      "id": "0dd611139813572302069fd8405dc9dc",
      "kind": "image",
      "name": "7102-1783589591.jpg",
+     "pos": "33% 13%",
      "size": 65184
     }
    ],
@@ -429,7 +453,7 @@
    "kind": "page",
    "link": "",
    "linkLabel": "",
-   "order": 5,
+   "order": 4,
    "parent": "root",
    "sub": "Síguenos",
    "theme": "",
@@ -1172,7 +1196,7 @@
    "id": "xmwmfthi8pndso"
   },
   {
-   "body": "Se trata de una recogida de pequeños residuos en la zona del paseo marítimo: pequeños plásticos, tapones… para sensibilizar sobre los importantes daños y perjuicios que generan al medio ambiente. Será preciso inscribirse (gratuitamente), el propio día de la actividad, en la zona del parque infantil del paseo de Xuvia, donde habrá un espacio habilitado para tal fin. El presidente de la Asociación de Bomberos de Narón aseguró que “nosotros teníamos ganas de organizar una actividad medioambiental y siendo un poco continuistas con las campañas que organizó el Ayuntamiento hablamos sobre la posibilidad de realizar esta para continuar manteniendo limpia la ciudad en un entorno que consideramos el ideal por ser de especial protección y de los más bonitos de Narón”.",
+   "body": "",
    "body_gl": "",
    "color": "#25209a",
    "cover": "900b99ac28ce4c38825d8aa546a93a97",
@@ -1205,6 +1229,98 @@
    "id": "xmwmg2nqism4iv"
   },
   {
+   "body": "",
+   "body_gl": "",
+   "color": "#25209a",
+   "cover": "7ffc50bfd5f02bbe30183e7012fee7fe",
+   "created": "2026-11-18",
+   "date": "2026-11-18",
+   "fijada": "",
+   "files": [
+    {
+     "ext": "webp",
+     "id": "7ffc50bfd5f02bbe30183e7012fee7fe",
+     "kind": "image",
+     "name": "69b7d3f1d68b8.webp",
+     "size": 226356
+    }
+   ],
+   "goto": "",
+   "icon": "i:news",
+   "kind": "news",
+   "link": "https://www.lavozdegalicia.es/noticia/ferrol/naron/2026/03/16/bombeiros-naron-recauda-27900-euros-princesa-rett/0003_202603F16C6991.htm",
+   "linkLabel": "",
+   "order": 8,
+   "parent": "noticias",
+   "sinPortada": true,
+   "sub": "La voz de Galicia",
+   "sub_gl": "",
+   "theme": "",
+   "title": "Bombeiros Narón recauda 27.900 euros para Princesa Rett",
+   "title_gl": "",
+   "id": "xmwmj1xsih3jkd"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "",
+   "cover": "2637a49befb7835976090cde31d22978",
+   "created": "2026-11-18",
+   "date": "2026-11-18",
+   "files": [
+    {
+     "ext": "png",
+     "id": "2637a49befb7835976090cde31d22978",
+     "kind": "image",
+     "name": "Captura de pantalla 2026-11-18 204551.png",
+     "size": 298284
+    }
+   ],
+   "goto": "",
+   "icon": "i:news",
+   "kind": "news",
+   "link": "https://www.lavozdegalicia.es/noticia/ferrol/naron/2025/11/21/bomberos-naron-lanzan-calendario-apoyo-julieta/0003_202511F21C5_COPY993.htm",
+   "linkLabel": "",
+   "order": 9,
+   "parent": "noticias",
+   "sub": "La voz de Galicia",
+   "sub_gl": "",
+   "theme": "",
+   "title": "Los bomberos de Narón lanzan un calendario de apoyo a Julieta, la niña con enfermedad de Rett",
+   "title_gl": "",
+   "id": "xmwmj65w681cji"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "",
+   "cover": "b069ebe1ef9b9182fd8ab519507fb8c5",
+   "created": "2026-11-18",
+   "date": "2026-11-18",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "b069ebe1ef9b9182fd8ab519507fb8c5",
+     "kind": "image",
+     "name": "5824-1690973226.jpg",
+     "size": 28655
+    }
+   ],
+   "goto": "",
+   "icon": "i:news",
+   "kind": "news",
+   "link": "https://www.naron.gal/es/noticias/get/5824/",
+   "linkLabel": "",
+   "order": 10,
+   "parent": "noticias",
+   "sub": "Concello de Narón",
+   "sub_gl": "",
+   "theme": "",
+   "title": "LOS MENORES SAHARAUIS QUE PARTICIPAN EN EL PROGRAMA \"VACACIONES EN PAZ\" VISITARON HOY LAS INSTALACIONES DEL SPEIS",
+   "title_gl": "",
+   "id": "xmwmjap6p3wwb3"
+  },
+  {
    "body": "Carrera de montaña y andainas por la costa de Narón: **Pena Lopesa, Pena Molexa, los acantilados de O Val y las playas de Lopesa, Hortiña y Casal**.\n\nSalida y meta junto a la Cooperativa Santa María do Val, delante de la A.VV. «Os Irmandiños». Organizan la A.D.C. Bombeiros Narón y el Concello de Narón (Padroado de Deportes). Las dos distancias de trail son **UTMB Index** y dan puntos para las UTMB World Series.\n\n- Trail largo · 27 km · ~1.500 m D+\n- Trail corto · 14 km · ~700 m D+\n- Andaina larga · 13,5 km\n- Andaina corta · 8 km",
    "color": "#14705f",
    "cover": "",
@@ -1215,7 +1331,7 @@
    "kind": "page",
    "link": "",
    "linkLabel": "",
-   "order": 4,
+   "order": 5,
    "parent": "root",
    "sub": "Carrera de montaña y andainas · Narón",
    "theme": "trail",
