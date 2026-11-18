@@ -523,8 +523,11 @@ function card(n,siblings){
     <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>${esc(fdate(n.date))}</small>`:""}</span>
     ${ctrls(n,siblings)||`<span class="ar">${direct?"↗":"›"}</span>`}</a>`;
 }
+function deepCover(n){ const own=coverOf(n); if(own&&(n.cover||!kids(n.id).length)) return own; if(own) return own;
+  const ds=descendants(n.id); const withCover=ds.slice().reverse().find(d=>d.cover&&coverOf(d)); if(withCover) return coverOf(withCover);
+  const anyImg=ds.slice().reverse().find(d=>coverOf(d)); return anyImg?coverOf(anyImg):null; }
 function pcard(n,siblings){
-  const c=coverOf(n); const direct=n.kind==="link"&&n.link&&!S.edit; const href=direct?n.link:"#n-"+n.id;
+  const c=deepCover(n); const direct=n.kind==="link"&&n.link&&!S.edit; const href=direct?n.link:"#n-"+n.id;
   return `<a class="pcard" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
     <div class="pimg">${c?`<img src="${esc(blobUrl(c))}" alt="" loading="lazy" style="object-position:${posOf(c)}">`:icon(n.icon)}</div>
     <div class="pbd"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date?`<small>${esc(fdate(n.date))}</small>`:""}</div>${ctrls(n,siblings)}</a>`;
@@ -639,7 +642,7 @@ function renderNode(n){
   if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
   if(children.length||ed){
     if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
-    else if(n.id==="eventos"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
+    else if(n.id==="eventos"||n.parent==="eventos"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
     else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
   if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
