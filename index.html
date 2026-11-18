@@ -515,7 +515,7 @@ function card(n,siblings){
   const href=direct?n.link:"#n-"+n.id;
   return `<a class="card" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
     ${coverOf(n)&&n.cover?`<span class="ic ph2"><img src="${esc(blobUrl(coverOf(n)))}" alt="" style="object-position:${posOf(coverOf(n))}"></span>`:`<span class="ic ${lum(n.color)>0.7?"light":""}">${icon(ic)}</span>`}
-    <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>📅 ${esc(fdate(n.date))}</small>`:""}</span>
+    <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>${esc(fdate(n.date))}</small>`:""}</span>
     ${ctrls(n,siblings)||`<span class="ar">${direct?"↗":"›"}</span>`}</a>`;
 }
 function pcard(n,siblings){
@@ -627,7 +627,7 @@ function renderNode(n){
   let html=`<section class="phead ${showCover?"hasimg":""}" ${n.color?`style="--c:${esc(n.color)}"`:""}>${showCover?`<div class="bg" style="background-image:url('${esc(blobUrl(cv))}');background-position:${posOf(cv)}"></div>`:""}<div class="wrap">
     <div class="crumbs"><a href="#inicio">${T("Inicio")}</a>${ch.map(c=>` › <a href="#n-${esc(c.id)}">${esc(tr(c,"title"))}</a>`).join("")}</div>
     <div class="row">${showCover?"":`<div class="bigic">${icon(n.icon)}</div>`}<div><h1>${esc(tr(n,"title"))}</h1>
-      ${tr(n,"sub")?`<div class="sub">${esc(tr(n,"sub"))}</div>`:""}${n.date?`<span class="pill">📅 ${esc(fdate(n.date))}</span>`:""}</div></div>${tools}</div></section>
+      ${tr(n,"sub")?`<div class="sub">${esc(tr(n,"sub"))}</div>`:""}${n.date?`<span class="pill">${esc(fdate(n.date))}</span>`:""}</div></div>${tools}</div></section>
   <div class="wrap content">`;
   if(n.kind==="collab") html+=collabPanel();
   if(tr(n,"body")) html+=`<div class="body">${md(tr(n,"body"))}</div>`;
