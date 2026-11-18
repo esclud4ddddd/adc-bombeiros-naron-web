@@ -321,6 +321,8 @@ body.editing [data-id],body.editing [data-fid]{cursor:grab}
 .ychips a:hover{border-color:var(--primary);color:var(--primary)}
 .yblock{scroll-margin-top:130px}
 .yh{font-size:34px;margin:10px 0 12px;display:flex;align-items:baseline;gap:12px;border-bottom:3px solid var(--accent);padding-bottom:6px}
+.yh .bo{font-family:Barlow;margin-left:auto}
+.yh .bo+.bo{margin-left:6px}
 .yh small{font-family:Barlow;font-size:14px;font-weight:600;color:var(--muted)}
 .ncard .nsum{margin:0;color:var(--muted);font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .ncard .nalso{font-size:13px;color:var(--muted)}
@@ -701,10 +703,11 @@ function socArt(){
 
 function newsByYear(n,l){
   const groups={}; l.forEach(x=>{ const y=(String(x.date||"").match(/^\d{4}/)||[""])[0]||"sin"; (groups[y]=groups[y]||[]).push(x); });
+  const ed=canEdit(n); if(ed) (n.years||[]).forEach(y=>{ if(/^\d{4}$/.test(y)&&!groups[y]) groups[y]=[]; });
   const years=Object.keys(groups).sort((a,b)=>a==="sin"?1:b==="sin"?-1:b.localeCompare(a));
   const lbl=y=>y==="sin"?(LANG==="gl"?"Sen data":"Sin fecha"):y;
   const chips=years.length>1?`<div class="ychips">${years.map(y=>`<a href="#n-${esc(n.id)}" data-act="ygo" data-id="${esc(y)}">${lbl(y)} <small>${groups[y].length}</small></a>`).join("")}</div>`:"";
-  return chips+years.map(y=>`<section class="yblock" id="y-${esc(y)}"><h2 class="yh">${lbl(y)}<small>${groups[y].length} ${groups[y].length===1?(LANG==="gl"?"nova":"noticia"):(LANG==="gl"?"novas":"noticias")}</small></h2><div class="ncards" data-sort="${esc(n.id)}" data-news="1" data-year="${esc(y)}">${groups[y].map(ncard).join("")}</div></section>`).join("");
+  return (ed?`<div class="links"><button class="bo mini pri" data-act="yadd" data-id="${esc(n.id)}">＋ Crear año</button></div>`:"")+chips+years.map(y=>`<section class="yblock" id="y-${esc(y)}"><h2 class="yh">${lbl(y)}<small>${groups[y].length} ${groups[y].length===1?(LANG==="gl"?"nova":"noticia"):(LANG==="gl"?"novas":"noticias")}</small>${ed&&y!=="sin"?`<button class="bo mini" data-act="yaddnews" data-id="${esc(n.id)}" data-y="${esc(y)}">＋ Noticia en ${esc(y)}</button>${!groups[y].length?`<button class="bo mini pel" data-act="ydel" data-id="${esc(n.id)}" data-y="${esc(y)}">Quitar año</button>`:""}`:""}</h2>${!groups[y].length?`<div class="empty">Año vacío: arrastra aquí noticias o añade una nueva.</div>`:""}<div class="ncards" data-sort="${esc(n.id)}" data-news="1" data-year="${esc(y)}">${groups[y].map(ncard).join("")}</div></section>`).join("");
 }
 /* ---------- home ---------- */
 function renderHome(){
@@ -1003,7 +1006,7 @@ async function exportVercel(){
 }
 
 /* ---------- actualización automática ---------- */
-const APP_VER="20261118-2140";
+const APP_VER="20261118-2145";
 async function checkVersion(){
   try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
     if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
@@ -1062,6 +1065,11 @@ document.addEventListener("click",async e=>{
   if(act==="edit") editNode({...S.nodes.get(id)});
   else if(act==="add") addChild(id);
   else if(act==="newnews") addChild("noticias");
+  else if(act==="yadd"){ const pn=S.nodes.get(id); const m=modal(`<h3>Crear año</h3><div class="fld"><label>Año</label><input id="yY" type="number" min="1990" max="2100" value="${new Date().getFullYear()-5}"></div><div class="mact"><button class="btn light" id="mC">Cancelar</button><button class="btn dark" id="mS">Crear</button></div>`);
+    $("#mC",m).onclick=close; $("#mS",m).onclick=async()=>{ const y=String($("#yY",m).value).trim(); if(!/^\d{4}$/.test(y)){ toast("Escribe un año de 4 cifras"); return; } close(); const ys=[...new Set([...(pn.years||[]),y])]; await saveNode({...pn,years:ys}); toast("Año "+y+" creado"); setTimeout(()=>{ const el=document.getElementById("y-"+y); if(el) el.scrollIntoView({behavior:"smooth"}); },300); }; }
+  else if(act==="ydel"){ const pn=S.nodes.get(id); await saveNode({...pn,years:(pn.years||[]).filter(y=>y!==b.dataset.y)}); }
+  else if(act==="yaddnews"){ const y=b.dataset.y; const p=S.nodes.get(id); const sib=kids(id);
+    editNode({id:"x"+uid(),parent:id,title:"",sub:"",icon:"i:news",color:"",body:"",kind:"news",date:y,created:hoyISO(),link:"",linkLabel:"",goto:"",theme:"",files:[],cover:"",order:(sib.length?Math.max(...sib.map(s=>s.order||0)):0)+1},true); }
   else if(act==="ygo"){ const el=document.getElementById("y-"+id); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); }
   else if(act==="secup") moveSec(id,-1);
   else if(act==="newsauto"){ const pn=S.nodes.get(id); if(pn){ await saveNode({...pn,manualOrder:false}); toast("Ordenadas por fecha"); } }
