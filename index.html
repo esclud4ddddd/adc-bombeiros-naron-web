@@ -219,7 +219,8 @@ body.trail .drop{border-color:var(--trail);background:color-mix(in srgb,var(--tr
 /* carrusel de noticias (mismos parámetros que Bombeiros Narón) */
 .car{position:relative;overflow:hidden;border-radius:18px;height:clamp(240px,36vw,430px);background:var(--ink);box-shadow:0 10px 26px rgba(20,18,58,.15)}
 .ctrack{display:flex;height:100%;transition:transform .7s ease}
-.slide{flex:0 0 100%;min-width:0;display:flex;align-items:flex-end;text-decoration:none;color:#fff;background:linear-gradient(to top,rgba(10,14,20,.9),rgba(10,14,20,.1) 70%),var(--primary);background-size:cover;background-position:center}
+.slenc{position:absolute;top:12px;right:12px;z-index:3;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;padding:6px 10px;font-weight:700;font-size:13px}
+.slide{position:relative;flex:0 0 100%;min-width:0;display:flex;align-items:flex-end;text-decoration:none;color:#fff;background:linear-gradient(to top,rgba(10,14,20,.9),rgba(10,14,20,.1) 70%),var(--primary);background-size:cover;background-position:center}
 .slide .cap{display:block;padding:26px 64px 46px;max-width:900px}
 .slide small{display:block;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9;margin-bottom:6px}
 .slide b{font:700 clamp(1.25rem,2.6vw,2rem)/1.15 "Barlow Condensed",sans-serif;text-wrap:balance}
@@ -523,7 +524,7 @@ function fechaN(n){ return n.date?fdate(n.date):""; }
 let carI=0, carTick=0;
 function carHTML(){
   const l=portada().slice(0,6);
-  const sl=l.length?l.map(n=>{const p=coverOf(n),u=n.link,t=u?'a':'a';return `<${t} href="${esc(u||("#n-"+n.id))}" ${u?'target="_blank" rel="noopener"':''} class="slide"${p?` style="background-image:linear-gradient(to top,rgba(10,14,20,.92),rgba(10,14,20,.08) 70%),url('${esc(blobUrl(p))}');background-position:center,${posOf(p)}"`:''}><span class="cap"><small>${esc(tr(n,"sub")||T("Noticias"))}${n.date?' · '+esc(fechaN(n)):''}</small><b>${esc(tr(n,"title"))}</b></span></${t}>`}).join(''):`<div class="slide"><span class="cap"><small>${T("Noticias de prensa")}</small><b>${T("Aún no hay noticias publicadas")}</b></span></div>`;
+  const sl=l.length?l.map(n=>{const p=coverOf(n),u=n.link,t=u?'a':'a';return `<${t} href="${esc(u||("#n-"+n.id))}" ${u?'target="_blank" rel="noopener"':''} class="slide"${p?` style="background-image:linear-gradient(to top,rgba(10,14,20,.92),rgba(10,14,20,.08) 70%),url('${esc(blobUrl(p))}');background-position:center,${posOf(p)}"`:''}>${p&&canEdit(n)?`<button class="slenc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(p.id)}">⌖ Encuadrar foto</button>`:""}<span class="cap"><small>${esc(tr(n,"sub")||T("Noticias"))}${n.date?' · '+esc(fechaN(n)):''}</small><b>${esc(tr(n,"title"))}</b></span></${t}>`}).join(''):`<div class="slide"><span class="cap"><small>${T("Noticias de prensa")}</small><b>${T("Aún no hay noticias publicadas")}</b></span></div>`;
   return `<div class="car" id="car" aria-roledescription="carrusel" aria-label="Noticias de prensa"><div class="ctrack" id="ctrack">${sl}</div>`+(l.length>1?`<button class="nav prev" data-act="car" data-d="-1" aria-label="Noticia anterior">‹</button><button class="nav next" data-act="car" data-d="1" aria-label="Noticia siguiente">›</button><div class="dots">${l.map((_,i)=>`<button data-act="car" data-i="${i}" aria-label="Noticia ${i+1}"></button>`).join('')}</div>`:'')+`</div>`;
 }
 function carGo(i){ carTick=0; const t=document.getElementById('ctrack'); if(!t) return; const n=t.children.length; carI=(i+n)%n; t.style.transform=`translateX(-${carI*100}%)`; document.querySelectorAll('#car .dots button').forEach((b,k)=>b.setAttribute('aria-current',k===carI)); }
@@ -601,6 +602,7 @@ function renderNode(n){
       <button class="btn sm" data-act="edit" data-id="${esc(n.id)}">✎ Editar</button>
       <button class="btn sm" data-act="add" data-id="${esc(n.id)}">＋ ${isNewsroom?"Noticia":"Botón"}</button>
       <button class="btn sm" data-act="upload" data-id="${esc(n.id)}">📎 Fotos / archivos</button>
+      ${cv?`<button class="btn sm" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(cv.id)}">⌖ Encuadrar portada</button>`:""}
       ${n.parent!=="root"||S.owner?`<button class="btn sm danger" data-act="del" data-id="${esc(n.id)}">🗑 Eliminar</button>`:""}</div>` : "";
   let html=`<section class="phead ${showCover?"hasimg":""}" ${n.color?`style="--c:${esc(n.color)}"`:""}>${showCover?`<div class="bg" style="background-image:url('${esc(blobUrl(cv))}');background-position:${posOf(cv)}"></div>`:""}<div class="wrap">
     <div class="crumbs"><a href="#inicio">${T("Inicio")}</a>${ch.map(c=>` › <a href="#n-${esc(c.id)}">${esc(tr(c,"title"))}</a>`).join("")}</div>
@@ -734,7 +736,7 @@ function editNode(n,isNew){
   const m=modal(`<h3>${isNew?"Nueva":"Editar"} ${isNews?"noticia":"sección / botón"}</h3>
    <div class="fld"><label>Título</label><input id="fT" value="${esc(n.title)}" maxlength="140"></div>
    <div class="fld"><label>${isNews?"Foto de la noticia":"Foto de portada (opcional)"}</label>
-     <div class="cvprev"><img id="cvImg" ${cv?`src="${esc(blobUrl(cv))}"`:""} alt=""><input type="file" id="fP" accept="image/*"></div>
+     <div class="cvprev"><img id="cvImg" ${cv?`src="${esc(blobUrl(cv))}" style="object-position:${posOf(cv)}"`:""} alt=""><input type="file" id="fP" accept="image/*">${cv&&!isNew?`<button type="button" class="btn sm light" id="fEnc">⌖ Encuadrar</button>`:""}</div>
      <div class="paste" id="fPaste" contenteditable="true">o mantén pulsado aquí y elige <b>Pegar</b> tras «Copiar imagen» en la web de la noticia</div>
      <span class="hint">${isNews?"La foto original de la noticia: se verá en la tarjeta y como cabecera":"Se mostrará como fondo de la cabecera de la sección"}</span></div>
    <div class="two"><div class="fld"><label>${isNews?"Medio / fuente":"Subtítulo"}</label><input id="fS" value="${esc(n.sub)}" maxlength="160"></div>
@@ -758,6 +760,7 @@ function editNode(n,isNew){
    <div class="mact"><button class="btn light" id="mC">Cancelar</button><button class="btn dark" id="mS">Guardar</button></div>`);
   let photo=null;
   $("#fP",m).onchange=e=>{ photo=e.target.files[0]||null; if(photo) $("#cvImg",m).src=URL.createObjectURL(photo); };
+  if($("#fEnc",m)) $("#fEnc",m).onclick=()=>encAbre(n.id,cv.id);
   $("#icg",m).onclick=e=>{ const bt=e.target.closest("[data-ic]"); if(!bt) return; m.querySelectorAll("#icg button").forEach(x=>x.classList.remove("on")); bt.classList.add("on"); $("#fI",m).value=bt.dataset.ic; };
   const setPhoto=f=>{ photo=f; $("#cvImg",m).src=URL.createObjectURL(f); toast("Foto lista: pulsa Guardar"); };
   m.addEventListener("paste",e=>{ const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith("image/"));
