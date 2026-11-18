@@ -427,7 +427,7 @@ async function boot(){
   try{ GLC=await (await fetch("gl.json")).json(); }catch(e){}
   document.documentElement.lang=LANG;
   if(window.__PUBLIC__){
-    try{ const d=await (await fetch("datos.json",{cache:"no-store"})).json(); S.defaults=d; }catch(e){ S.defaults={meta:{},nodes:[]}; }
+    try{ const t=await (await fetch("datos.json?v="+Date.now(),{cache:"no-store"})).text(); S.pubRaw=t; S.defaults=JSON.parse(t); }catch(e){ S.defaults={meta:{},nodes:[]}; }
     useDefaults(); S.loaded=true; route(); return; }
   try{ const r=await fetch("seed.json"); S.defaults=await r.json(); }catch(e){ S.defaults={meta:{},nodes:[]}; }
   useDefaults(); S.loaded=true; route();
@@ -863,12 +863,25 @@ async function exportVercel(){
     for(const n of nodes) for(const f of (n.files||[])){ if(!f.id||seen.has(f.id)) continue; seen.add(f.id);
       const ext=(f.ext||"bin").toLowerCase().replace(/[^a-z0-9]/g,"")||"bin";
       try{ const b=await (await fetch(blobUrl(f))).blob(); z.file("archivos/"+f.id+"."+ext,b); rew.push({source:"/_blob/"+f.id,destination:"/archivos/"+f.id+"."+ext}); }catch(e){} }
-    z.file("vercel.json",JSON.stringify({cleanUrls:true,rewrites:rew},null,1));
+    z.file("vercel.json",JSON.stringify({cleanUrls:true,rewrites:rew,headers:["/","/index.html","/datos.json","/gl.json"].map(s=>({source:s,headers:[{key:"Cache-Control",value:"no-cache"}]}))},null,1));
     z.file("LEEME.txt","A.D.C. BOMBEIROS NARÓN · web pública para Vercel\n\nindex.html  la web\ndatos.json  todo el contenido\ngl.json     traducciones al gallego\narchivos/   fotos, PDF y tracks\nvercel.json configuración (no tocar)\n\nPublicar: sube el contenido de esta carpeta a GitHub (o arrástrala en vercel.com > Add New > Project). Framework: Other, sin build.\nActualizar: edita en el panel privado de Claude, pulsa «Exportar para Vercel» y vuelve a subir.\n");
     const blob=await z.generateAsync({type:"blob"});
     await dl.save({filename:"adc-bombeiros-naron-web.zip",data:blob}); toast("Descargado: súbelo a GitHub o envíamelo por el chat");
   }catch(e){ if(e&&e.code==="declined") return; console.log(e); toast("No se pudo preparar la exportación."); }
 }
+
+/* ---------- actualización automática ---------- */
+const APP_VER="20261118-1910";
+async function checkVersion(){
+  try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
+    if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
+}
+setInterval(checkVersion,60000);
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ checkVersion(); if(window.__PUBLIC__) reloadPublic(); } });
+async function reloadPublic(){
+  try{ const t=await (await fetch("datos.json?v="+Date.now(),{cache:"no-store"})).text(); if(t===S.pubRaw) return; S.pubRaw=t; S.defaults=JSON.parse(t); useDefaults(); route(true); }catch(e){}
+}
+if(window.__PUBLIC__) setInterval(reloadPublic,120000);
 /* ---------- events ---------- */
 const curId=()=>location.hash.startsWith("#n-")?location.hash.slice(3):null;
 document.addEventListener("click",async e=>{
@@ -896,7 +909,7 @@ document.addEventListener("click",async e=>{
   else if(act==="del"){ const n=S.nodes.get(id); const d=descendants(id).length;
     if(await confirmBox(`¿Eliminar «${n.title}»${d?` y sus ${d} sub-apartados`:""}? No se puede deshacer.`)){ const back=n.parent; await delNode(id); if(curId()===id) location.hash=back==="root"?"inicio":"n-"+back; toast("Eliminado"); } }
 });
-function setEdit(v){ if(v&&!S.fromDb){ toast("Conectando con los datos… inténtalo en unos segundos."); return; } S.edit=v; route(true); }
+function setEdit(v){ if(!v) setTimeout(checkVersion,300); if(v&&!S.fromDb){ toast("Conectando con los datos… inténtalo en unos segundos."); return; } S.edit=v; route(true); }
 $("#editBtn").onclick=()=>{ if(S.owner) setEdit(!S.edit); };
 $("#langBtn").onclick=()=>{ LANG=LANG==="gl"?"es":"gl"; try{localStorage.setItem("adc-lang",LANG)}catch(e){} document.documentElement.lang=LANG; route(true); };
 $("#menuBtn").onclick=()=>$("#nav").classList.toggle("open");

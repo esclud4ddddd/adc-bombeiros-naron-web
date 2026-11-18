@@ -17,5 +17,43 @@
    "source": "/_blob/0dd611139813572302069fd8405dc9dc",
    "destination": "/archivos/0dd611139813572302069fd8405dc9dc.jpg"
   }
+ ],
+ "headers": [
+  {
+   "source": "/",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-cache"
+    }
+   ]
+  },
+  {
+   "source": "/index.html",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-cache"
+    }
+   ]
+  },
+  {
+   "source": "/datos.json",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-cache"
+    }
+   ]
+  },
+  {
+   "source": "/gl.json",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-cache"
+    }
+   ]
+  }
  ]
 }
