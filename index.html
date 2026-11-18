@@ -322,6 +322,12 @@ body.editing [data-id],body.editing [data-fid]{cursor:grab}
 .yblock{scroll-margin-top:130px}
 .yh{font-size:34px;margin:10px 0 12px;display:flex;align-items:baseline;gap:12px;border-bottom:3px solid var(--accent);padding-bottom:6px}
 .yh small{font-family:Barlow;font-size:14px;font-weight:600;color:var(--muted)}
+.ncard .nsum{margin:0;color:var(--muted);font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.ncard .nalso{font-size:13px;color:var(--muted)}
+.ncard .nalso a{color:var(--primary);font-weight:600;text-decoration:none}
+.ncard{min-width:0;overflow:hidden}
+.ncard h3,.ncard .lbl{overflow-wrap:anywhere}
+.ysel{font:inherit;font-size:13.5px;padding:4px 6px}
 /* footer (sin cambios) */
 footer{margin-top:50px;background:#0e0c3c;color:#cfd0ea;font-size:15px}
 body.trail footer{background:#0b2d36}
@@ -624,14 +630,29 @@ function carHTML(){
 function carGo(i){ carTick=0; const t=document.getElementById('ctrack'); if(!t) return; const n=t.children.length; carI=(i+n)%n; t.style.transform=`translateX(-${carI*100}%)`; document.querySelectorAll('#car .dots button').forEach((b,k)=>b.setAttribute('aria-current',k===carI)); }
 setInterval(()=>{ const c=document.getElementById('car'); const m=S.meta||{}; if(!c||m.carAuto===false||matchMedia('(prefers-reduced-motion:reduce)').matches||c.matches(':hover,:focus-within')) return;
   if(++carTick>=Math.min(30,Math.max(3,+m.carSecs||6))) carGo(carI+1); },1000);
+
+function newsSummary(n){
+  const raw=String(tr(n,"body")||""); if(!raw) return "";
+  const urls=[...new Set((raw.match(/https?:\/\/[^\s<)]+/g)||[]).filter(u=>u!==n.link))];
+  const main=raw.split(/\n\s*(?:También en|Tamén en)\s*:?/i)[0].replace(/https?:\/\/[^\s<)]+/g,"").trim();
+  const dom=u=>{ try{ return new URL(u).hostname.replace(/^www\./,"").replace(/^diariodeferrol\.elidealgallego\.com$/,"diariodeferrol.com"); }catch(e){ return "enlace"; } };
+  const NAMES={"ferrol360.es":"Ferrol 360","diariodeferrol.com":"Diario de Ferrol","naron.gal":"Concello de Narón","cope.es":"COPE","lavozdegalicia.es":"La Voz de Galicia","elespanol.com":"El Español","enfoques.gal":"Enfoques","utmb.world":"UTMB"};
+  return `<p class="nsum">${esc(plain(main))}</p>${urls.length?`<div class="nalso">${LANG==="gl"?"Tamén en":"También en"}: ${urls.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(NAMES[dom(u)]||dom(u))}</a>`).join(" · ")}</div>`:""}`;
+}
+function yearSel(n){
+  const cur=(String(n.date||"").match(/^\d{4}/)||[""])[0]; const now=new Date().getFullYear(); const ys=[]; for(let y=now;y>=2015;y--) ys.push(String(y));
+  return `<select class="bo mini ysel" data-ysel="${esc(n.id)}" title="Pasar a otro año"><option value="">Año: ${cur||"—"}</option>${ys.filter(y=>y!==cur).map(y=>`<option value="${y}">→ ${y}</option>`).join("")}</select>`;
+}
+async function setNewsYear(id,y){ const n=S.nodes.get(id); if(!n||!/^\d{4}$/.test(y)) return; const d=String(n.date||"");
+  const nd=/^\d{4}/.test(d)?y+d.slice(4):y; await saveNode({...n,date:nd}); toast("Noticia pasada a "+y); }
 function ncard(n){
   const p=coverOf(n), ed=canEdit(n), main=n.parent==="noticias";
   const b=(a,t,c='',extra='')=>`<button class="bo mini ${c}" data-act="${a}" data-id="${esc(n.id)}" ${extra}>${t}</button>`;
   const st=ed?(n.retirada?'<span class="npill warn">Retirada · no se ve en la web</span>':main?(enPortada(n)?'<span class="npill ok">En portada</span>':n.sinPortada?'<span class="npill">Quitada de portada · sigue en Noticias</span>':'<span class="npill">Ya no está en portada · sigue en Noticias</span>'):''):'';
   let tools='';
   if(ed){ tools = n.retirada ? b('nrest','Restablecer','pri')+b('nborrar','Borrar del todo','pel')
-    : (p?b('nquitar','Quitar foto','pel',`data-fid="${esc(p.id)}"`)+b('encuadre','Encuadrar foto','',`data-fid="${esc(p.id)}"`):'')+b('edit','Editar')+b('upload','Subir fotos')+(main?(enPortada(n)?b('nsinport','Quitar de portada'):b('nfija','Volver a portada')):'')+b('nretira','Retirar (ocultar)','pel')+b('nborrar','Borrar para siempre','pel'); }
-  return `<div class="ncard" data-id="${esc(n.id)}">${p?`<img class="foto" src="${esc(blobUrl(p))}" alt="" loading="lazy" style="object-position:${posOf(p)}">`:''}<span class="lbl">${esc(tr(n,"sub")||"")}${n.date?' · '+esc(fechaN(n)):''}</span>${st}<h3><a href="#n-${esc(n.id)}">${esc(tr(n,"title"))}</a></h3>${tr(n,"body")?`<p>${esc(plain(tr(n,"body")))}</p>`:''}${n.link?`<a class="bo" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(tr(n,"linkLabel")&&!/^leer en|^ver /i.test(tr(n,"linkLabel"))?tr(n,"linkLabel"):T("Leer la noticia"))}</a>`:''}${tools?`<div class="mtools">${tools}</div>`:''}</div>`;
+    : (p?b('nquitar','Quitar foto','pel',`data-fid="${esc(p.id)}"`)+b('encuadre','Encuadrar foto','',`data-fid="${esc(p.id)}"`):'')+b('edit','Editar')+b('upload','Subir fotos')+yearSel(n)+(main?(enPortada(n)?b('nsinport','Quitar de portada'):b('nfija','Volver a portada')):'')+b('nretira','Retirar (ocultar)','pel')+b('nborrar','Borrar para siempre','pel'); }
+  return `<div class="ncard" data-id="${esc(n.id)}">${p?`<img class="foto" src="${esc(blobUrl(p))}" alt="" loading="lazy" style="object-position:${posOf(p)}">`:''}<span class="lbl">${esc(tr(n,"sub")||"")}${n.date?' · '+esc(fechaN(n)):''}</span>${st}<h3><a href="#n-${esc(n.id)}">${esc(tr(n,"title"))}</a></h3>${newsSummary(n)}${n.link?`<a class="bo" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(tr(n,"linkLabel")&&!/^leer en|^ver /i.test(tr(n,"linkLabel"))?tr(n,"linkLabel"):T("Leer la noticia"))}</a>`:''}${tools?`<div class="mtools">${tools}</div>`:''}</div>`;
 }
 function encAbre(id,fid){
   const n=S.nodes.get(id); const f=(n.files||[]).find(x=>x.id===fid); if(!f) return; let pos=posOf(f); const u=blobUrl(f);
@@ -683,7 +704,7 @@ function newsByYear(n,l){
   const years=Object.keys(groups).sort((a,b)=>a==="sin"?1:b==="sin"?-1:b.localeCompare(a));
   const lbl=y=>y==="sin"?(LANG==="gl"?"Sen data":"Sin fecha"):y;
   const chips=years.length>1?`<div class="ychips">${years.map(y=>`<a href="#n-${esc(n.id)}" data-act="ygo" data-id="${esc(y)}">${lbl(y)} <small>${groups[y].length}</small></a>`).join("")}</div>`:"";
-  return chips+years.map(y=>`<section class="yblock" id="y-${esc(y)}"><h2 class="yh">${lbl(y)}<small>${groups[y].length} ${groups[y].length===1?(LANG==="gl"?"nova":"noticia"):(LANG==="gl"?"novas":"noticias")}</small></h2><div class="ncards" data-sort="${esc(n.id)}" data-news="1">${groups[y].map(ncard).join("")}</div></section>`).join("");
+  return chips+years.map(y=>`<section class="yblock" id="y-${esc(y)}"><h2 class="yh">${lbl(y)}<small>${groups[y].length} ${groups[y].length===1?(LANG==="gl"?"nova":"noticia"):(LANG==="gl"?"novas":"noticias")}</small></h2><div class="ncards" data-sort="${esc(n.id)}" data-news="1" data-year="${esc(y)}">${groups[y].map(ncard).join("")}</div></section>`).join("");
 }
 /* ---------- home ---------- */
 function renderHome(){
@@ -982,7 +1003,7 @@ async function exportVercel(){
 }
 
 /* ---------- actualización automática ---------- */
-const APP_VER="20261118-2130";
+const APP_VER="20261118-2140";
 async function checkVersion(){
   try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
     if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
@@ -1009,7 +1030,9 @@ async function initSort(){
   if(S.owner){ const nav=$("#nav"); if(nav&&!nav._s){ nav._s=Sortable.create(nav,{...opts,draggable:"a[data-id]",onEnd:()=>saveOrder([...nav.querySelectorAll("a[data-id]")].map(a=>a.dataset.id))}); } }
   document.querySelectorAll("[data-sort]").forEach(el=>{ if(el._s) return; const pid=el.dataset.sort; const pn=S.nodes.get(pid);
     if(pid!=="root"&&!canEdit(pn)) return; if(pid==="root"&&!S.owner) return;
-    el._s=Sortable.create(el,{...opts,draggable:"[data-id]",onEnd:async()=>{ let ids=[...el.querySelectorAll(":scope > [data-id]")].map(x=>x.dataset.id);
+    el._s=Sortable.create(el,{...opts,draggable:"[data-id]",group:el.dataset.news?("news-"+pid):undefined,filter:"button,.ctr,input,textarea,select,a.bo",onEnd:async(ev)=>{
+      if(el.dataset.news&&ev.to!==ev.from){ const y=ev.to.dataset.year; const id=ev.item.dataset.id; if(/^\d{4}$/.test(y)) await setNewsYear(id,y); else route(true); return; }
+      let ids=[...el.querySelectorAll(":scope > [data-id]")].map(x=>x.dataset.id);
       if(el.dataset.news&&pn&&!pn.manualOrder) await saveNode({...pn,manualOrder:true});
       if(pid==="root"){ const asoc=kids("root").find(r=>r.id==="asociacion"); if(asoc){ const at=kids("root").indexOf(asoc); ids.splice(Math.min(at,ids.length),0,"asociacion"); } }
       saveOrder(ids); }}); });
@@ -1066,6 +1089,7 @@ $("#editBtn").onclick=()=>{ if(S.owner) setEdit(!S.edit); };
 $("#langBtn").onclick=()=>{ LANG=LANG==="gl"?"es":"gl"; try{localStorage.setItem("adc-lang",LANG)}catch(e){} document.documentElement.lang=LANG; route(true); };
 $("#menuBtn").onclick=()=>$("#nav").classList.toggle("open");
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") close(); });
+document.addEventListener("change",e=>{ const s=e.target.closest&&e.target.closest("[data-ysel]"); if(s&&s.value){ setNewsYear(s.dataset.ysel,s.value); } });
 boot();
 })();
 </script>
