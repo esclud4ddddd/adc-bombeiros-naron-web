@@ -328,6 +328,10 @@ footer .flinks .fl-t{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-
 footer .flinks a{color:#fff;text-decoration:none;font-size:15px;font-weight:500;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:1px;transition:border-color .15s}
 footer .flinks a:hover{border-color:#fff}
 footer .flinks .sep{color:rgba(255,255,255,.3)}
+footer .fll{display:contents}
+footer .fli{display:inline-flex;align-items:center;gap:4px}
+footer .flb{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:6px;width:24px;height:24px;font-size:12px}
+footer .fladd{background:transparent;color:#fff;border:1px dashed rgba(255,255,255,.4);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:600}
 @media (max-width:700px){footer .flinks{justify-content:center}}
 footer .copy{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;font-size:13px;opacity:.75}
 @media (max-width:700px){footer .wrap{grid-template-columns:1fr;text-align:center}footer img{margin:auto}footer .soc{justify-content:center}}
@@ -551,6 +555,7 @@ function renderNav(cur){
     `<a href="#n-${esc(r.id)}" data-id="${esc(r.id)}" class="${r.theme==="trail"?"trailbtn":""} ${top&&top.id===r.id?"on":""}">${esc(tr(r,"title"))}</a>`).join("");
 }
 function socials(){ return kids("rrss").filter(n=>n.kind==="link"&&n.link).slice(0,4); }
+function footLinksOf(){ return (S.meta&&S.meta.footLinks)||DEF_LINKS; }
 const DEF_LINKS=[["Concello de Narón","https://www.naron.gal"],["Bombeiros Narón","https://bombeiros-naron-web.vercel.app"],["Xogos Europeos de Policías e Bombeiros","https://policeandfire.games/es/"]];
 function renderFoot(){
   const m={...(S.meta||{})}; if(!m.footLinks) m.footLinks=DEF_LINKS;
@@ -558,7 +563,7 @@ function renderFoot(){
     <img src="escudo.png" alt="">
     <div><b style="color:#fff;font-family:'Barlow Condensed';font-size:22px;letter-spacing:.04em">${esc((m.heroTitle||"A.D.C. Bombeiros Narón").toUpperCase())}</b><br>${esc((LANG==="gl"&&m.contact_gl)||m.contact||"")}</div>
     <div class="soc">${socials().map(s=>`<a href="${esc(s.link)}" target="_blank" rel="noopener" title="${esc(s.title)}" style="background:${esc(s.color||"")}">${icon(s.icon,"link")}</a>`).join("")}</div>
-    ${(m.footLinks||[]).length?`<nav class="flinks" aria-label="Accesos directos"><span class="fl-t">${LANG==="gl"?"Accesos directos":"Accesos directos"}</span>${(m.footLinks||[]).map(l=>`<a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join('<span class="sep">·</span>')}</nav>`:""}
+    ${(m.footLinks||[]).length||(S.edit&&S.owner)?`<nav class="flinks" aria-label="Accesos directos"><span class="fl-t">Accesos directos</span><span class="fll" id="fll">${(m.footLinks||[]).map((l,i)=>`<span class="fli" data-i="${i}"><a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>${S.edit&&S.owner?`<button class="flb" data-act="fledit" data-i="${i}" title="Editar">✎</button><button class="flb" data-act="fldel" data-i="${i}" title="Quitar">✕</button>`:""}</span>`).join('<span class="sep">·</span>')}</span>${S.edit&&S.owner?`<button class="fladd" data-act="fladd">＋ Añadir acceso directo</button>`:""}</nav>`:""}
     <div class="copy">© ${new Date().getFullYear()} Asociación Deportiva e Cultural Bombeiros Narón · Trail Costa Ártabra · Narón (A Coruña)</div></div>`;
 }
 
@@ -596,9 +601,10 @@ const hoyISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMont
 const diaBase=n=>/^\d{4}-\d{2}-\d{2}/.test(n.date||"")?String(n.date).slice(0,10):/^\d{4}-\d{2}$/.test(n.date||"")?n.date+"-01":/^\d{4}$/.test(n.date||"")?n.date+"-01-01":(n.created||"");
 const diaNoticia=n=>{const b=diaBase(n),f=/^\d{4}-\d{2}-\d{2}/.test(n.fijada||'')?n.fijada.slice(0,10):'';return f>b?f:b};
 const caducada=n=>{const f=diaNoticia(n);if(!f)return false;const d=new Date(f+'T12:00:00');d.setDate(d.getDate()+DIAS_NOTICIA);return d.toISOString().slice(0,10)<=hoyISO()};
-const porPortada=l=>[...l].sort((a,b)=>diaNoticia(b).localeCompare(diaNoticia(a))||(+b.order||0)-(+a.order||0));
-function newsAll(parent,conRetiradas){ return porPortada(kids(parent).filter(n=>n.kind==="news"&&(conRetiradas||!n.retirada))); }
-function portada(){ const l=newsAll("noticias").filter(n=>!n.sinPortada),nu=l.filter(n=>!caducada(n)); return nu.length>=MIN_NOTICIAS?nu:l.slice(0,MIN_NOTICIAS); }
+const porPortada=(l,manual)=>[...l].sort((a,b)=>manual?((+a.order||0)-(+b.order||0)):(diaNoticia(b).localeCompare(diaNoticia(a))||(+b.order||0)-(+a.order||0)));
+const isManual=pid=>{ const p=S.nodes.get(pid); return !!(p&&p.manualOrder); };
+function newsAll(parent,conRetiradas){ return porPortada(kids(parent).filter(n=>n.kind==="news"&&(conRetiradas||!n.retirada)),isManual(parent)); }
+function portada(){ const l=newsAll("noticias").filter(n=>!n.sinPortada); const byDate=porPortada(l,false); const nu=byDate.filter(n=>!caducada(n)); const sel=new Set((nu.length>=MIN_NOTICIAS?nu:byDate.slice(0,MIN_NOTICIAS)).map(n=>n.id)); return l.filter(n=>sel.has(n.id)); }
 const enPortada=n=>portada().some(x=>x.id===n.id);
 const posOf=f=>/^\d{1,3}% \d{1,3}%$/.test((f&&f.pos)||'')?f.pos:'50% 50%';
 function fechaN(n){ return n.date?fdate(n.date):""; }
@@ -618,7 +624,7 @@ function ncard(n){
   let tools='';
   if(ed){ tools = n.retirada ? b('nrest','Restablecer','pri')+b('nborrar','Borrar del todo','pel')
     : (p?b('nquitar','Quitar foto','pel',`data-fid="${esc(p.id)}"`)+b('encuadre','Encuadrar foto','',`data-fid="${esc(p.id)}"`):'')+b('edit','Editar')+b('upload','Subir fotos')+(main?(enPortada(n)?b('nsinport','Quitar de portada'):b('nfija','Volver a portada')):'')+b('nretira','Retirar (ocultar)','pel')+b('nborrar','Borrar para siempre','pel'); }
-  return `<div class="ncard">${p?`<img class="foto" src="${esc(blobUrl(p))}" alt="" loading="lazy" style="object-position:${posOf(p)}">`:''}<span class="lbl">${esc(tr(n,"sub")||"")}${n.date?' · '+esc(fechaN(n)):''}</span>${st}<h3><a href="#n-${esc(n.id)}">${esc(tr(n,"title"))}</a></h3>${tr(n,"body")?`<p>${esc(plain(tr(n,"body")))}</p>`:''}${n.link?`<a class="bo" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(tr(n,"linkLabel")&&!/^leer en|^ver /i.test(tr(n,"linkLabel"))?tr(n,"linkLabel"):T("Leer la noticia"))}</a>`:''}${tools?`<div class="mtools">${tools}</div>`:''}</div>`;
+  return `<div class="ncard" data-id="${esc(n.id)}">${p?`<img class="foto" src="${esc(blobUrl(p))}" alt="" loading="lazy" style="object-position:${posOf(p)}">`:''}<span class="lbl">${esc(tr(n,"sub")||"")}${n.date?' · '+esc(fechaN(n)):''}</span>${st}<h3><a href="#n-${esc(n.id)}">${esc(tr(n,"title"))}</a></h3>${tr(n,"body")?`<p>${esc(plain(tr(n,"body")))}</p>`:''}${n.link?`<a class="bo" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(tr(n,"linkLabel")&&!/^leer en|^ver /i.test(tr(n,"linkLabel"))?tr(n,"linkLabel"):T("Leer la noticia"))}</a>`:''}${tools?`<div class="mtools">${tools}</div>`:''}</div>`;
 }
 function encAbre(id,fid){
   const n=S.nodes.get(id); const f=(n.files||[]).find(x=>x.id===fid); if(!f) return; let pos=posOf(f); const u=blobUrl(f);
@@ -729,7 +735,7 @@ function renderNode(n){
   if(tr(n,"body")) html+=`<div class="body">${md(tr(n,"body"))}</div>`;
   if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
   if(children.length||ed){
-    if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
+    if(isNewsroom){ const l=newsAll(n.id,ed); html+= (ed&&l.length>1?`<div class="links"><span style="color:var(--muted);font-size:14px;align-self:center">${n.manualOrder?"Orden manual: arrastra las noticias para colocarlas.":"Orden automático por fecha. Arrastra una noticia para ordenarlas a mano."}</span>${n.manualOrder?`<button class="bo mini" data-act="newsauto" data-id="${esc(n.id)}">Volver a ordenar por fecha</button>`:""}</div>`:"")+(l.length?`<div class="ncards" data-sort="${esc(n.id)}" data-news="1">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`); if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
     else if(n.id==="eventos"||n.parent==="eventos"||n.id==="trail-ediciones"||n.layout==="fotos") html+=`<div class="pcards" data-sort="${esc(n.id)}">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
     else html+=`<div class="cards" data-sort="${esc(n.id)}">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
@@ -961,7 +967,7 @@ async function exportVercel(){
 }
 
 /* ---------- actualización automática ---------- */
-const APP_VER="20261118-2045";
+const APP_VER="20261118-2100";
 async function checkVersion(){
   try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
     if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
@@ -988,11 +994,24 @@ async function initSort(){
   if(S.owner){ const nav=$("#nav"); if(nav&&!nav._s){ nav._s=Sortable.create(nav,{...opts,draggable:"a[data-id]",onEnd:()=>saveOrder([...nav.querySelectorAll("a[data-id]")].map(a=>a.dataset.id))}); } }
   document.querySelectorAll("[data-sort]").forEach(el=>{ if(el._s) return; const pid=el.dataset.sort; const pn=S.nodes.get(pid);
     if(pid!=="root"&&!canEdit(pn)) return; if(pid==="root"&&!S.owner) return;
-    el._s=Sortable.create(el,{...opts,draggable:"[data-id]",onEnd:()=>{ let ids=[...el.querySelectorAll(":scope > [data-id]")].map(x=>x.dataset.id);
+    el._s=Sortable.create(el,{...opts,draggable:"[data-id]",onEnd:async()=>{ let ids=[...el.querySelectorAll(":scope > [data-id]")].map(x=>x.dataset.id);
+      if(el.dataset.news&&pn&&!pn.manualOrder) await saveNode({...pn,manualOrder:true});
       if(pid==="root"){ const asoc=kids("root").find(r=>r.id==="asociacion"); if(asoc){ const at=kids("root").indexOf(asoc); ids.splice(Math.min(at,ids.length),0,"asociacion"); } }
       saveOrder(ids); }}); });
+  if(S.owner){ const fl=document.getElementById("fll"); if(fl&&!fl._s){ fl._s=Sortable.create(fl,{...opts,draggable:".fli",onEnd:async()=>{ const L=footLinksOf(); const ord=[...fl.querySelectorAll(".fli")].map(x=>L[+x.dataset.i]).filter(Boolean); await saveMeta({...S.meta,footLinks:ord}); toast("Orden guardado"); }}); } }
   document.querySelectorAll("[data-sortf]").forEach(el=>{ if(el._s) return; const nid=el.dataset.sortf; if(!canEdit(S.nodes.get(nid))) return;
     el._s=Sortable.create(el,{...opts,draggable:"[data-fid]",onEnd:()=>saveFileOrder(nid,[...el.querySelectorAll(":scope > [data-fid]")].map(x=>x.dataset.fid))}); });
+}
+
+function footLinkEdit(i){
+  const L=[...footLinksOf()]; const it=i>=0?L[i]:["",""];
+  const m=modal(`<h3>${i>=0?"Editar":"Nuevo"} acceso directo</h3>
+   <div class="fld"><label>Texto</label><input id="flT" value="${esc(it[0])}" placeholder="Concello de Narón"></div>
+   <div class="fld"><label>Enlace</label><input id="flU" value="${esc(it[1])}" placeholder="https://…"></div>
+   <div class="mact"><button class="btn light" id="mC">Cancelar</button><button class="btn dark" id="mS">Guardar</button></div>`);
+  $("#mC",m).onclick=close;
+  $("#mS",m).onclick=async()=>{ const t=$("#flT",m).value.trim(); let u=$("#flU",m).value.trim(); if(!t||!u){ toast("Pon el texto y el enlace"); return; }
+    if(!/^https?:\/\//i.test(u)) u="https://"+u; if(i>=0) L[i]=[t,u]; else L.push([t,u]); close(); await saveMeta({...S.meta,footLinks:L}); toast("Guardado"); };
 }
 /* ---------- events ---------- */
 const curId=()=>location.hash.startsWith("#n-")?location.hash.slice(3):null;
@@ -1006,6 +1025,9 @@ document.addEventListener("click",async e=>{
   else if(act==="add") addChild(id);
   else if(act==="newnews") addChild("noticias");
   else if(act==="secup") moveSec(id,-1);
+  else if(act==="newsauto"){ const pn=S.nodes.get(id); if(pn){ await saveNode({...pn,manualOrder:false}); toast("Ordenadas por fecha"); } }
+  else if(act==="fladd"||act==="fledit") footLinkEdit(act==="fledit"?+b.dataset.i:-1);
+  else if(act==="fldel"){ const L=[...footLinksOf()]; const it=L[+b.dataset.i]; if(it&&await confirmBox(`¿Quitar el acceso «${it[0]}»?`)){ L.splice(+b.dataset.i,1); await saveMeta({...S.meta,footLinks:L}); } }
   else if(act==="secdown") moveSec(id,1);
   else if(act==="car") carGo(b.dataset.i!=null?+b.dataset.i:carI+ +b.dataset.d);
   else if(act==="encuadre") encAbre(id,b.dataset.fid);
