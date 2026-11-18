@@ -254,6 +254,20 @@ body.trail .drop{border-color:var(--trail);background:color-mix(in srgb,var(--tr
 .encprev span{display:flex;flex-direction:column;gap:4px;flex:1}
 .encprev i{display:block;background-size:cover;border-radius:6px;border:1px solid var(--line)}
 #encp1{aspect-ratio:16/5}#encp2{aspect-ratio:16/9}
+
+/* tarjetas con foto (Eventos) */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.pcard{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;box-shadow:0 4px 14px rgba(20,18,58,.06);transition:transform .12s,box-shadow .12s}
+.pcard:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,18,58,.13)}
+.pcard .pimg{aspect-ratio:16/9;background:linear-gradient(135deg,var(--c,var(--primary)),color-mix(in srgb,var(--c,var(--primary)) 55%,#000));display:flex;align-items:center;justify-content:center;color:#fff;position:relative}
+.pcard .pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pcard .pimg svg.ico{width:48px;height:48px;opacity:.75}
+.pcard .pbd{padding:14px 16px 16px;border-top:4px solid var(--c,var(--primary));display:flex;flex-direction:column;gap:4px}
+.pcard h3{font-size:22px;text-transform:uppercase}
+.pcard small{color:var(--muted);font-size:14px}
+.pcard .ctr{position:absolute;top:8px;right:8px;z-index:2}
+.card .ic.ph2{padding:0;overflow:hidden}
+.card .ic.ph2 img{width:100%;height:100%;object-fit:cover}
 /* footer (sin cambios) */
 footer{margin-top:50px;background:#0e0c3c;color:#cfd0ea;font-size:15px}
 body.trail footer{background:#0b2d36}
@@ -500,9 +514,15 @@ function card(n,siblings){
   const ic=n.icon||""; const direct=n.kind==="link"&&n.link&&!S.edit;
   const href=direct?n.link:"#n-"+n.id;
   return `<a class="card" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
-    <span class="ic ${lum(n.color)>0.7?"light":""}">${icon(ic)}</span>
+    ${coverOf(n)&&n.cover?`<span class="ic ph2"><img src="${esc(blobUrl(coverOf(n)))}" alt="" style="object-position:${posOf(coverOf(n))}"></span>`:`<span class="ic ${lum(n.color)>0.7?"light":""}">${icon(ic)}</span>`}
     <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>📅 ${esc(fdate(n.date))}</small>`:""}</span>
     ${ctrls(n,siblings)||`<span class="ar">${direct?"↗":"›"}</span>`}</a>`;
+}
+function pcard(n,siblings){
+  const c=coverOf(n); const direct=n.kind==="link"&&n.link&&!S.edit; const href=direct?n.link:"#n-"+n.id;
+  return `<a class="pcard" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
+    <div class="pimg">${c?`<img src="${esc(blobUrl(c))}" alt="" loading="lazy" style="object-position:${posOf(c)}">`:icon(n.icon)}</div>
+    <div class="pbd"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date?`<small>${esc(fdate(n.date))}</small>`:""}</div>${ctrls(n,siblings)}</a>`;
 }
 function phOf(n,cls){ const c=coverOf(n); return `<div class="ph">${c?`<img src="${esc(blobUrl(c))}" alt="" loading="lazy" style="object-position:${posOf(c)}">`:icon("i:news")}</div>`; }
 function feat(n){ return `<a class="feat" href="#n-${esc(n.id)}">${phOf(n)}<div class="bd"><span class="meta">${esc(fdate(n.date))}${tr(n,"sub")?" · "+esc(tr(n,"sub")):""}</span><h3>${esc(tr(n,"title"))}</h3><p>${esc(plain(tr(n,"body")).slice(0,220))}${plain(tr(n,"body")).length>220?"…":""}</p></div></a>`; }
@@ -614,6 +634,7 @@ function renderNode(n){
   if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
   if(children.length||ed){
     if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
+    else if(n.id==="eventos"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
     else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
   if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
