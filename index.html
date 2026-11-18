@@ -191,6 +191,11 @@ svg.ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .gal figure{margin:0;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1;background:#ddd;cursor:zoom-in}
 .gal img{width:100%;height:100%;object-fit:cover;display:block}
 .gal .x{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;width:28px;height:28px}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.vid{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.vid video{width:100%;aspect-ratio:16/9;background:#000;display:block}
+.vid figcaption{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:14px;color:var(--muted)}
+.vid .x{margin-left:auto;background:#fde8e7;color:#b3261e;border:0;border-radius:8px;width:28px;height:28px}
 .gal .enc{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
 .gal .cv{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
 .gal .cv.on{background:var(--hl);color:#111}
@@ -335,7 +340,7 @@ let GLC={};
 const UI={"Inicio":"Inicio","Últimas noticias":"Últimas novas","Prensa y actualidad":"Prensa e actualidade","Todas las noticias →":"Todas as novas →","Conocer la asociación →":"Coñecer a asociación →",
  "Deporte":"Deporte","Cultura":"Cultura","Solidaridad":"Solidariedade","Asociación Deportiva e Cultural":"Asociación Deportiva e Cultural","Leer la noticia":"Ler a nova",
  "Noticias de prensa":"Novas de prensa","Aún no hay noticias publicadas":"Aínda non hai novas publicadas","Aún no hay noticias publicadas.":"Aínda non hai novas publicadas.","Contenido en preparación.":"Contido en preparación.",
- "Fotos":"Fotos","Tracks":"Tracks","Documentos":"Documentos","Distancia":"Distancia","Desnivel +":"Desnivel +","Desnivel −":"Desnivel −","Altitud máx.":"Altitude máx.","Cargando track…":"Cargando track…",
+ "Fotos":"Fotos","Vídeos":"Vídeos","Tracks":"Tracks","Documentos":"Documentos","Distancia":"Distancia","Desnivel +":"Desnivel +","Desnivel −":"Desnivel −","Altitud máx.":"Altitude máx.","Cargando track…":"Cargando track…",
  "Abrir enlace":"Abrir ligazón","Trail largo 27 km":"Trail longo 27 km","Trail corto 14 km":"Trail curto 14 km","Andaina larga 13,5 km":"Andaina longa 13,5 km","Andaina corta 8 km":"Andaina curta 8 km",
  "Noticias":"Novas","Noticia anterior":"Nova anterior","Noticia siguiente":"Nova seguinte","No se encontraron puntos en el archivo.":"Non se atoparon puntos no arquivo.","Este archivo no incluye altitudes":"Este arquivo non inclúe altitudes",
  "Abrir":"Abrir","Zona reservada":"Zona reservada","Contacto":"Contacto"};
@@ -615,7 +620,7 @@ function renderHome(){
 /* ---------- node page ---------- */
 function renderNode(n){
   const ch=chain(n.id); const children=kids(n.id); const ed=canEdit(n);
-  const files=n.files||[]; const imgs=files.filter(f=>f.kind==="image"), trks=files.filter(f=>f.kind==="track"), docs=files.filter(f=>f.kind==="doc");
+  const files=n.files||[]; const imgs=files.filter(f=>f.kind==="image"), vids=files.filter(f=>f.kind==="video"), trks=files.filter(f=>f.kind==="track"), docs=files.filter(f=>f.kind==="doc");
   const goto=n.goto&&S.nodes.get(n.goto); const isNewsroom=n.kind==="newsroom"; const cv=coverOf(n);
   const showCover = cv && (n.kind==="news" || n.cover);
   const tools = ed ? `<div class="tools">
@@ -638,9 +643,10 @@ function renderNode(n){
     else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
   if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
+  if(vids.length) html+=`<div><h2 class="sub2">▶ ${T("Vídeos")} <small style="font-size:16px;color:var(--muted)">(${vids.length})</small></h2><div class="vids">${vids.map(f=>`<figure class="vid"><video controls playsinline preload="metadata" src="${esc(blobUrl(f))}"></video><figcaption>${esc(f.name)}${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</figcaption></figure>`).join("")}</div></div>`;
   if(trks.length) html+=`<div><h2 class="sub2">🗺️ ${T("Tracks")}</h2><div class="docs">${trks.map(f=>`<div class="track" data-track="${esc(f.id)}"><div class="tt"><b>${esc(f.name)}</b><span class="sp"></span><a class="btn sm ${isTrail(n.id)?"green":"blue"}" href="${esc(blobUrl(f))}" target="_blank" rel="noopener">Abrir ${esc((f.ext||"").toUpperCase())}</a>${ed?`<button class="btn sm" style="background:#b3261e" data-rmf="${esc(f.id)}">✕</button>`:""}</div><div class="tbody note">${T("Cargando track…")}</div></div>`).join("")}</div></div>`;
   if(docs.length) html+=`<div><h2 class="sub2">📄 ${T("Documentos")}</h2><div class="docs">${docs.map(f=>`<a class="doc" href="${esc(blobUrl(f))}" target="_blank" rel="noopener"><span class="fi" style="background:${f.ext==="pdf"?"#c62828":"var(--primary)"}">${esc((f.ext||"DOC").toUpperCase().slice(0,4))}</span><span><b>${esc(f.name)}</b><br><small>${f.size?Math.max(1,Math.round(f.size/1024))+" KB":""}</small></span>${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</a>`).join("")}</div></div>`;
-  if(ed) html+=`<div class="drop" id="drop" data-id="${esc(n.id)}"><b>Arrastra aquí fotos, PDF, GPX o KML</b><br><span style="font-size:14px;color:var(--muted)">o pulsa para elegir archivos · se guardan en esta sección</span></div>`;
+  if(ed) html+=`<div class="drop" id="drop" data-id="${esc(n.id)}"><b>Arrastra aquí fotos, vídeos, PDF, GPX o KML</b><br><span style="font-size:14px;color:var(--muted)">o pulsa para elegir archivos · se guardan en esta sección</span></div>`;
   else if(!children.length&&!tr(n,"body")&&!files.length&&!n.link&&n.kind!=="collab") html+=`<div class="empty">${T("Contenido en preparación.")}</div>`;
   html+=`</div>`;
   app.innerHTML=html;
@@ -710,7 +716,7 @@ async function drawTrack(f){
 
 /* ---------- uploads ---------- */
 function kindOf(f){ const ext=(f.name.split(".").pop()||"").toLowerCase();
-  return [/^(jpe?g|png|webp|gif|svg|avif)$/.test(ext)||(f.type||"").startsWith("image/")?"image":(ext==="gpx"||ext==="kml")?"track":"doc",ext]; }
+  return [/^(jpe?g|png|webp|gif|svg|avif)$/.test(ext)||(f.type||"").startsWith("image/")?"image":/^(mp4|m4v|mov|webm|ogv)$/.test(ext)||(f.type||"").startsWith("video/")?"video":(ext==="gpx"||ext==="kml")?"track":"doc",ext]; }
 async function uploadOne(f){
   const [kind,ext]=kindOf(f); let blob=f;
   if(kind==="track") blob=new Blob([await f.text()],{type:"text/plain"});
@@ -719,16 +725,17 @@ async function uploadOne(f){
   return {id:r.id,name:f.name,kind,ext,size:r.sizeBytes||f.size};
 }
 function pickFiles(id){ const i=document.createElement("input"); i.type="file"; i.multiple=true;
-  i.accept="image/*,.pdf,.gpx,.kml,.txt,.csv,.json";
+  i.accept="image/*,video/*,.mp4,.mov,.webm,.pdf,.gpx,.kml,.txt,.csv,.json";
   i.onchange=()=>uploadFiles(id,[...i.files]); i.click(); }
 async function uploadFiles(id,files){
   if(!files.length) return;
   if(!S.assets){ toast("Tu acceso no permite subir archivos."); return; }
   let ok=0;
   for(const f of files){
+    if(f.size>20*1024*1024&&kindOf(f)[0]!=="image"){ toast(`«${f.name}» pesa ${Math.round(f.size/1048576)} MB: el máximo es 20 MB por archivo. Recórtalo o comprímelo y vuelve a intentarlo.`,6000); continue; }
     toast("Subiendo "+f.name+"…",1800);
     try{ const rec=await uploadOne(f); const n={...S.nodes.get(id)}; n.files=[...(n.files||[]),rec]; await saveNode(n); ok++; }
-    catch(e){ console.log(e); toast(`No se pudo subir «${f.name}». Admitidos: imágenes, PDF, GPX, KML (máx. 20 MB). Word/Excel: guárdalos como PDF.`,6000); }
+    catch(e){ console.log(e); toast(`No se pudo subir «${f.name}». Admitidos: imágenes, vídeos MP4/MOV/WEBM, PDF, GPX, KML (máx. 20 MB por archivo). Word/Excel: guárdalos como PDF.`,6000); }
   }
   if(ok) toast(ok===1?"Archivo añadido":ok+" archivos añadidos");
 }
