@@ -267,12 +267,38 @@ body.trail .drop{border-color:var(--trail);background:color-mix(in srgb,var(--tr
 .pcard .pimg{aspect-ratio:16/9;background:linear-gradient(135deg,var(--c,var(--primary)),color-mix(in srgb,var(--c,var(--primary)) 55%,#000));display:flex;align-items:center;justify-content:center;color:#fff;position:relative}
 .pcard .pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .pcard .pimg svg.ico{width:48px;height:48px;opacity:.75}
+.pcard .pimg{font:400 64px Graduate,serif;letter-spacing:.04em}
 .pcard .pbd{padding:14px 16px 16px;border-top:4px solid var(--c,var(--primary));display:flex;flex-direction:column;gap:4px}
 .pcard h3{font-size:22px;text-transform:uppercase}
 .pcard small{color:var(--muted);font-size:14px}
 .pcard .ctr{position:absolute;top:8px;right:8px;z-index:2}
 .card .ic.ph2{padding:0;overflow:hidden}
 .card .ic.ph2 img{width:100%;height:100%;object-fit:cover}
+
+/* cabeceras animadas: Trail y Redes */
+.phead.anim{min-height:300px}
+.phead.anim .wrap{z-index:2}
+.hart{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.hart .mtbox{position:absolute;left:0;right:0;bottom:0;height:72%}
+.hart svg.mt{position:absolute;inset:0;width:100%;height:100%}
+.tdot{position:absolute;width:0;height:0}
+.tdot:before{content:"";position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--trailAccent);box-sizing:border-box;z-index:2}
+.tdot i{position:absolute;left:-10px;top:-10px;width:20px;height:20px;border-radius:50%;background:var(--trailAccent);animation:halo 1.6s ease-out infinite}
+.tlbl{position:absolute;color:#fff;font-weight:700;font-size:13px;opacity:.85}
+.tlbl.t0{left:8px;bottom:6px}.tlbl.t1{right:8px;bottom:6px}.tlbl.tp{left:46.7%;top:calc(60/260*100% - 26px);transform:translateX(-50%);white-space:nowrap}
+@media (max-width:700px){.tlbl.tp{display:none}.hart .mtbox{height:58%}}
+@keyframes halo{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.soc{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.soc svg.net{position:absolute;right:0;top:0;height:100%;width:60%;opacity:.55}
+.soc .net line{stroke:rgba(255,255,255,.35);stroke-width:1.5;stroke-dasharray:6 6;animation:flow 3s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.soc .net circle{fill:#fff;animation:pulse 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{50%{transform:scale(1.35);opacity:.7}}
+.soc .fl{position:absolute;bottom:-40px;color:#fff;opacity:0;animation:rise 7s linear infinite}
+.soc .fl svg.ico{width:30px;height:30px}
+.soc .fl.hrt{color:#ff6b8a}
+@keyframes rise{0%{transform:translateY(0) scale(.7);opacity:0}10%{opacity:.95}80%{opacity:.8}100%{transform:translateY(-340px) scale(1.15);opacity:0}}
+@media (prefers-reduced-motion:reduce){.tdot i,.soc .fl,.soc .net line,.soc .net circle{animation:none}.hart .prof{stroke-dashoffset:0}.soc .fl{opacity:.6;bottom:30%}}
 /* footer (sin cambios) */
 footer{margin-top:50px;background:#0e0c3c;color:#cfd0ea;font-size:15px}
 body.trail footer{background:#0b2d36}
@@ -581,6 +607,35 @@ function encAbre(id,fid){
   $("#encg",m).onclick=async()=>{ close(); const nn={...S.nodes.get(id)}; nn.files=(nn.files||[]).map(x=>x.id===fid?{...x,pos}:x); if(await saveNode(nn)) toast("Guardado"); };
 }
 
+
+function trailArt(){
+  const P="M0 230 L70 214 L130 186 L190 198 L260 140 L320 158 L390 92 L450 120 L510 104 L560 60 L620 98 L690 150 L750 132 L820 176 L890 118 L950 140 L1020 188 L1090 166 L1200 212";
+  return `<div class="hart"><div class="mtbox"><svg class="mt" viewBox="0 0 1200 260" preserveAspectRatio="none" aria-hidden="true">
+   <defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+   <path d="M0 260 L0 200 L120 150 L240 182 L380 120 L520 160 L660 96 L800 150 L960 110 L1100 160 L1200 140 L1200 260Z" fill="#000" opacity=".12"/>
+   <path d="${P} L1200 260 L0 260Z" fill="url(#mg)"/>
+   <path d="${P}" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+   <path class="prof" d="${P}" fill="none" stroke="var(--trailAccent)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+  </svg><div class="tdot" style="left:0;bottom:0"><i></i></div><span class="tlbl t0">0 km</span><span class="tlbl t1">27 km</span><span class="tlbl tp">Pena Molexa</span></div></div>`;
+}
+let trailRAF=0;
+function startTrailAnim(){
+  cancelAnimationFrame(trailRAF); const art=document.querySelector(".hart"); if(!art) return;
+  const svg=art.querySelector("svg.mt"), path=art.querySelector(".prof"), dot=art.querySelector(".tdot"); if(!path||!dot) return;
+  const L=path.getTotalLength(); path.style.strokeDasharray=L; const red=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const place=f=>{ const pt=path.getPointAtLength(L*f); dot.style.left=(pt.x/1200*100)+"%"; dot.style.top=(pt.y/260*100)+"%"; path.style.strokeDashoffset=L*(1-f); };
+  if(red){ place(1); return; }
+  const t0=performance.now(), D=12000;
+  const step=now=>{ if(!art.isConnected) return; const t=((now-t0)%D)/D; place(Math.min(1,t/0.85)); trailRAF=requestAnimationFrame(step); };
+  trailRAF=requestAnimationFrame(step);
+}
+function socArt(){
+  const ics=["heart","chat","instagram","facebook","heart","users","star","heart"];
+  const fl=ics.map((k,i)=>`<span class="fl ${k==="heart"?"hrt":""}" style="left:${50+i*6}%;animation-delay:${(i*0.9).toFixed(1)}s">${icon("i:"+k)}</span>`).join("");
+  const pts=[[60,40],[180,90],[110,170],[260,40],[300,150],[200,230],[360,90]];
+  const ln=[[0,1],[1,2],[1,3],[3,4],[4,5],[2,5],[4,6],[3,6]].map(([a,b])=>`<line x1="${pts[a][0]}" y1="${pts[a][1]}" x2="${pts[b][0]}" y2="${pts[b][1]}"/>`).join("");
+  return `<div class="soc"><svg class="net" viewBox="0 0 400 260" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">${ln}${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i%2?6:9}" style="animation-delay:${i*0.3}s"/>`).join("")}</svg>${fl}</div>`;
+}
 /* ---------- home ---------- */
 function renderHome(){
   const m=S.meta||{}; const roots=kids("root");
@@ -632,7 +687,8 @@ function renderNode(n){
       <button class="btn sm" data-act="upload" data-id="${esc(n.id)}">📎 Fotos / archivos</button>
       ${cv?`<button class="btn sm" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(cv.id)}">⌖ Encuadrar portada</button>`:""}
       ${n.parent!=="root"||S.owner?`<button class="btn sm danger" data-act="del" data-id="${esc(n.id)}">🗑 Eliminar</button>`:""}</div>` : "";
-  let html=`<section class="phead ${showCover?"hasimg":""}" ${n.color?`style="--c:${esc(n.color)}"`:""}>${showCover?`<div class="bg" style="background-image:url('${esc(blobUrl(cv))}');background-position:${posOf(cv)}"></div>`:""}<div class="wrap">
+  const art = n.id==="trail"&&!showCover ? trailArt() : n.id==="rrss"&&!showCover ? socArt() : "";
+  let html=`<section class="phead ${showCover?"hasimg":""} ${art?"anim":""}" ${n.color?`style="--c:${esc(n.color)}"`:""}>${art}${showCover?`<div class="bg" style="background-image:url('${esc(blobUrl(cv))}');background-position:${posOf(cv)}"></div>`:""}<div class="wrap">
     <div class="crumbs"><a href="#inicio">${T("Inicio")}</a>${ch.map(c=>` › <a href="#n-${esc(c.id)}">${esc(tr(c,"title"))}</a>`).join("")}</div>
     <div class="row">${showCover?"":`<div class="bigic">${icon(n.icon)}</div>`}<div><h1>${esc(tr(n,"title"))}</h1>
       ${tr(n,"sub")?`<div class="sub">${esc(tr(n,"sub"))}</div>`:""}${n.date?`<span class="pill">${esc(fdate(n.date))}</span>`:""}</div></div>${tools}</div></section>
@@ -642,7 +698,7 @@ function renderNode(n){
   if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
   if(children.length||ed){
     if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
-    else if(n.id==="eventos"||n.parent==="eventos"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
+    else if(n.id==="eventos"||n.parent==="eventos"||n.id==="trail-ediciones"||n.layout==="fotos") html+=`<div class="pcards">${children.map(c=>pcard(c,children)).join("")}</div>${ed?`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir categoría</button></div>`:""}`;
     else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
   }
   if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
@@ -654,6 +710,7 @@ function renderNode(n){
   html+=`</div>`;
   app.innerHTML=html;
   trks.forEach(f=>drawTrack(f));
+  if(art&&n.id==="trail") startTrailAnim();
   const dz=$("#drop"); if(dz){ dz.onclick=()=>pickFiles(n.id);
     dz.ondragover=e=>{e.preventDefault();dz.classList.add("over");}; dz.ondragleave=()=>dz.classList.remove("over");
     dz.ondrop=e=>{e.preventDefault();dz.classList.remove("over");uploadFiles(n.id,[...e.dataTransfer.files]);}; }
@@ -871,7 +928,7 @@ async function exportVercel(){
 }
 
 /* ---------- actualización automática ---------- */
-const APP_VER="20261118-1925";
+const APP_VER="20261118-2005";
 async function checkVersion(){
   try{ const t=await (await fetch("index.html?v="+Date.now(),{cache:"no-store"})).text(); const m=/const APP_VER="([^"]+)"/.exec(t);
     if(m&&m[1]!==APP_VER){ if(S.edit){ if(!S.verWarned){ S.verWarned=true; toast("Hay una versión nueva de la web: se cargará al salir de edición.",5000);} return; } location.reload(); } }catch(e){}
