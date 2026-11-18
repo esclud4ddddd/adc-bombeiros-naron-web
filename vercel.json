@@ -1,0 +1,21 @@
+{
+ "cleanUrls": true,
+ "rewrites": [
+  {
+   "source": "/_blob/f3a8bc62219d3189b2ec307f2989e0f1",
+   "destination": "/archivos/f3a8bc62219d3189b2ec307f2989e0f1.jpeg"
+  },
+  {
+   "source": "/_blob/d2f27c91822af5385f421d37a253bc20",
+   "destination": "/archivos/d2f27c91822af5385f421d37a253bc20.jpg"
+  },
+  {
+   "source": "/_blob/df00b0ebbed63741951870b2912d9c25",
+   "destination": "/archivos/df00b0ebbed63741951870b2912d9c25.webp"
+  },
+  {
+   "source": "/_blob/0dd611139813572302069fd8405dc9dc",
+   "destination": "/archivos/0dd611139813572302069fd8405dc9dc.jpg"
+  }
+ ]
+}

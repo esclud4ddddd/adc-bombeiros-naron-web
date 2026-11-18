@@ -1,0 +1,10 @@
+A.D.C. BOMBEIROS NARÓN · web pública para Vercel
+
+index.html  la web
+datos.json  todo el contenido
+gl.json     traducciones al gallego
+archivos/   fotos, PDF y tracks
+vercel.json configuración (no tocar)
+
+Publicar: sube el contenido de esta carpeta a GitHub (o arrástrala en vercel.com > Add New > Project). Framework: Other, sin build.
+Actualizar: edita en el panel privado de Claude, pulsa «Exportar para Vercel» y vuelve a subir.

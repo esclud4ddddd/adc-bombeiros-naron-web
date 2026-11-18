@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>window.__PUBLIC__=true</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A.D.C. Bombeiros Narón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=Graduate&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#25209a; --accent:#e3262b; --trail:#14705f; --trailAccent:#f5e33b;
+  --ink:#14123a; --muted:#5d5f78; --bg:#f4f5fb; --card:#fff; --line:#e3e4ef;
+  --hdr:var(--primary); --hl:var(--accent); --radius:18px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{font-family:Barlow,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.5}
+body.trail{--hdr:#0f3d4a;--hl:var(--trailAccent);--bg:#f1f6f3}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+h1,h2,h3{font-family:"Barlow Condensed",sans-serif;letter-spacing:.01em;line-height:1.05;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+
+/* header */
+header{position:sticky;top:0;z-index:40;background:var(--hdr);color:#fff;border-bottom:4px solid var(--hl);transition:background .3s}
+.hbar{display:flex;align-items:center;gap:12px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand img{height:46px;width:auto}
+.brand img.sq{border-radius:8px;background:#fff}
+.brand b{font-family:"Barlow Condensed";font-weight:800;font-size:20px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.trail .brand b{font-family:Graduate;font-weight:400;font-size:17px}
+nav.main{display:flex;gap:2px;margin-left:auto}
+nav.main a{padding:8px 11px;border-radius:9px;text-decoration:none;font-weight:600;font-size:15px;opacity:.9;white-space:nowrap}
+nav.main a:hover,nav.main a.on{background:rgba(255,255,255,.14);opacity:1}
+nav.main a.trailbtn{background:var(--trail);border:1px solid rgba(255,255,255,.25)}
+.hbtn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:10px;padding:7px 11px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hbtn.on{background:var(--hl);color:#111;border-color:transparent}
+#menuBtn{display:none}
+#langBtn{font-weight:800;letter-spacing:.06em;margin-left:8px}
+@media (max-width:900px){
+  nav.main{display:none;position:absolute;top:68px;left:0;right:0;background:var(--hdr);flex-direction:column;padding:10px 14px 16px;gap:4px;box-shadow:0 12px 24px rgba(0,0,0,.25)}
+  nav.main.open{display:flex}
+  nav.main a{font-size:17px;padding:12px}
+  #menuBtn{display:flex;margin-left:auto}
+  .brand b{font-size:17px}
+}
+.editbar{background:var(--hl);color:#111;font-weight:600;font-size:14px;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:6px 12px}
+
+/* hero (centered) */
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:radial-gradient(900px 420px at 50% 0%,#3a35c4 0%,var(--primary) 45%,#120f5c 100%)}
+.hero .wm{position:absolute;right:-40px;top:-40px;width:300px;opacity:.07;transform:rotate(-12deg);pointer-events:none}
+.hero .inner{position:relative;padding:22px 18px 34px;max-width:820px;margin:0 auto}
+.hero .shield{width:92px;filter:drop-shadow(0 14px 26px rgba(0,0,0,.45));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+.hero .kicker{display:inline-block;margin-top:10px;font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;background:rgba(255,255,255,.12);padding:5px 12px;border-radius:999px}
+.hero h1{font-size:clamp(30px,5.4vw,54px);font-weight:800;text-transform:uppercase;margin-top:8px}
+.hero p{font-size:17px;opacity:.9;margin:6px auto 4px;max-width:560px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chev{position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--accent)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:12px 18px;font-weight:700;font-size:16px;text-decoration:none;color:#fff;background:var(--accent)}
+.btn.green{background:var(--trail)}
+.btn.ghost{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35)}
+.btn.dark{background:var(--ink)}
+.btn.light{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.blue{background:var(--primary)}
+.btn.sm{padding:8px 12px;font-size:14px;border-radius:10px}
+
+section.blk{padding:40px 0 4px}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.sh h2{font-size:30px;text-transform:uppercase}
+.sh h2 small{display:block;font-family:Barlow;font-size:14px;font-weight:600;color:var(--muted);text-transform:none;letter-spacing:0;margin-bottom:2px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:170px;gap:14px}
+.bx{position:relative;border-radius:22px;padding:20px;color:#fff;text-decoration:none;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c,var(--primary));box-shadow:0 10px 26px rgba(20,18,58,.13);transition:transform .15s,box-shadow .15s;border:0;text-align:left}
+.bx:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,18,58,.22)}
+.bx .bi{position:absolute;top:18px;left:20px;font-size:30px;line-height:1}
+.bx .go{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:16px}
+.bx h3{font-size:26px;text-transform:uppercase}
+.bx small{opacity:.88;font-size:14.5px;margin-top:3px;display:block}
+.bx.big{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,#0f3d4a 0%,var(--trail) 100%)}
+.bx.big img{position:absolute;right:20px;top:20px;width:32%;max-width:170px;border-radius:20px;background:#fff;box-shadow:0 12px 26px rgba(0,0,0,.3);transform:rotate(4deg)}
+.bx.big h3{font-family:Graduate;font-weight:400;text-transform:none;font-size:clamp(28px,3.4vw,40px)}
+.bx.big .ybar{align-self:flex-start;background:var(--trailAccent);color:#0f3d4a;font-weight:700;padding:3px 10px;border-radius:6px;margin-bottom:10px;font-size:15px}
+.bx.big .mods{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.bx.big .mods span{background:rgba(255,255,255,.15);border-radius:999px;padding:4px 11px;font-size:13.5px;font-weight:600}
+.bx.wide{grid-column:span 2}
+.bx.wide .head{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.bx.wide .hl{font-family:"Barlow Condensed";font-weight:700;font-size:22px;line-height:1.1;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bx.wide .ph{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35}
+.bx.light{color:#111}
+.bento{grid-auto-flow:dense}
+.bx.s2{grid-column:span 2}.bx.s4{grid-column:span 4}
+@media (max-width:820px){
+  .bento{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  .bx.big{grid-column:span 2;grid-row:span 2}
+  .bx.wide,.bx.s2,.bx.s4{grid-column:span 2}
+  .bx h3{font-size:21px}
+  .bx.big img{width:104px;right:14px;top:14px}
+  .bx.big h3{font-size:28px}
+  .bento{grid-auto-rows:160px}
+}
+
+/* about window */
+.about{position:relative;display:grid;grid-template-columns:1fr 260px;gap:26px;align-items:center;background:var(--card);border-radius:24px;padding:28px;border:1px solid var(--line);overflow:hidden;box-shadow:0 8px 24px rgba(20,18,58,.06)}
+.about:before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:linear-gradient(var(--accent),var(--primary))}
+.about h2{font-size:32px;text-transform:uppercase;color:var(--primary)}
+.about p{font-size:17px;color:#33354d;margin:10px 0 16px}
+.about .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.about .chips span{background:#eef0fb;color:var(--primary);border-radius:999px;padding:5px 12px;font-weight:600;font-size:14px}
+.about img{width:100%;max-width:230px;justify-self:center;filter:drop-shadow(0 10px 18px rgba(20,18,58,.25))}
+@media (max-width:760px){.about{grid-template-columns:1fr;text-align:center;padding:24px 20px}.about img{max-width:120px;order:-1}.about .chips{justify-content:center}}
+
+/* news */
+.feat{display:grid;grid-template-columns:1.1fr 1fr;background:var(--card);border-radius:22px;overflow:hidden;border:1px solid var(--line);text-decoration:none;box-shadow:0 8px 24px rgba(20,18,58,.07);margin-bottom:14px}
+.feat .ph{min-height:260px;background:linear-gradient(135deg,var(--primary),#120f5c);display:flex;align-items:center;justify-content:center;font-size:70px;position:relative}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feat .bd{padding:24px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.feat h3{font-size:30px}
+.feat p{margin:0;color:var(--muted);font-size:16px}
+.meta{font-size:13px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+body.trail .meta{color:var(--trail)}
+@media (max-width:760px){.feat{grid-template-columns:1fr}.feat .ph{min-height:190px}.feat h3{font-size:24px}}
+.nlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.nrow{display:grid;grid-template-columns:110px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;align-items:stretch;position:relative}
+.nrow .ph{background:linear-gradient(135deg,var(--primary),#120f5c);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative;min-height:104px}
+.nrow .bd{padding:12px 14px 12px 0;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.nrow h3{font-size:19px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+/* page */
+.phead{color:#fff;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--c,var(--primary)),color-mix(in srgb,var(--c,var(--primary)) 50%,#000))}
+.phead .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.phead .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.7))}
+.phead .wrap{position:relative;padding-top:22px;padding-bottom:30px}
+.phead.hasimg .wrap{padding-top:90px}
+.crumbs{font-size:14px;opacity:.88;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.crumbs a{text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+.phead .row{display:flex;gap:16px;align-items:center}
+.phead .bigic{font-size:40px;width:68px;height:68px;border-radius:18px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-family:"Barlow Condensed";font-weight:800;flex:none}
+.phead h1{font-size:clamp(30px,5.2vw,54px);text-transform:uppercase}
+body.trail .phead h1{font-family:Graduate;font-weight:400;text-transform:none;font-size:clamp(26px,4.4vw,44px)}
+.phead .sub{opacity:.92;font-size:17px;margin-top:4px}
+.pill{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:700;margin-top:8px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tools .btn{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3)}
+.tools .btn.danger{background:#b3261e;border-color:transparent}
+.content{display:grid;gap:22px;padding-top:26px;padding-bottom:10px}
+.body{background:var(--card);border-radius:var(--radius);padding:22px 24px;border:1px solid var(--line);font-size:17px}
+.body p{margin:0 0 12px}.body p:last-child{margin:0}
+.body ul{margin:0 0 12px;padding-left:20px}.body li{margin:3px 0}
+.body h2{font-size:24px;text-transform:uppercase;color:var(--primary);margin:22px 0 8px;padding-top:18px;border-top:1px solid var(--line)}
+.body h2:first-child{margin-top:0;padding-top:0;border:0}
+body.trail .body h2{color:var(--trail)}
+.body a{color:var(--primary);word-break:break-word}
+body.trail .body a{color:var(--trail)}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+h2.sub2{font-size:24px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+
+/* list cards (children) */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{position:relative;display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-decoration:none;box-shadow:0 4px 14px rgba(20,18,58,.05);transition:transform .12s,box-shadow .12s;border-left:6px solid var(--c,var(--primary));text-align:left;min-height:84px}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,18,58,.12)}
+.card .ic{width:52px;height:52px;flex:none;border-radius:14px;background:var(--c,var(--primary));color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-family:"Barlow Condensed";font-weight:800}
+.card .ic.light{color:#111}
+svg.ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block}
+.card .ic svg.ico{width:26px;height:26px}
+.bx .bi svg.ico{width:30px;height:30px}
+.phead .bigic svg.ico{width:36px;height:36px}
+.ph svg.ico{width:46px;height:46px;opacity:.55;color:#fff}
+.feat .ph svg.ico{width:72px;height:72px}
+.icgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+.icgrid button{height:42px;border:1px solid #d5d7e6;border-radius:10px;background:#fff;color:var(--ink);display:flex;align-items:center;justify-content:center}
+.icgrid button svg.ico{width:22px;height:22px}
+.icgrid button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.paste{border:2px dashed #cfd1e2;border-radius:10px;padding:10px;font-size:14px;color:var(--muted);text-align:center;outline:none}
+.paste:focus{border-color:var(--primary);background:#f5f6fd}
+.card .tx{flex:1;min-width:0}
+.card h3{font-size:21px;text-transform:uppercase}
+.card small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.card .ar{color:var(--muted);font-size:18px}
+.card.add{border:2px dashed #b8bad0;justify-content:center;color:var(--muted);box-shadow:none;font-weight:700;background:transparent}
+.ctr{display:flex;gap:4px;flex:none}
+.ctr button{background:#eef0f6;color:var(--ink);border:0;border-radius:8px;width:32px;height:32px;font-size:14px}
+.ctr button.d{background:#fde8e7;color:#b3261e}
+
+/* gallery / docs / tracks */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.gal figure{margin:0;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1;background:#ddd;cursor:zoom-in}
+.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.gal .x{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;width:28px;height:28px}
+.gal .enc{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
+.gal .cv{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.6);color:#fff;border:0;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
+.gal .cv.on{background:var(--hl);color:#111}
+.docs{display:grid;gap:8px}
+.doc{position:relative;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none}
+.doc .fi{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;background:var(--primary);flex:none;font-family:"Barlow Condensed";letter-spacing:.04em}
+.doc .x{margin-left:auto;background:#fde8e7;color:#b3261e;border:0;border-radius:8px;width:30px;height:30px}
+.doc small{color:var(--muted)}
+.track{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.track .tt{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.track .tt b{font-size:17px}
+.track .tt .sp{flex:1}
+.tstats{display:flex;gap:18px;flex-wrap:wrap;padding:12px 16px;background:#f7f8fc}
+.tstats div{font-size:13px;color:var(--muted)}
+.tstats b{display:block;font-family:"Barlow Condensed";font-size:26px;color:var(--ink);line-height:1}
+.tsvg{display:grid;grid-template-columns:1fr 1fr}
+.tsvg svg{width:100%;height:auto;display:block}
+.tsvg .map{background:linear-gradient(#eef4ef,#e2ece5);border-right:1px solid var(--line)}
+@media (max-width:760px){.tsvg{grid-template-columns:1fr}.tsvg .map{border-right:0;border-bottom:1px solid var(--line)}}
+.empty{color:var(--muted);background:var(--card);border:2px dashed var(--line);border-radius:var(--radius);padding:18px;text-align:center}
+.drop{border:2px dashed var(--primary);background:color-mix(in srgb,var(--primary) 6%,#fff);border-radius:var(--radius);padding:18px;text-align:center;color:var(--ink);cursor:pointer}
+body.trail .drop{border-color:var(--trail);background:color-mix(in srgb,var(--trail) 7%,#fff)}
+.drop.over{filter:brightness(.95)}
+
+
+/* carrusel de noticias (mismos parámetros que Bombeiros Narón) */
+.car{position:relative;overflow:hidden;border-radius:18px;height:clamp(240px,36vw,430px);background:var(--ink);box-shadow:0 10px 26px rgba(20,18,58,.15)}
+.ctrack{display:flex;height:100%;transition:transform .7s ease}
+.slide{flex:0 0 100%;min-width:0;display:flex;align-items:flex-end;text-decoration:none;color:#fff;background:linear-gradient(to top,rgba(10,14,20,.9),rgba(10,14,20,.1) 70%),var(--primary);background-size:cover;background-position:center}
+.slide .cap{display:block;padding:26px 64px 46px;max-width:900px}
+.slide small{display:block;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9;margin-bottom:6px}
+.slide b{font:700 clamp(1.25rem,2.6vw,2rem)/1.15 "Barlow Condensed",sans-serif;text-wrap:balance}
+.car .nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:#14181f;font-size:1.6rem;line-height:1;cursor:pointer}
+.car .prev{left:12px}.car .next{right:12px}
+.car .dots{position:absolute;left:0;right:0;bottom:14px;display:flex;gap:8px;justify-content:center}
+.car .dots button{width:11px;height:11px;border-radius:50%;border:2px solid #fff;background:transparent;padding:0;cursor:pointer}
+.car .dots button[aria-current="true"]{background:#fff}
+@media (prefers-reduced-motion:reduce){.ctrack{transition:none}}
+@media (max-width:760px){.slide .cap{padding:16px 16px 40px}.car .nav{display:none}}
+/* tarjetas de noticia */
+.ncards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;align-items:start}
+.ncard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.ncard img.foto{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.ncard .lbl{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.ncard h3{font-family:Barlow,sans-serif;font-weight:700;font-size:19px;line-height:1.2}
+.ncard h3 a{text-decoration:none}
+.ncard p{margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+.npill{display:inline-block;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted)}
+.npill.ok{background:#2e9d57;border-color:#2e9d57;color:#fff}
+.npill.warn{background:#fdecea;border-color:#f5c2bd;color:#b3261e}
+.bo{display:inline-flex;align-items:center;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;padding:8px 12px;font-weight:600;font-size:15px;text-decoration:none}
+.bo.mini{padding:4px 9px;font-size:13.5px;border-radius:6px}
+.bo.pel{color:#c62828}
+.bo.pri{background:var(--primary);color:#fff;border-color:var(--primary)}
+.mtools{display:flex;flex-wrap:wrap;gap:6px}
+.encbox{position:relative;cursor:crosshair;touch-action:none;background:#eef0f6;border-radius:8px;overflow:hidden;line-height:0}
+.encbox img{width:100%;max-height:52vh;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.encdot{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.5);pointer-events:none}
+.encprev{display:flex;gap:12px;margin-top:12px;font-size:.8rem;color:var(--muted)}
+.encprev span{display:flex;flex-direction:column;gap:4px;flex:1}
+.encprev i{display:block;background-size:cover;border-radius:6px;border:1px solid var(--line)}
+#encp1{aspect-ratio:16/5}#encp2{aspect-ratio:16/9}
+/* footer (sin cambios) */
+footer{margin-top:50px;background:#0e0c3c;color:#cfd0ea;font-size:15px}
+body.trail footer{background:#0b2d36}
+footer .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;padding-top:28px;padding-bottom:28px}
+footer img{height:70px}
+footer .soc{display:flex;gap:8px}
+footer .soc a{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:800;font-size:18px;color:#fff}
+footer .copy{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;font-size:13px;opacity:.75}
+@media (max-width:700px){footer .wrap{grid-template-columns:1fr;text-align:center}footer img{margin:auto}footer .soc{justify-content:center}}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(10,10,30,.55);z-index:80;display:flex;align-items:flex-end;justify-content:center}
+@media (min-width:700px){.ov{align-items:center;padding:20px}}
+.modal{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px}
+@media (min-width:700px){.modal{border-radius:20px}}
+.modal h3{font-size:26px;margin-bottom:12px;text-transform:uppercase}
+.fld{display:grid;gap:5px;margin-bottom:12px}
+.fld label{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld textarea,.fld select{font:inherit;font-size:16px;padding:10px 12px;border:1px solid #cfd1e2;border-radius:10px;width:100%;background:#fff}
+.fld textarea{min-height:140px;resize:vertical}
+.fld .hint{font-size:12.5px;color:var(--muted)}
+.cvprev{display:flex;align-items:center;gap:10px}
+.cvprev img{width:90px;height:64px;object-fit:cover;border-radius:10px;background:#eee}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sw{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sw button{width:30px;height:30px;border-radius:8px;border:2px solid #fff;box-shadow:0 0 0 1px #ccc}
+.sw input[type=color]{width:46px;height:34px;padding:2px;border-radius:8px}
+details.more{margin:4px 0 8px}
+details.more summary{cursor:pointer;font-weight:700;color:var(--muted);font-size:14px;margin-bottom:10px}
+.mact{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:90;display:flex;align-items:center;justify-content:center}
+.lb img{max-width:96vw;max-height:88vh;border-radius:8px}
+.lb button{position:absolute;background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:50%;width:48px;height:48px;font-size:22px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;border-radius:12px;z-index:99;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.3);max-width:92vw}
+.note{font-size:13px;color:var(--muted);text-align:center;padding:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hbar">
+    <a class="brand" href="#inicio" id="brand"><img id="logo" src="escudo.png" alt="Escudo"><b id="brandName">A.D.C. BOMBEIROS NARÓN</b></a>
+    <nav class="main" id="nav"></nav>
+    <button class="hbtn" id="menuBtn" aria-label="Menú">☰</button>
+    <button class="hbtn" id="langBtn" title="Idioma">GL</button>
+    <button class="hbtn" id="editBtn" hidden>✏️ <span>Editar</span></button>
+  </div>
+  <div class="editbar" id="editbar" hidden></div>
+</header>
+<main id="app"></main>
+<footer id="foot"></footer>
+<div id="layer"></div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const app=$("#app"), layer=$("#layer");
+const S={nodes:new Map(), meta:{}, defaults:null, db:null, assets:null, user:null,
+  owner:false, contrib:false, edit:false, fromDb:false, loaded:false, writeQ:{}};
+
+/* ---------- helpers ---------- */
+/* ---------- idioma ---------- */
+let LANG="es"; try{ LANG=localStorage.getItem("adc-lang")||"es"; }catch(e){}
+let GLC={};
+const UI={"Inicio":"Inicio","Últimas noticias":"Últimas novas","Prensa y actualidad":"Prensa e actualidade","Todas las noticias →":"Todas as novas →","Conocer la asociación →":"Coñecer a asociación →",
+ "Deporte":"Deporte","Cultura":"Cultura","Solidaridad":"Solidariedade","Asociación Deportiva e Cultural":"Asociación Deportiva e Cultural","Leer la noticia":"Ler a nova",
+ "Noticias de prensa":"Novas de prensa","Aún no hay noticias publicadas":"Aínda non hai novas publicadas","Aún no hay noticias publicadas.":"Aínda non hai novas publicadas.","Contenido en preparación.":"Contido en preparación.",
+ "Fotos":"Fotos","Tracks":"Tracks","Documentos":"Documentos","Distancia":"Distancia","Desnivel +":"Desnivel +","Desnivel −":"Desnivel −","Altitud máx.":"Altitude máx.","Cargando track…":"Cargando track…",
+ "Abrir enlace":"Abrir ligazón","Trail largo 27 km":"Trail longo 27 km","Trail corto 14 km":"Trail curto 14 km","Andaina larga 13,5 km":"Andaina longa 13,5 km","Andaina corta 8 km":"Andaina curta 8 km",
+ "Noticias":"Novas","Noticia anterior":"Nova anterior","Noticia siguiente":"Nova seguinte","No se encontraron puntos en el archivo.":"Non se atoparon puntos no arquivo.","Este archivo no incluye altitudes":"Este arquivo non inclúe altitudes",
+ "Abrir":"Abrir","Zona reservada":"Zona reservada","Contacto":"Contacto"};
+const T=s=>LANG==="gl"&&UI[s]?UI[s]:s;
+function tr(n,f){ if(!n) return ""; const v=n[f]; if(LANG!=="gl") return v; if(n[f+"_gl"]) return n[f+"_gl"]; const g=GLC[n.id]&&GLC[n.id][f]; return (g&&g[0]===v)?g[1]:v; }
+
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MES_ES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"],MES_GL=["xaneiro","febreiro","marzo","abril","maio","xuño","xullo","agosto","setembro","outubro","novembro","decembro"];
+function fdate(d){ if(!d) return ""; const p=String(d).split("-");
+  const MES=LANG==="gl"?MES_GL:MES_ES; if(p.length===1) return p[0]; if(p.length===2) return MES[+p[1]-1]+" "+p[0];
+  return (+p[2])+" "+MES[+p[1]-1]+" "+p[0]; }
+function inline(t){ return esc(t)
+  .replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
+  .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>'); }
+function md(t){ if(!t) return ""; return String(t).split(/\n{2,}/).map(b=>{
+  if(/^##\s+/.test(b)) return "<h2>"+inline(b.replace(/^##\s+/,""))+"</h2>";
+  const ls=b.split("\n"); if(ls.every(l=>/^\s*[-•]\s+/.test(l))) return "<ul>"+ls.map(l=>"<li>"+inline(l.replace(/^\s*[-•]\s+/,""))+"</li>").join("")+"</ul>";
+  return "<p>"+ls.map(inline).join("<br>")+"</p>"; }).join(""); }
+const plain=t=>String(t||"").replace(/^##\s+.*$/gm,"").replace(/\*\*/g,"").replace(/^\s*-\s+/gm,"").trim();
+function toast(m,ms=2600){ const t=document.createElement("div"); t.className="toast"; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),ms); }
+const lum=hex=>{ const m=/^#?([0-9a-f]{6})$/i.exec(hex||""); if(!m) return 0; const n=parseInt(m[1],16);
+  return (0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255))/255; };
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const blobUrl=f=>f&&f.id?("/_blob/"+f.id):"";
+function kids(id){ return [...S.nodes.values()].filter(n=>n.parent===id)
+  .sort((a,b)=> (a.kind==="news"&&b.kind==="news") ? String(b.date).localeCompare(String(a.date)) : (a.order||0)-(b.order||0)); }
+function chain(id){ const out=[]; let n=S.nodes.get(id), g=0; while(n&&g++<30){ out.unshift(n); n=S.nodes.get(n.parent); } return out; }
+function isTrail(id){ return chain(id).some(n=>n.theme==="trail"); }
+function descendants(id){ const out=[]; const walk=p=>kids(p).forEach(k=>{out.push(k);walk(k.id);}); walk(id); return out; }
+function coverOf(n){ const fs=n.files||[]; return fs.find(f=>f.id===n.cover&&f.kind==="image")||fs.find(f=>f.kind==="image")||null; }
+const canEdit=n=>S.edit&&(S.owner||(S.contrib&&n&&isTrail(n.id)));
+const colOf=id=>isTrail(id)?"trail":"site";
+
+
+const IC={
+ truck:'<path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+ flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+ calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ news:'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
+ mountain:'<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>',
+ peak:'<path d="m8 3 4 8 5-5 5 15H2L8 3z"/><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19"/>',
+ phone:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
+ users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ medal:'<circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/>',
+ trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+ heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+ handshake:'<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/>',
+ folder:'<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/>',
+ file:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>',
+ clipboard:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+ lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+ camera:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>',
+ map:'<path d="M14.1 5.55a2 2 0 0 0 1.79 0l3.66-1.83A1 1 0 0 1 21 4.62v12.76a1 1 0 0 1-.55.9l-4.56 2.27a2 2 0 0 1-1.79 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.65 1.83A1 1 0 0 1 3 19.38V6.62a1 1 0 0 1 .55-.9l4.56-2.27a2 2 0 0 1 1.79 0z"/><path d="M15 5.76v15M9 3.24v15"/>',
+ pin:'<path d="M20 10c0 5-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
+ boot:'<path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0ZM20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0ZM16 17h4M4 13h4"/>',
+ route:'<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>',
+ run:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+ ball:'<circle cx="12" cy="12" r="10"/><path d="m12 7 4.3 3.1-1.6 5H9.3l-1.6-5z"/>',
+ mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+ chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+ megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ star:'<path d="M11.53 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.12 2.12 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.12 2.12 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.12 2.12 0 0 0-1.97 0L6.4 21.01a.53.53 0 0 1-.77-.56l.88-5.14a2.12 2.12 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .3-.91l5.16-.75a2.12 2.12 0 0 0 1.6-1.16z"/>',
+ flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+ info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+ link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+ facebook:'<path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>',
+ instagram:'<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+ image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/>'
+};
+const EMO={"🚒":"truck","📅":"calendar","🗓️":"calendar","📰":"news","⛰️":"mountain","🏔️":"peak","📱":"phone","👥":"users","🥇":"medal","🏅":"medal","🏆":"trophy","❤️":"heart","🤝":"handshake","📁":"folder","📄":"file","📝":"clipboard","🔐":"lock","📷":"camera","🗺️":"map","🥾":"boot","🚶":"route","🏃":"run","⚽":"ball","✉️":"mail","💬":"chat","📣":"megaphone","⭐":"star","f":"facebook","◎":"instagram"};
+function icon(v,fb){ v=String(v||"").trim(); let k=v.startsWith("i:")?v.slice(2):EMO[v];
+  if(!k&&!v) k=fb||"star";
+  if(k&&IC[k]) return '<svg class="ico" viewBox="0 0 24 24">'+IC[k]+'</svg>';
+  return esc(v); }
+
+/* ---------- theme ---------- */
+function applyMeta(){ const c=(S.meta&&S.meta.colors)||{}; const r=document.documentElement.style;
+  ["primary","accent","trail","trailAccent"].forEach(k=>{ if(c[k]) r.setProperty("--"+k,c[k]); }); }
+
+/* ---------- data ---------- */
+async function boot(){
+  try{ GLC=await (await fetch("gl.json")).json(); }catch(e){}
+  document.documentElement.lang=LANG;
+  if(window.__PUBLIC__){
+    try{ const d=await (await fetch("datos.json",{cache:"no-store"})).json(); S.defaults=d; }catch(e){ S.defaults={meta:{},nodes:[]}; }
+    useDefaults(); S.loaded=true; route(); return; }
+  try{ const r=await fetch("seed.json"); S.defaults=await r.json(); }catch(e){ S.defaults={meta:{},nodes:[]}; }
+  useDefaults(); S.loaded=true; route();
+  if(!window.claude||!window.claude.use) return;
+  try{
+    const [db,user,assets]=await Promise.all([claude.use("db"),claude.use("user"),claude.use("assets")]);
+    S.db=db; S.user=user; S.assets=assets;
+    if(user&&db){
+      try{ S.owner=!!(await Promise.resolve(user.isOwner())); }catch(e){}
+      try{ const w=await Promise.resolve(user.can("data.write")); S.contrib = S.owner || w===true; }catch(e){}
+    }
+    $("#editBtn").hidden=!S.owner||!!window.__PUBLIC__;
+    if(!db){ route(true); return; }
+    let metaData, site, trail, settled=false;
+    const timer=setTimeout(()=>{ if(!settled) toast("No se pudo conectar con los datos; se muestra el contenido base."); },10000);
+    const combine=()=>{ if(metaData===undefined||site===undefined||trail===undefined) return; settled=true; clearTimeout(timer);
+      if(metaData&&metaData.seeded){ S.fromDb=true; S.meta=metaData; S.nodes=new Map([...site,...trail].map(d=>[d.id,d])); applyMeta(); }
+      route(true); };
+    db.doc("meta/site").onSnapshot(s=>{ metaData=s.exists?s.data():null; combine(); },()=>{ clearTimeout(timer); });
+    db.collection("site").onSnapshot(s=>{ site=s.docs.map(d=>({...d.data(),id:d.id})); combine(); },()=>{});
+    db.collection("trail").onSnapshot(s=>{ trail=s.docs.map(d=>({...d.data(),id:d.id})); combine(); },()=>{});
+  }catch(e){ console.log(e); route(true); }
+}
+function useDefaults(){ S.meta=JSON.parse(JSON.stringify(S.defaults.meta||{})); S.nodes=new Map((S.defaults.nodes||[]).map(n=>[n.id,JSON.parse(JSON.stringify(n))])); applyMeta(); }
+
+function q(path,fn){ const prev=S.writeQ[path]||Promise.resolve(); const p=prev.catch(()=>{}).then(fn); S.writeQ[path]=p; return p; }
+function clean(n){ const o={...n}; delete o.id; delete o.col; return JSON.parse(JSON.stringify(o)); }
+async function saveNode(n){ if(!S.db||!S.fromDb){ toast("Sin conexión con los datos compartidos."); return false; }
+  S.nodes.set(n.id,n); route(true); const path=colOf(n.id)+"/"+n.id;
+  try{ await q(path,()=>S.db.doc(path).set(clean(n))); return true; }catch(e){ fail(e); return false; } }
+async function delNode(id){ if(!S.db||!S.fromDb) return; const all=[S.nodes.get(id),...descendants(id)].filter(Boolean);
+  const paths=all.map(n=>colOf(n.id)+"/"+n.id); all.forEach(n=>S.nodes.delete(n.id)); route(true);
+  for(const p of paths){ try{ await q(p,()=>S.db.doc(p).delete()); }catch(e){ fail(e); break; } } }
+async function saveMeta(m){ if(!S.db||!S.fromDb) return; S.meta=m; applyMeta(); route(true);
+  try{ await q("meta/site",()=>S.db.doc("meta/site").set({...m,seeded:true})); }catch(e){ fail(e); } }
+function fail(e){ console.log(e); const c=e&&e.code;
+  if(c==="invalid_argument"){ toast("No tienes permiso para editar esto."); }
+  else if(c==="quota_exceeded") toast("Se ha llenado el espacio de datos. Elimina contenido antiguo.");
+  else toast("No se pudo guardar. Inténtalo de nuevo."); }
+
+/* ---------- routing ---------- */
+let lastHash=null;
+function route(keepScroll){
+  if(!S.loaded) return;
+  const h=location.hash.slice(1)||"inicio";
+  const id=h.startsWith("n-")?h.slice(2):null;
+  const node=id&&S.nodes.get(id);
+  const tr=!!(node&&isTrail(node.id));
+  document.body.classList.toggle("trail",tr);
+  const logo=$("#logo"); logo.src=tr?"trail.jpg":"escudo.png"; logo.classList.toggle("sq",tr);
+  $("#brandName").textContent=tr?"Trail Costa Ártabra":"A.D.C. BOMBEIROS NARÓN";
+  $("#brand").href=tr?"#n-trail":"#inicio";
+  renderNav(node); renderFoot(); renderEditbar();
+  if(node) renderNode(node); else renderHome();
+  if(!keepScroll||lastHash!==h) window.scrollTo(0,0);
+  lastHash=h;
+}
+window.addEventListener("hashchange",()=>{ $("#nav").classList.remove("open"); route(); });
+function renderEditbar(){
+  $("#langBtn").textContent=LANG==="gl"?"ES":"GL"; $("#langBtn").title=LANG==="gl"?"Ver en castelán":"Ver en galego";
+  const eb=$("#editbar"); eb.hidden=!S.edit; $("#editBtn").classList.toggle("on",S.edit);
+  if(!S.edit) return;
+  eb.innerHTML = S.owner
+    ? `✏️ Modo edición (administrador) <button class="btn sm blue" data-act="newnews">＋ Noticia</button><button class="btn sm dark" data-act="settings">🎨 Colores y portada</button><button class="btn sm dark" data-act="export">⭳ Exportar para Vercel</button><button class="btn sm light" data-act="exitedit">Salir</button>`
+    : `🔐 Modo colaborador · solo Trail Costa Ártabra <button class="btn sm light" data-act="exitedit">Salir</button>`;
+}
+function renderNav(cur){
+  const roots=kids("root"); const top=cur?chain(cur.id)[0]:null;
+  $("#nav").innerHTML=`<a href="#inicio" class="${!cur?"on":""}">Inicio</a>`+roots.map(r=>
+    `<a href="#n-${esc(r.id)}" class="${r.theme==="trail"?"trailbtn":""} ${top&&top.id===r.id?"on":""}">${esc(tr(r,"title"))}</a>`).join("");
+}
+function socials(){ return kids("rrss").filter(n=>n.kind==="link"&&n.link).slice(0,4); }
+function renderFoot(){
+  const m=S.meta||{};
+  $("#foot").innerHTML=`<div class="wrap">
+    <img src="escudo.png" alt="">
+    <div><b style="color:#fff;font-family:'Barlow Condensed';font-size:22px;letter-spacing:.04em">${esc((m.heroTitle||"A.D.C. Bombeiros Narón").toUpperCase())}</b><br>${esc((LANG==="gl"&&m.contact_gl)||m.contact||"")}</div>
+    <div class="soc">${socials().map(s=>`<a href="${esc(s.link)}" target="_blank" rel="noopener" title="${esc(s.title)}" style="background:${esc(s.color||"")}">${esc(s.icon||"↗")}</a>`).join("")}</div>
+    <div class="copy">© ${new Date().getFullYear()} Asociación Deportiva e Cultural Bombeiros Narón · Trail Costa Ártabra · Narón (A Coruña)</div></div>`;
+}
+
+/* ---------- cards ---------- */
+function ctrls(n,siblings){
+  if(!canEdit(n)) return "";
+  const idx=siblings?siblings.indexOf(n):-1;
+  return `<span class="ctr">${idx>0?`<button data-act="up" data-id="${esc(n.id)}" title="Subir">↑</button>`:""}${siblings&&idx>-1&&idx<siblings.length-1?`<button data-act="down" data-id="${esc(n.id)}" title="Bajar">↓</button>`:""}<button data-act="edit" data-id="${esc(n.id)}" title="Editar">✎</button><button class="d" data-act="del" data-id="${esc(n.id)}" title="Eliminar">🗑</button></span>`;
+}
+function card(n,siblings){
+  const ic=n.icon||""; const direct=n.kind==="link"&&n.link&&!S.edit;
+  const href=direct?n.link:"#n-"+n.id;
+  return `<a class="card" ${n.color?`style="--c:${esc(n.color)}"`:""} href="${esc(href)}" ${direct?'target="_blank" rel="noopener"':""}>
+    <span class="ic ${lum(n.color)>0.7?"light":""}">${icon(ic)}</span>
+    <span class="tx"><h3>${esc(tr(n,"title"))}</h3>${tr(n,"sub")?`<small>${esc(tr(n,"sub"))}</small>`:""}${n.date&&n.kind!=="news"?`<small>📅 ${esc(fdate(n.date))}</small>`:""}</span>
+    ${ctrls(n,siblings)||`<span class="ar">${direct?"↗":"›"}</span>`}</a>`;
+}
+function phOf(n,cls){ const c=coverOf(n); return `<div class="ph">${c?`<img src="${esc(blobUrl(c))}" alt="" loading="lazy" style="object-position:${posOf(c)}">`:icon("i:news")}</div>`; }
+function feat(n){ return `<a class="feat" href="#n-${esc(n.id)}">${phOf(n)}<div class="bd"><span class="meta">${esc(fdate(n.date))}${tr(n,"sub")?" · "+esc(tr(n,"sub")):""}</span><h3>${esc(tr(n,"title"))}</h3><p>${esc(plain(tr(n,"body")).slice(0,220))}${plain(tr(n,"body")).length>220?"…":""}</p></div></a>`; }
+function nrow(n,siblings){ return `<a class="nrow" href="#n-${esc(n.id)}">${phOf(n)}<div class="bd"><span class="meta">${esc(fdate(n.date))}${tr(n,"sub")?" · "+esc(tr(n,"sub")):""}</span><h3>${esc(tr(n,"title"))}</h3>${canEdit(n)?ctrls(n,null):""}</div></a>`; }
+
+
+/* ---------- noticias: portada como en Bombeiros Narón ---------- */
+const DIAS_NOTICIA=4, MIN_NOTICIAS=4;
+const hoyISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const diaBase=n=>/^\d{4}-\d{2}-\d{2}/.test(n.date||"")?String(n.date).slice(0,10):/^\d{4}-\d{2}$/.test(n.date||"")?n.date+"-01":/^\d{4}$/.test(n.date||"")?n.date+"-01-01":(n.created||"");
+const diaNoticia=n=>{const b=diaBase(n),f=/^\d{4}-\d{2}-\d{2}/.test(n.fijada||'')?n.fijada.slice(0,10):'';return f>b?f:b};
+const caducada=n=>{const f=diaNoticia(n);if(!f)return false;const d=new Date(f+'T12:00:00');d.setDate(d.getDate()+DIAS_NOTICIA);return d.toISOString().slice(0,10)<=hoyISO()};
+const porPortada=l=>[...l].sort((a,b)=>diaNoticia(b).localeCompare(diaNoticia(a))||(+b.order||0)-(+a.order||0));
+function newsAll(parent,conRetiradas){ return porPortada(kids(parent).filter(n=>n.kind==="news"&&(conRetiradas||!n.retirada))); }
+function portada(){ const l=newsAll("noticias"),nu=l.filter(n=>!caducada(n)); return nu.length>=MIN_NOTICIAS?nu:l.slice(0,MIN_NOTICIAS); }
+const enPortada=n=>portada().some(x=>x.id===n.id);
+const posOf=f=>/^\d{1,3}% \d{1,3}%$/.test((f&&f.pos)||'')?f.pos:'50% 50%';
+function fechaN(n){ return n.date?fdate(n.date):""; }
+let carI=0, carTick=0;
+function carHTML(){
+  const l=portada().slice(0,6);
+  const sl=l.length?l.map(n=>{const p=coverOf(n),u=n.link,t=u?'a':'a';return `<${t} href="${esc(u||("#n-"+n.id))}" ${u?'target="_blank" rel="noopener"':''} class="slide"${p?` style="background-image:linear-gradient(to top,rgba(10,14,20,.92),rgba(10,14,20,.08) 70%),url('${esc(blobUrl(p))}');background-position:center,${posOf(p)}"`:''}><span class="cap"><small>${esc(tr(n,"sub")||T("Noticias"))}${n.date?' · '+esc(fechaN(n)):''}</small><b>${esc(tr(n,"title"))}</b></span></${t}>`}).join(''):`<div class="slide"><span class="cap"><small>${T("Noticias de prensa")}</small><b>${T("Aún no hay noticias publicadas")}</b></span></div>`;
+  return `<div class="car" id="car" aria-roledescription="carrusel" aria-label="Noticias de prensa"><div class="ctrack" id="ctrack">${sl}</div>`+(l.length>1?`<button class="nav prev" data-act="car" data-d="-1" aria-label="Noticia anterior">‹</button><button class="nav next" data-act="car" data-d="1" aria-label="Noticia siguiente">›</button><div class="dots">${l.map((_,i)=>`<button data-act="car" data-i="${i}" aria-label="Noticia ${i+1}"></button>`).join('')}</div>`:'')+`</div>`;
+}
+function carGo(i){ carTick=0; const t=document.getElementById('ctrack'); if(!t) return; const n=t.children.length; carI=(i+n)%n; t.style.transform=`translateX(-${carI*100}%)`; document.querySelectorAll('#car .dots button').forEach((b,k)=>b.setAttribute('aria-current',k===carI)); }
+setInterval(()=>{ const c=document.getElementById('car'); const m=S.meta||{}; if(!c||m.carAuto===false||matchMedia('(prefers-reduced-motion:reduce)').matches||c.matches(':hover,:focus-within')) return;
+  if(++carTick>=Math.min(30,Math.max(3,+m.carSecs||6))) carGo(carI+1); },1000);
+function ncard(n){
+  const p=coverOf(n), ed=canEdit(n), main=n.parent==="noticias";
+  const b=(a,t,c='',extra='')=>`<button class="bo mini ${c}" data-act="${a}" data-id="${esc(n.id)}" ${extra}>${t}</button>`;
+  const st=ed?(n.retirada?'<span class="npill warn">Retirada · no se ve en la web</span>':main?(enPortada(n)?'<span class="npill ok">En portada</span>':'<span class="npill">Ya no está en portada · sigue en Noticias</span>'):''):'';
+  let tools='';
+  if(ed){ tools = n.retirada ? b('nrest','Restablecer','pri')+b('nborrar','Borrar del todo','pel')
+    : (p?b('nquitar','Quitar foto','pel',`data-fid="${esc(p.id)}"`)+b('encuadre','Encuadrar foto','',`data-fid="${esc(p.id)}"`):'')+b('edit','Editar')+b('upload','Subir fotos')+(main&&!enPortada(n)?b('nfija','Volver a portada'):'')+b('nretira','Retirar','pel'); }
+  return `<div class="ncard">${p?`<img class="foto" src="${esc(blobUrl(p))}" alt="" loading="lazy" style="object-position:${posOf(p)}">`:''}<span class="lbl">${esc(tr(n,"sub")||"")}${n.date?' · '+esc(fechaN(n)):''}</span>${st}<h3><a href="#n-${esc(n.id)}">${esc(tr(n,"title"))}</a></h3>${tr(n,"body")?`<p>${esc(plain(tr(n,"body")))}</p>`:''}${n.link?`<a class="bo" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(tr(n,"linkLabel")&&!/^leer en|^ver /i.test(tr(n,"linkLabel"))?tr(n,"linkLabel"):T("Leer la noticia"))}</a>`:''}${tools?`<div class="mtools">${tools}</div>`:''}</div>`;
+}
+function encAbre(id,fid){
+  const n=S.nodes.get(id); const f=(n.files||[]).find(x=>x.id===fid); if(!f) return; let pos=posOf(f); const u=blobUrl(f);
+  const m=modal(`<h3>Encuadrar foto</h3><p class="hint" style="margin:0 0 10px;color:var(--muted);font-size:14px">Pulsa o arrastra sobre la foto el punto que tiene que quedar siempre a la vista.</p>
+   <div class="encbox" id="encb"><img id="enci" src="${esc(u)}" alt=""><span class="encdot" id="encd"></span></div>
+   <div class="encprev"><span><i id="encp1" style="background-image:url('${esc(u)}')"></i>Cabecera ancha</span><span><i id="encp2" style="background-image:url('${esc(u)}')"></i>Tarjeta</span></div>
+   <div class="mact"><button class="btn light" id="encr">Centrar</button><button class="btn light" id="encc">Cancelar</button><button class="btn dark" id="encg">Guardar</button></div>`);
+  const put=p=>{ pos=p; const [x,y]=p.split(' '); const d=$("#encd",m); d.style.left=x; d.style.top=y; $("#encp1",m).style.backgroundPosition=p; $("#encp2",m).style.backgroundPosition=p; };
+  put(pos); const box=$("#encb",m); let on=false;
+  const mv=e=>{ const r=$("#enci",m).getBoundingClientRect(); const x=Math.round(Math.min(100,Math.max(0,(e.clientX-r.left)/r.width*100))), y=Math.round(Math.min(100,Math.max(0,(e.clientY-r.top)/r.height*100))); put(`${x}% ${y}%`); };
+  box.addEventListener('pointerdown',e=>{on=true;box.setPointerCapture(e.pointerId);mv(e)}); box.addEventListener('pointermove',e=>{if(on)mv(e)}); ['pointerup','pointercancel'].forEach(k=>box.addEventListener(k,()=>on=false));
+  $("#encr",m).onclick=()=>put('50% 50%'); $("#encc",m).onclick=close;
+  $("#encg",m).onclick=async()=>{ close(); const nn={...S.nodes.get(id)}; nn.files=(nn.files||[]).map(x=>x.id===fid?{...x,pos}:x); if(await saveNode(nn)) toast("Guardado"); };
+}
+
+/* ---------- home ---------- */
+function renderHome(){
+  const m=S.meta||{}; const roots=kids("root");
+  const news=portada();
+  const asoc=S.nodes.get("asociacion");
+  const eds=kids("trail-ediciones");
+  const ordered=[...roots.filter(r=>r.id==="trail"),...roots.filter(r=>r.id==="noticias"),...roots.filter(r=>r.id!=="trail"&&r.id!=="noticias"&&r.id!=="asociacion")];
+  const others=ordered.filter(r=>r.id!=="trail"&&r.id!=="noticias"); const rest=others.slice(2);
+  const spanOf=r=>{ const i=rest.indexOf(r); if(i<0) return ""; const k=rest.length%4; const lastRow=rest.slice(rest.length-(k||4)); const j=lastRow.indexOf(r); if(j<0) return "";
+    if(lastRow.length===1) return "s4"; if(lastRow.length===2) return "s2"; if(lastRow.length===3&&j===2) return "s2"; return ""; };
+  const bento=ordered.map(r=>{
+    if(r.id==="trail") return `<a class="bx big" href="#n-trail"><img src="trail.jpg" alt=""><span class="ybar">${esc(eds[0]?tr(eds[0],"sub"):"")}</span><h3>${esc(tr(r,"title"))}</h3><small>${esc(tr(r,"sub")||"")}</small><div class="mods"><span>${T("Trail largo 27 km")}</span><span>${T("Trail corto 14 km")}</span><span>${T("Andaina larga 13,5 km")}</span><span>${T("Andaina corta 8 km")}</span></div></a>`;
+    if(r.id==="noticias"){ const l=news[0]; const c=l&&coverOf(l);
+      return `<a class="bx wide" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-noticias">${c?`<span class="ph" style="background-image:url('${esc(blobUrl(c))}');background-position:${posOf(c)}"></span>`:""}<span class="bi">${icon(r.icon,"news")}</span><span class="go">→</span><span class="head" style="position:relative">${esc(tr(r,"title"))} · ${esc(l?fdate(l.date):"")}</span><span class="hl" style="position:relative">${esc(l?tr(l,"title"):tr(r,"sub"))}</span></a>`; }
+    return `<a class="bx ${spanOf(r)} ${lum(r.color)>0.7?"light":""}" ${r.color?`style="--c:${esc(r.color)}"`:""} href="#n-${esc(r.id)}"><span class="bi">${icon(r.icon)}</span><span class="go">→</span><h3>${esc(tr(r,"title"))}</h3>${tr(r,"sub")?`<small>${esc(tr(r,"sub"))}</small>`:""}</a>`;
+  }).join("");
+  const first=asoc?plain((tr(asoc,"body")||"").split(/\n{2,}/)[0]):"";
+  app.innerHTML=`
+  <section class="hero"><img class="wm" src="escudo.png" alt=""><div class="inner">
+    <img class="shield" src="escudo.png" alt="Escudo A.D.C. Bombeiros Narón">
+    <div><span class="kicker">${T("Asociación Deportiva e Cultural")}</span></div>
+    <h1>${esc(m.heroTitle||"A.D.C. Bombeiros Narón")}</h1>
+    <p>${esc(m.heroSub||"")}</p>
+  </div><div class="chev"></div></section>
+  <section class="blk"><div class="wrap">
+    <div class="bento">${bento}</div>
+    ${S.edit&&S.owner?`<div style="margin-top:12px"><button class="btn sm light" data-act="add" data-id="root">＋ Añadir apartado principal</button></div>`:""}
+  </div></section>
+  ${asoc?`<section class="blk"><div class="wrap"><div class="about">
+    <div><h2>${esc(tr(asoc,"title"))}</h2><p>${esc(first)}</p>
+      <div class="chips"><span>${T("Deporte")}</span><span>${T("Cultura")}</span><span>${T("Solidaridad")}</span><span>Trail Costa Ártabra</span></div>
+      <a class="btn blue" href="#n-asociacion">${T("Conocer la asociación →")}</a></div>
+    <img src="escudo.png" alt=""></div></div></section>`:""}
+  <section class="blk"><div class="wrap"><div class="sh"><h2><small>${T("Prensa y actualidad")}</small>${T("Últimas noticias")}</h2><a class="btn sm light" href="#n-noticias">${T("Todas las noticias →")}</a></div>
+    ${carHTML()}
+  </div></section>`;
+  carI=0; carGo(0);
+}
+
+/* ---------- node page ---------- */
+function renderNode(n){
+  const ch=chain(n.id); const children=kids(n.id); const ed=canEdit(n);
+  const files=n.files||[]; const imgs=files.filter(f=>f.kind==="image"), trks=files.filter(f=>f.kind==="track"), docs=files.filter(f=>f.kind==="doc");
+  const goto=n.goto&&S.nodes.get(n.goto); const isNewsroom=n.kind==="newsroom"; const cv=coverOf(n);
+  const showCover = cv && (n.kind==="news" || n.cover);
+  const tools = ed ? `<div class="tools">
+      <button class="btn sm" data-act="edit" data-id="${esc(n.id)}">✎ Editar</button>
+      <button class="btn sm" data-act="add" data-id="${esc(n.id)}">＋ ${isNewsroom?"Noticia":"Botón"}</button>
+      <button class="btn sm" data-act="upload" data-id="${esc(n.id)}">📎 Fotos / archivos</button>
+      ${n.parent!=="root"||S.owner?`<button class="btn sm danger" data-act="del" data-id="${esc(n.id)}">🗑 Eliminar</button>`:""}</div>` : "";
+  let html=`<section class="phead ${showCover?"hasimg":""}" ${n.color?`style="--c:${esc(n.color)}"`:""}>${showCover?`<div class="bg" style="background-image:url('${esc(blobUrl(cv))}');background-position:${posOf(cv)}"></div>`:""}<div class="wrap">
+    <div class="crumbs"><a href="#inicio">${T("Inicio")}</a>${ch.map(c=>` › <a href="#n-${esc(c.id)}">${esc(tr(c,"title"))}</a>`).join("")}</div>
+    <div class="row">${showCover?"":`<div class="bigic">${icon(n.icon)}</div>`}<div><h1>${esc(tr(n,"title"))}</h1>
+      ${tr(n,"sub")?`<div class="sub">${esc(tr(n,"sub"))}</div>`:""}${n.date?`<span class="pill">📅 ${esc(fdate(n.date))}</span>`:""}</div></div>${tools}</div></section>
+  <div class="wrap content">`;
+  if(n.kind==="collab") html+=collabPanel();
+  if(tr(n,"body")) html+=`<div class="body">${md(tr(n,"body"))}</div>`;
+  if(n.link||goto) html+=`<div class="links">${n.link?`<a class="btn ${isTrail(n.id)?"green":"blue"}" href="${esc(n.link)}" target="_blank" rel="noopener">↗ ${esc(tr(n,"linkLabel")||T("Abrir enlace"))}</a>`:""}${goto?`<a class="btn dark" href="#n-${esc(goto.id)}">→ ${esc(tr(goto,"title"))}</a>`:""}</div>`;
+  if(children.length||ed){
+    if(isNewsroom){ const l=newsAll(n.id,ed); html+= l.length?`<div class="ncards">${l.map(ncard).join("")}</div>`:`<div class="empty">${T("Aún no hay noticias publicadas.")}</div>`; if(ed) html+=`<div><button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir noticia</button></div>`; }
+    else html+=`<div class="cards">${children.map(c=>card(c,children)).join("")}${ed?`<button class="card add" data-act="add" data-id="${esc(n.id)}">＋ Añadir botón</button>`:""}</div>`;
+  }
+  if(imgs.length) html+=`<div><h2 class="sub2">📷 ${T("Fotos")} <small style="font-size:16px;color:var(--muted)">(${imgs.length})</small></h2><div class="gal">${imgs.map((f,i)=>`<figure data-lb="${i}"><img loading="lazy" src="${esc(blobUrl(f))}" alt="${esc(f.name)}" style="object-position:${posOf(f)}">${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button><button class="enc" data-act="encuadre" data-id="${esc(n.id)}" data-fid="${esc(f.id)}" title="Encuadrar foto">⌖ Encuadrar</button><button class="cv ${cv&&cv.id===f.id&&n.cover?"on":""}" data-cover="${esc(f.id)}">★ Portada</button>`:""}</figure>`).join("")}</div></div>`;
+  if(trks.length) html+=`<div><h2 class="sub2">🗺️ ${T("Tracks")}</h2><div class="docs">${trks.map(f=>`<div class="track" data-track="${esc(f.id)}"><div class="tt"><b>${esc(f.name)}</b><span class="sp"></span><a class="btn sm ${isTrail(n.id)?"green":"blue"}" href="${esc(blobUrl(f))}" target="_blank" rel="noopener">Abrir ${esc((f.ext||"").toUpperCase())}</a>${ed?`<button class="btn sm" style="background:#b3261e" data-rmf="${esc(f.id)}">✕</button>`:""}</div><div class="tbody note">${T("Cargando track…")}</div></div>`).join("")}</div></div>`;
+  if(docs.length) html+=`<div><h2 class="sub2">📄 ${T("Documentos")}</h2><div class="docs">${docs.map(f=>`<a class="doc" href="${esc(blobUrl(f))}" target="_blank" rel="noopener"><span class="fi" style="background:${f.ext==="pdf"?"#c62828":"var(--primary)"}">${esc((f.ext||"DOC").toUpperCase().slice(0,4))}</span><span><b>${esc(f.name)}</b><br><small>${f.size?Math.max(1,Math.round(f.size/1024))+" KB":""}</small></span>${ed?`<button class="x" data-rmf="${esc(f.id)}" title="Quitar">✕</button>`:""}</a>`).join("")}</div></div>`;
+  if(ed) html+=`<div class="drop" id="drop" data-id="${esc(n.id)}"><b>Arrastra aquí fotos, PDF, GPX o KML</b><br><span style="font-size:14px;color:var(--muted)">o pulsa para elegir archivos · se guardan en esta sección</span></div>`;
+  else if(!children.length&&!tr(n,"body")&&!files.length&&!n.link&&n.kind!=="collab") html+=`<div class="empty">${T("Contenido en preparación.")}</div>`;
+  html+=`</div>`;
+  app.innerHTML=html;
+  trks.forEach(f=>drawTrack(f));
+  const dz=$("#drop"); if(dz){ dz.onclick=()=>pickFiles(n.id);
+    dz.ondragover=e=>{e.preventDefault();dz.classList.add("over");}; dz.ondragleave=()=>dz.classList.remove("over");
+    dz.ondrop=e=>{e.preventDefault();dz.classList.remove("over");uploadFiles(n.id,[...e.dataTransfer.files]);}; }
+}
+function collabPanel(){
+  if(S.edit) return `<div class="body"><b>${S.owner?"Modo edición activo.":"Modo colaborador activo."}</b> Dentro del Trail puedes usar ✎ para editar botones (texto, icono y color), ＋ para crear botones, 📎 para subir fotos, documentos y tracks GPX/KML, ↑↓ para ordenar y 🗑 para eliminar.<div class="links" style="margin-top:12px"><button class="btn dark" data-act="exitedit">Salir</button></div></div>`;
+  if(S.contrib) return `<div class="body">Zona para los colaboradores del Trail Costa Ártabra: edita las ediciones, recorridos, fotos, tracks y patrocinadores.<div class="links" style="margin-top:12px"><button class="btn green" data-act="enteredit">🔓 Entrar en modo colaborador</button></div></div>`;
+  return `<div class="body">Zona reservada a los colaboradores del Trail Costa Ártabra. Para acceder, pide al administrador de la web que te la comparta con nivel <b>Colaborador</b> (Contributor) y entra con tu cuenta.</div>`;
+}
+
+/* ---------- tracks ---------- */
+const trackCache={};
+async function parseTrack(f){
+  if(trackCache[f.id]) return trackCache[f.id];
+  const txt=await (await fetch(blobUrl(f))).text();
+  const doc=new DOMParser().parseFromString(txt,"application/xml"); let pts=[];
+  const tp=[...doc.getElementsByTagName("trkpt"),...doc.getElementsByTagName("rtept")];
+  if(tp.length){ pts=tp.map(p=>{ const e=p.getElementsByTagName("ele")[0]; return [+p.getAttribute("lat"),+p.getAttribute("lon"),e?+e.textContent:null]; }); }
+  else { const cs=[...doc.getElementsByTagName("coordinates")]; let best=[];
+    cs.forEach(c=>{ const arr=c.textContent.trim().split(/\s+/).map(s=>s.split(",").map(Number)).filter(a=>a.length>=2&&!isNaN(a[0])); if(arr.length>best.length) best=arr; });
+    if(!best.length){ best=[...doc.getElementsByTagName("gx:coord")].map(c=>c.textContent.trim().split(/\s+/).map(Number)); }
+    pts=best.map(a=>[a[1],a[0],a.length>2?a[2]:null]); }
+  pts=pts.filter(p=>isFinite(p[0])&&isFinite(p[1]));
+  const R=6371000, rad=x=>x*Math.PI/180; let d=0, up=0, dn=0, lastE=null; const prof=[];
+  for(let i=0;i<pts.length;i++){ if(i){ const [a,b]=pts[i-1], [c,e]=pts[i]; const dl=rad(c-a), dg=rad(e-b);
+      const h=Math.sin(dl/2)**2+Math.cos(rad(a))*Math.cos(rad(c))*Math.sin(dg/2)**2; d+=2*R*Math.asin(Math.sqrt(h)); }
+    const el=pts[i][2]; if(el!=null&&isFinite(el)){ if(lastE==null) lastE=el; const df=el-lastE; if(Math.abs(df)>=3){ if(df>0) up+=df; else dn-=df; lastE=el; } prof.push([d,el]); } }
+  return trackCache[f.id]={pts,dist:d,up,dn,prof};
+}
+async function drawTrack(f){
+  const box=document.querySelector(`[data-track="${CSS.escape(f.id)}"] .tbody`); if(!box) return;
+  try{ const t=await parseTrack(f); if(t.pts.length<2){ box.textContent=T("No se encontraron puntos en el archivo."); return; }
+    const W=600,H=380,P=24; const lats=t.pts.map(p=>p[0]), lons=t.pts.map(p=>p[1]);
+    const mnLa=Math.min(...lats),mxLa=Math.max(...lats),mnLo=Math.min(...lons),mxLo=Math.max(...lons);
+    const k=Math.cos((mnLa+mxLa)/2*Math.PI/180); const sx=(mxLo-mnLo)*k||1e-6, sy=(mxLa-mnLa)||1e-6;
+    const sc=Math.min((W-2*P)/sx,(H-2*P)/sy); const ox=(W-sx*sc)/2, oy=(H-sy*sc)/2;
+    const X=lo=>ox+(lo-mnLo)*k*sc, Y=la=>H-oy-(la-mnLa)*sc;
+    const step=Math.max(1,Math.floor(t.pts.length/1500));
+    const path=t.pts.filter((_,i)=>i%step===0||i===t.pts.length-1).map((p,i)=>(i?"L":"M")+X(p[1]).toFixed(1)+" "+Y(p[0]).toFixed(1)).join("");
+    const s=t.pts[0], e=t.pts[t.pts.length-1]; const col=getComputedStyle(document.body).getPropertyValue("--trail").trim()||"#14705f";
+    const map=`<svg class="map" viewBox="0 0 ${W} ${H}"><path d="${path}" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/><path d="${path}" fill="none" stroke="${col}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="${X(e[1])}" cy="${Y(e[0])}" r="8" fill="#e3262b" stroke="#fff" stroke-width="3"/><circle cx="${X(s[1])}" cy="${Y(s[0])}" r="8" fill="#1fa25a" stroke="#fff" stroke-width="3"/>
+      <text x="${W-12}" y="22" text-anchor="end" font-size="13" fill="#5d5f78" font-family="Barlow">N ↑</text></svg>`;
+    let prof="";
+    if(t.prof.length>2){ const PW=600,PH=380,L=46,B=30,T=16,Rr=14; const els=t.prof.map(p=>p[1]); const mn=Math.min(...els), mx=Math.max(...els);
+      const lo=Math.floor(mn/50)*50, hi=Math.max(lo+50,Math.ceil(mx/50)*50); const D=t.dist||1;
+      const px=x=>L+x/D*(PW-L-Rr), py=y=>PH-B-(y-lo)/(hi-lo)*(PH-B-T);
+      const ps=Math.max(1,Math.floor(t.prof.length/800)); const pp=t.prof.filter((_,i)=>i%ps===0);
+      const line=pp.map((p,i)=>(i?"L":"M")+px(p[0]).toFixed(1)+" "+py(p[1]).toFixed(1)).join("");
+      let grid=""; const yStep=(hi-lo)>600?200:(hi-lo)>250?100:50;
+      for(let y=lo;y<=hi;y+=yStep) grid+=`<line x1="${L}" x2="${PW-Rr}" y1="${py(y)}" y2="${py(y)}" stroke="#e3e4ef"/><text x="${L-6}" y="${py(y)+4}" text-anchor="end" font-size="12" fill="#5d5f78">${y}</text>`;
+      const km=D/1000, ks=km>20?5:km>8?2:1;
+      for(let x=0;x<=km;x+=ks) grid+=`<text x="${px(x*1000)}" y="${PH-10}" text-anchor="middle" font-size="12" fill="#5d5f78">${x} km</text>`;
+      prof=`<svg viewBox="0 0 ${PW} ${PH}"><text x="${L}" y="12" font-size="12" fill="#5d5f78">m</text>${grid}
+        <path d="${line}L${px(pp[pp.length-1][0])} ${PH-B}L${L} ${PH-B}Z" fill="${col}" opacity=".22"/><path d="${line}" fill="none" stroke="${col}" stroke-width="2.5"/></svg>`; }
+    else prof=`<div class="note" style="display:flex;align-items:center;justify-content:center">${T("Este archivo no incluye altitudes")}</div>`;
+    const eles=t.prof.map(p=>p[1]);
+    box.className="";
+    box.innerHTML=`<div class="tstats"><div><b>${(t.dist/1000).toFixed(1)} km</b>${T("Distancia")}</div>${eles.length?`<div><b>${Math.round(t.up)} m</b>${T("Desnivel +")}</div><div><b>${Math.round(t.dn)} m</b>${T("Desnivel −")}</div><div><b>${Math.round(Math.max(...eles))} m</b>${T("Altitud máx.")}</div>`:""}</div>
+      <div class="tsvg">${map}${prof}</div>`;
+  }catch(e){ console.log(e); box.textContent="No se pudo leer el track."; }
+}
+
+/* ---------- uploads ---------- */
+function kindOf(f){ const ext=(f.name.split(".").pop()||"").toLowerCase();
+  return [/^(jpe?g|png|webp|gif|svg|avif)$/.test(ext)||(f.type||"").startsWith("image/")?"image":(ext==="gpx"||ext==="kml")?"track":"doc",ext]; }
+async function uploadOne(f){
+  const [kind,ext]=kindOf(f); let blob=f;
+  if(kind==="track") blob=new Blob([await f.text()],{type:"text/plain"});
+  if(kind==="image"&&f.size>2.5e6&&ext!=="gif"&&ext!=="svg") blob=await shrink(f);
+  const r=await S.assets.upload(blob);
+  return {id:r.id,name:f.name,kind,ext,size:r.sizeBytes||f.size};
+}
+function pickFiles(id){ const i=document.createElement("input"); i.type="file"; i.multiple=true;
+  i.accept="image/*,.pdf,.gpx,.kml,.txt,.csv,.json";
+  i.onchange=()=>uploadFiles(id,[...i.files]); i.click(); }
+async function uploadFiles(id,files){
+  if(!files.length) return;
+  if(!S.assets){ toast("Tu acceso no permite subir archivos."); return; }
+  let ok=0;
+  for(const f of files){
+    toast("Subiendo "+f.name+"…",1800);
+    try{ const rec=await uploadOne(f); const n={...S.nodes.get(id)}; n.files=[...(n.files||[]),rec]; await saveNode(n); ok++; }
+    catch(e){ console.log(e); toast(`No se pudo subir «${f.name}». Admitidos: imágenes, PDF, GPX, KML (máx. 20 MB). Word/Excel: guárdalos como PDF.`,6000); }
+  }
+  if(ok) toast(ok===1?"Archivo añadido":ok+" archivos añadidos");
+}
+function shrink(file){ return new Promise((res)=>{ const img=new Image(); const u=URL.createObjectURL(file);
+  img.onload=()=>{ const m=2400, s=Math.min(1,m/Math.max(img.width,img.height)); const c=document.createElement("canvas");
+    c.width=Math.round(img.width*s); c.height=Math.round(img.height*s); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    c.toBlob(b=>{URL.revokeObjectURL(u);res(b||file);},"image/jpeg",0.86); };
+  img.onerror=()=>res(file); img.src=u; }); }
+function removeFileOf(id,fid){ return removeFile(id,fid); }
+async function removeFile(id,fid){
+  if(!await confirmBox("¿Quitar este archivo de la sección?")) return;
+  const n={...S.nodes.get(id)}; n.files=(n.files||[]).filter(f=>f.id!==fid); if(n.cover===fid) n.cover=""; await saveNode(n);
+  try{ if(S.assets) await S.assets.delete(fid); }catch(e){}
+}
+
+/* ---------- modals ---------- */
+function modal(html){ layer.innerHTML=`<div class="ov"><div class="modal">${html}</div></div>`;
+  const ov=$(".ov",layer); ov.addEventListener("click",e=>{ if(e.target===ov) close(); }); return $(".modal",layer); }
+function close(){ layer.innerHTML=""; }
+function confirmBox(msg){ return new Promise(res=>{ const m=modal(`<h3>Confirmar</h3><p>${esc(msg)}</p><div class="mact"><button class="btn light" id="cNo">Cancelar</button><button class="btn" id="cYes" style="background:#b3261e">Sí, continuar</button></div>`);
+  $("#cNo",m).onclick=()=>{close();res(false)}; $("#cYes",m).onclick=()=>{close();res(true)}; }); }
+const SW=["#25209a","#141056","#3b3fb5","#e3262b","#c2185b","#14705f","#0f4457","#5e9e4a","#c9a400","#f5e33b","#ef6c00","#4a4f63","#1877f2","#111111"];
+function editNode(n,isNew){
+  const isNews=n.kind==="news"; const cv=coverOf(n);
+  const opts=[...S.nodes.values()].filter(x=>x.id!==n.id).sort((a,b)=>a.title.localeCompare(b.title)).map(x=>`<option value="${esc(x.id)}" ${n.goto===x.id?"selected":""}>${esc(x.title)}${x.sub?" — "+esc(x.sub):""}</option>`).join("");
+  const m=modal(`<h3>${isNew?"Nueva":"Editar"} ${isNews?"noticia":"sección / botón"}</h3>
+   <div class="fld"><label>Título</label><input id="fT" value="${esc(n.title)}" maxlength="140"></div>
+   <div class="fld"><label>${isNews?"Foto de la noticia":"Foto de portada (opcional)"}</label>
+     <div class="cvprev"><img id="cvImg" ${cv?`src="${esc(blobUrl(cv))}"`:""} alt=""><input type="file" id="fP" accept="image/*"></div>
+     <div class="paste" id="fPaste" contenteditable="true">o mantén pulsado aquí y elige <b>Pegar</b> tras «Copiar imagen» en la web de la noticia</div>
+     <span class="hint">${isNews?"La foto original de la noticia: se verá en la tarjeta y como cabecera":"Se mostrará como fondo de la cabecera de la sección"}</span></div>
+   <div class="two"><div class="fld"><label>${isNews?"Medio / fuente":"Subtítulo"}</label><input id="fS" value="${esc(n.sub)}" maxlength="160"></div>
+     <div class="fld"><label>Fecha</label><input id="fD" value="${esc(n.date)}" placeholder="2026-09-13"><span class="hint">AAAA-MM-DD, AAAA-MM o AAAA</span></div></div>
+   <div class="fld"><label>${isNews?"Resumen":"Texto"}</label><textarea id="fB">${esc(n.body)}</textarea><span class="hint">Línea en blanco entre párrafos · «- » para listas · «## » para títulos · **negrita** · los enlaces http se activan solos</span></div>
+   <div class="two"><div class="fld"><label>${isNews?"Enlace a la noticia original":"Enlace externo"}</label><input id="fL" value="${esc(n.link)}" placeholder="https://…"></div>
+     <div class="fld"><label>Texto del enlace</label><input id="fLL" value="${esc(n.linkLabel)}" placeholder="${isNews?"Leer en el periódico":"Abrir enlace"}"></div></div>
+   <details class="more"><summary>Versión en gallego (opcional)</summary>
+     <div class="fld"><label>Título en gallego</label><input id="gT" value="${esc(n.title_gl||"")}"></div>
+     <div class="fld"><label>${isNews?"Medio / fuente":"Subtítulo"} en gallego</label><input id="gS" value="${esc(n.sub_gl||"")}"></div>
+     <div class="fld"><label>${isNews?"Resumen":"Texto"} en gallego</label><textarea id="gB" style="min-height:100px">${esc(n.body_gl||"")}</textarea><span class="hint">Si lo dejas vacío, en gallego se verá el texto en castellano</span></div>
+   </details>
+   <details class="more" ${isNews?"":"open"}><summary>Aspecto y opciones</summary>
+   <div class="fld"><label>Icono</label><div class="icgrid" id="icg">${Object.keys(IC).map(k=>`<button type="button" data-ic="i:${k}" class="${(n.icon==="i:"+k||EMO[n.icon]===k)?"on":""}" title="${k}">${icon("i:"+k)}</button>`).join("")}</div>
+     <input id="fI" value="${esc(n.icon)}" maxlength="6" style="margin-top:6px" placeholder="o escribe hasta 4 letras (p. ej. V, IV, 2026)"></div>
+   <div class="two"><div class="fld"><label>Tipo</label><select id="fK">
+      ${[["page","Sección con contenido"],["link","Acceso directo a enlace"],["news","Noticia"],["newsroom","Listado de noticias"],["collab","Zona colaboradores"]].map(([v,l])=>`<option value="${v}" ${n.kind===v?"selected":""}>${l}</option>`).join("")}</select></div></div>
+   <div class="fld"><label>Color</label><div class="sw" id="sw">${SW.map(c=>`<button type="button" data-c="${c}" style="background:${c}"></button>`).join("")}<input type="color" id="fC" value="${esc(/^#[0-9a-f]{6}$/i.test(n.color)?n.color:"#25209a")}"></div></div>
+   <div class="fld"><label>Botón «ir a» otra sección</label><select id="fG"><option value="">— ninguno —</option>${opts}</select></div>
+   </details>
+   <div class="mact"><button class="btn light" id="mC">Cancelar</button><button class="btn dark" id="mS">Guardar</button></div>`);
+  let photo=null;
+  $("#fP",m).onchange=e=>{ photo=e.target.files[0]||null; if(photo) $("#cvImg",m).src=URL.createObjectURL(photo); };
+  $("#icg",m).onclick=e=>{ const bt=e.target.closest("[data-ic]"); if(!bt) return; m.querySelectorAll("#icg button").forEach(x=>x.classList.remove("on")); bt.classList.add("on"); $("#fI",m).value=bt.dataset.ic; };
+  const setPhoto=f=>{ photo=f; $("#cvImg",m).src=URL.createObjectURL(f); toast("Foto lista: pulsa Guardar"); };
+  m.addEventListener("paste",e=>{ const it=[...(e.clipboardData&&e.clipboardData.items||[])].find(i=>i.type.startsWith("image/"));
+    if(it){ e.preventDefault(); const f=it.getAsFile(); if(f) setPhoto(new File([f],"foto-noticia."+(f.type.split("/")[1]||"jpg"),{type:f.type})); }
+    else if(e.target.id==="fPaste"){ e.preventDefault(); toast("No hay imagen copiada. Usa «Copiar imagen» en la noticia."); } });
+  $("#fPaste",m).addEventListener("input",e=>{ const img=e.target.querySelector("img"); e.target.innerHTML='o mantén pulsado aquí y elige <b>Pegar</b> tras «Copiar imagen» en la web de la noticia';
+    if(img&&img.src&&img.src.startsWith("data:")){ fetch(img.src).then(r=>r.blob()).then(b=>setPhoto(new File([b],"foto-noticia.jpg",{type:b.type||"image/jpeg"}))); } });
+  $("#sw",m).onclick=e=>{ const c=e.target.dataset&&e.target.dataset.c; if(c) $("#fC",m).value=c; };
+  $("#mC",m).onclick=close;
+  $("#mS",m).onclick=async()=>{ const t=$("#fT",m).value.trim(); if(!t){ $("#fT",m).focus(); return; }
+    const out={...n,title:t,sub:$("#fS",m).value.trim(),icon:$("#fI",m).value.trim(),date:$("#fD",m).value.trim(),color:$("#fC",m).value,
+      body:$("#fB",m).value,title_gl:$("#gT",m).value.trim(),sub_gl:$("#gS",m).value.trim(),body_gl:$("#gB",m).value,link:$("#fL",m).value.trim(),linkLabel:$("#fLL",m).value.trim(),goto:$("#fG",m).value,kind:$("#fK",m).value};
+    if(isNew&&out.kind==="news"&&!n.color) out.color="";
+    if(out.link&&!/^https?:\/\//i.test(out.link)) out.link="https://"+out.link;
+    const btn=$("#mS",m); btn.disabled=true; btn.textContent="Guardando…";
+    if(photo){ if(!S.assets){ toast("Tu acceso no permite subir fotos."); }
+      else { try{ const rec=await uploadOne(photo); out.files=[rec,...(out.files||[])]; out.cover=rec.id; }catch(e){ toast("No se pudo subir la foto."); } } }
+    close(); const ok=await saveNode(out); if(ok){ toast("Guardado"); if(isNew) location.hash="n-"+out.id; } };
+}
+function addChild(parentId){
+  const p=S.nodes.get(parentId); const sib=kids(parentId);
+  const isNews=p&&p.kind==="newsroom";
+  editNode({id:"x"+uid(),parent:parentId,title:"",sub:"",icon:isNews?"i:news":"i:star",color:isNews?"":((p&&p.color)||"#25209a"),body:"",kind:isNews?"news":"page",
+    date:isNews?hoyISO():"",created:hoyISO(),link:"",linkLabel:"",goto:"",theme:"",files:[],cover:"",order:(sib.length?Math.max(...sib.map(s=>s.order||0)):0)+1},true);
+}
+async function move(id,dir){
+  const n=S.nodes.get(id); const sib=kids(n.parent); const i=sib.indexOf(n); const j=i+dir; if(j<0||j>=sib.length) return;
+  const arr=sib.map((s,k)=>({...s,order:k+1})); [arr[i].order,arr[j].order]=[arr[j].order,arr[i].order];
+  for(const s of arr){ if(S.nodes.get(s.id).order!==s.order) await saveNode(s); }
+}
+async function setCover(id,fid){ const n={...S.nodes.get(id)}; n.cover = n.cover===fid ? "" : fid; await saveNode(n); }
+function settings(){
+  const m0=S.meta||{}; const c=m0.colors||{};
+  const m=modal(`<h3>Colores y portada</h3>
+   <div class="two">${[["primary","Azul principal"],["accent","Rojo (detalles)"],["trail","Verde Trail"],["trailAccent","Amarillo Trail"]].map(([k,l])=>`<div class="fld"><label>${l}</label><input type="color" data-k="${k}" value="${esc(c[k]||"#000000")}"></div>`).join("")}</div>
+   <div class="fld"><label>Título portada</label><input id="sT" value="${esc(m0.heroTitle)}"></div>
+   <div class="fld"><label>Lema portada</label><input id="sS" value="${esc(m0.heroSub)}"></div>
+   <div class="two"><div class="fld"><label>Segundos entre noticias</label><input type="number" id="sCs" min="3" max="30" value="${esc(m0.carSecs||6)}"></div>
+     <div class="fld"><label>Carrusel</label><label style="display:flex;gap:8px;align-items:center;text-transform:none;font-size:15px;color:var(--ink);font-weight:600;letter-spacing:0"><input type="checkbox" id="sCa" style="width:auto" ${m0.carAuto===false?"":"checked"}>Las noticias pasan solas</label></div></div>
+   <div class="fld"><label>Contacto (pie de página)</label><textarea id="sF" style="min-height:70px">${esc(m0.contact)}</textarea></div>
+   <div class="mact"><button class="btn light" id="sR">Restaurar colores</button><button class="btn light" id="mC">Cancelar</button><button class="btn dark" id="mS">Guardar</button></div>`);
+  $("#mC",m).onclick=close;
+  $("#sR",m).onclick=()=>{ const d=(S.defaults.meta||{}).colors||{}; m.querySelectorAll("[data-k]").forEach(i=>{ if(d[i.dataset.k]) i.value=d[i.dataset.k]; }); };
+  $("#mS",m).onclick=async()=>{ const cols={}; m.querySelectorAll("[data-k]").forEach(i=>cols[i.dataset.k]=i.value);
+    close(); await saveMeta({...m0,colors:cols,heroTitle:$("#sT",m).value.trim(),heroSub:$("#sS",m).value.trim(),carSecs:Math.min(30,Math.max(3,+$("#sCs",m).value||6)),carAuto:$("#sCa",m).checked,contact:$("#sF",m).value.trim()}); toast("Guardado"); };
+}
+function lightbox(list,i){
+  const show=()=>{ layer.innerHTML=`<div class="lb"><img src="${esc(blobUrl(list[i]))}" alt=""><button style="top:16px;right:16px" id="lx">✕</button>${list.length>1?`<button style="left:12px" id="lp">‹</button><button style="right:12px" id="ln">›</button>`:""}</div>`;
+    $("#lx").onclick=close; const lb=$(".lb"); lb.onclick=e=>{ if(e.target===lb) close(); };
+    if($("#lp")){ $("#lp").onclick=()=>{i=(i-1+list.length)%list.length;show();}; $("#ln").onclick=()=>{i=(i+1)%list.length;show();}; } };
+  show();
+}
+
+
+/* ---------- exportar a Vercel (web pública de solo lectura) ---------- */
+function loadZip(){ return new Promise((res,rej)=>{ if(window.JSZip) return res(window.JSZip); const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; s.onload=()=>res(window.JSZip); s.onerror=rej; document.head.appendChild(s); }); }
+async function exportVercel(){
+  const dl=await claude.use("downloads"); if(!dl){ toast("Este visor no permite descargar archivos."); return; }
+  toast("Preparando la web pública…",4000);
+  try{
+    const JSZip=await loadZip(); const z=new JSZip();
+    let html=await (await fetch("index.html",{cache:"no-store"})).text();
+    html=html.replace("<head>","<head>\n<script>window.__PUBLIC__=true<\/script>");
+    z.file("index.html",html);
+    for(const f of ["escudo.png","trail.jpg","gl.json"]){ z.file(f,await (await fetch(f)).blob()); }
+    const nodes=[...S.nodes.values()].map(n=>{ const o={...n}; delete o.col; return o; });
+    z.file("datos.json",JSON.stringify({meta:S.meta,nodes},null,1));
+    const rew=[]; const seen=new Set();
+    for(const n of nodes) for(const f of (n.files||[])){ if(!f.id||seen.has(f.id)) continue; seen.add(f.id);
+      const ext=(f.ext||"bin").toLowerCase().replace(/[^a-z0-9]/g,"")||"bin";
+      try{ const b=await (await fetch(blobUrl(f))).blob(); z.file("archivos/"+f.id+"."+ext,b); rew.push({source:"/_blob/"+f.id,destination:"/archivos/"+f.id+"."+ext}); }catch(e){} }
+    z.file("vercel.json",JSON.stringify({cleanUrls:true,rewrites:rew},null,1));
+    z.file("LEEME.txt","A.D.C. BOMBEIROS NARÓN · web pública para Vercel\n\nindex.html  la web\ndatos.json  todo el contenido\ngl.json     traducciones al gallego\narchivos/   fotos, PDF y tracks\nvercel.json configuración (no tocar)\n\nPublicar: sube el contenido de esta carpeta a GitHub (o arrástrala en vercel.com > Add New > Project). Framework: Other, sin build.\nActualizar: edita en el panel privado de Claude, pulsa «Exportar para Vercel» y vuelve a subir.\n");
+    const blob=await z.generateAsync({type:"blob"});
+    await dl.save({filename:"adc-bombeiros-naron-web.zip",data:blob}); toast("Descargado: súbelo a GitHub o envíamelo por el chat");
+  }catch(e){ if(e&&e.code==="declined") return; console.log(e); toast("No se pudo preparar la exportación."); }
+}
+/* ---------- events ---------- */
+const curId=()=>location.hash.startsWith("#n-")?location.hash.slice(3):null;
+document.addEventListener("click",async e=>{
+  const rm=e.target.closest("[data-rmf]"); if(rm){ e.preventDefault(); e.stopPropagation(); removeFile(curId(),rm.dataset.rmf); return; }
+  const cvb=e.target.closest("[data-cover]"); if(cvb){ e.preventDefault(); e.stopPropagation(); setCover(curId(),cvb.dataset.cover); return; }
+  const lb=e.target.closest("[data-lb]"); if(lb){ const n=S.nodes.get(curId()); lightbox((n.files||[]).filter(f=>f.kind==="image"),+lb.dataset.lb); return; }
+  const b=e.target.closest("[data-act]"); if(!b) return;
+  e.preventDefault(); e.stopPropagation(); const id=b.dataset.id, act=b.dataset.act;
+  if(act==="edit") editNode({...S.nodes.get(id)});
+  else if(act==="add") addChild(id);
+  else if(act==="newnews") addChild("noticias");
+  else if(act==="car") carGo(b.dataset.i!=null?+b.dataset.i:carI+ +b.dataset.d);
+  else if(act==="encuadre") encAbre(id,b.dataset.fid);
+  else if(act==="nquitar") removeFileOf(id,b.dataset.fid);
+  else if(act==="nretira"||act==="nrest"||act==="nfija"){ const nn={...S.nodes.get(id)}; if(act==="nretira") nn.retirada=true; else if(act==="nrest") nn.retirada=false; else { nn.fijada=hoyISO(); nn.retirada=false; }
+    if(await saveNode(nn)) toast(act==="nretira"?"Noticia retirada. Puedes restablecerla en Noticias.":act==="nrest"?"Noticia restablecida":"Vuelve a estar en portada"); }
+  else if(act==="nborrar"){ if(await confirmBox("¿Borrar del todo esta noticia? No se puede deshacer.")){ await delNode(id); toast("Noticia borrada"); } }
+  else if(act==="settings") settings();
+  else if(act==="export") exportVercel();
+  else if(act==="upload") pickFiles(id);
+  else if(act==="up") move(id,-1);
+  else if(act==="down") move(id,1);
+  else if(act==="enteredit") setEdit(true);
+  else if(act==="exitedit") setEdit(false);
+  else if(act==="del"){ const n=S.nodes.get(id); const d=descendants(id).length;
+    if(await confirmBox(`¿Eliminar «${n.title}»${d?` y sus ${d} sub-apartados`:""}? No se puede deshacer.`)){ const back=n.parent; await delNode(id); if(curId()===id) location.hash=back==="root"?"inicio":"n-"+back; toast("Eliminado"); } }
+});
+function setEdit(v){ if(v&&!S.fromDb){ toast("Conectando con los datos… inténtalo en unos segundos."); return; } S.edit=v; route(true); }
+$("#editBtn").onclick=()=>{ if(S.owner) setEdit(!S.edit); };
+$("#langBtn").onclick=()=>{ LANG=LANG==="gl"?"es":"gl"; try{localStorage.setItem("adc-lang",LANG)}catch(e){} document.documentElement.lang=LANG; route(true); };
+$("#menuBtn").onclick=()=>$("#nav").classList.toggle("open");
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") close(); });
+boot();
+})();
+</script>
+</body>
+</html>
