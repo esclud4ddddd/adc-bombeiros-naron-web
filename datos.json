@@ -238,6 +238,7 @@
    "color": "",
    "cover": "",
    "date": "2023-09",
+   "fijada": "",
    "files": [],
    "goto": "",
    "icon": "🏔️",
@@ -246,11 +247,10 @@
    "linkLabel": "Ver crónica",
    "order": 6,
    "parent": "noticias",
+   "sinPortada": true,
    "sub": "SkyTrailRun",
    "theme": "",
    "title": "Más de 220 participantes en la segunda edición",
-   "sinPortada": true,
-   "fijada": "",
    "id": "n-ii-2023"
   },
   {
@@ -258,6 +258,7 @@
    "color": "",
    "cover": "",
    "date": "2025-09-15",
+   "fijada": "",
    "files": [
     {
      "ext": "jpeg",
@@ -274,11 +275,10 @@
    "linkLabel": "Leer en Diario de Ferrol",
    "order": 4,
    "parent": "noticias",
+   "sinPortada": true,
    "sub": "Diario de Ferrol",
    "theme": "",
    "title": "Narón celebra una cuarta edición de récord del Trail Costa Ártabra",
-   "sinPortada": true,
-   "fijada": "",
    "id": "n-iv-record"
   },
   {
@@ -286,6 +286,7 @@
    "color": "",
    "cover": "",
    "date": "2025-08",
+   "fijada": "",
    "files": [],
    "goto": "",
    "icon": "📣",
@@ -294,15 +295,15 @@
    "linkLabel": "Leer en Ferrol 360",
    "order": 5,
    "parent": "noticias",
+   "sinPortada": true,
    "sub": "Ferrol 360",
    "theme": "",
    "title": "El Trail Costa Ártabra regresa el 14 de septiembre",
-   "sinPortada": true,
-   "fijada": "",
    "id": "n-iv-regresa"
   },
   {
    "body": "La asociación cerró su participación en los XI Xogos Europeos de Policías e Bombeiros de Vigo con 2 oros, 4 platas y 7 bronces. La carrera vertical fue la disciplina que más medallas aportó al equipo.",
+   "body_gl": "",
    "color": "#25209a",
    "cover": "",
    "date": "2026-10-19",
@@ -323,11 +324,10 @@
    "order": 1,
    "parent": "noticias",
    "sub": "Concello de Narón",
+   "sub_gl": "",
    "theme": "",
    "title": "Trece medallas para los bomberos de Narón en los Juegos Europeos",
    "title_gl": "",
-   "sub_gl": "",
-   "body_gl": "",
    "id": "n-medallas"
   },
   {
@@ -1178,6 +1178,7 @@
    "cover": "900b99ac28ce4c38825d8aa546a93a97",
    "created": "2026-11-18",
    "date": "2026-11-18",
+   "fijada": "",
    "files": [
     {
      "ext": "jpg",
@@ -1195,13 +1196,12 @@
    "order": 7,
    "parent": "noticias",
    "retirada": false,
+   "sinPortada": true,
    "sub": "",
    "sub_gl": "",
    "theme": "",
    "title": "Narón organiza una nueva campaña de sensibilización medioambiental",
    "title_gl": "",
-   "sinPortada": true,
-   "fijada": "",
    "id": "xmwmg2nqism4iv"
   },
   {
@@ -1281,7 +1281,29 @@
    "color": "#0f4457",
    "cover": "",
    "date": "",
-   "files": [],
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "d70eeb13ff49e0b8bf7b58dd7ccd0346",
+     "kind": "image",
+     "name": "IMG-20220918-WA0393.jpg",
+     "size": 234362
+    },
+    {
+     "ext": "jpg",
+     "id": "a1dc2e507d96a1f2d1c862ed28fe2719",
+     "kind": "image",
+     "name": "IMG-20220918-WA0394.jpg",
+     "size": 226428
+    },
+    {
+     "ext": "jpg",
+     "id": "a1d6ef11da9ed1385c99f812f69a17a1",
+     "kind": "image",
+     "name": "DSC_0031.JPG",
+     "size": 430190
+    }
+   ],
    "goto": "",
    "icon": "📷",
    "kind": "page",
@@ -2070,6 +2092,161 @@
    "title": "Instagram",
    "title_gl": "",
    "id": "trs-ig"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#14705f",
+   "cover": "bc729dfe925d446eb07bb625913a2f5b",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "bc729dfe925d446eb07bb625913a2f5b",
+     "kind": "image",
+     "name": "images (2).jpg",
+     "pos": "38% 0%",
+     "size": 48657
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "trail-2022",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CARTEL",
+   "title_gl": "",
+   "id": "xmwmghyv2lr3m0"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#0f4457",
+   "cover": "1049f06706a4e39d6eba9a0617197c94",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "1049f06706a4e39d6eba9a0617197c94",
+     "kind": "image",
+     "name": "images (4).jpg",
+     "pos": "60% 4%",
+     "size": 52435
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "trail-2023",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CARTEL",
+   "title_gl": "",
+   "id": "xmwmh02amvasp0"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#14705f",
+   "cover": "17bb06a8421dd44eab365e1ffb0180f6",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "17bb06a8421dd44eab365e1ffb0180f6",
+     "kind": "image",
+     "name": "images (3).jpg",
+     "pos": "41% 5%",
+     "size": 40119
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "trail-2024",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CARTEL",
+   "title_gl": "",
+   "id": "xmwmh0n7mw8448"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#0f4457",
+   "cover": "408f5030c3f913eea72412082cf69066",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "408f5030c3f913eea72412082cf69066",
+     "kind": "image",
+     "name": "images (6).jpg",
+     "pos": "40% 7%",
+     "size": 17299
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "trail-2025",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CARTEL",
+   "title_gl": "",
+   "id": "xmwmh1c2spbox3"
+  },
+  {
+   "body": "",
+   "body_gl": "",
+   "color": "#14705f",
+   "cover": "e5fc74f566ccea1867cc270e03ee6080",
+   "created": "2026-11-18",
+   "date": "",
+   "files": [
+    {
+     "ext": "jpg",
+     "id": "e5fc74f566ccea1867cc270e03ee6080",
+     "kind": "image",
+     "name": "images (5).jpg",
+     "pos": "34% 5%",
+     "size": 55308
+    }
+   ],
+   "goto": "",
+   "icon": "i:star",
+   "kind": "page",
+   "link": "",
+   "linkLabel": "",
+   "order": 4,
+   "parent": "trail-2026",
+   "sub": "",
+   "sub_gl": "",
+   "theme": "",
+   "title": "CARTEL",
+   "title_gl": "",
+   "id": "xmwmh1w2o3s7x0"
   }
  ]
 }
